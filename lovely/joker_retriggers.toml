@@ -361,4 +361,4 @@ pattern = '''message = localize('$')..self.ability.extra,
     dollars = self.ability.extra,'''
 position = "at"
 match_indent = true
-payload = '''message = localize('$')..self.ability.extra.dollars,'''
+payload = '''message = localize('$')..self.ability.extra,'''
