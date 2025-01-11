@@ -887,12 +887,12 @@ for i=1, #G.hand.cards do
     -- TARGET: card held destroyed when hand played
 
     if destroyed then --
-        if SMODS.shatters(G.play.cards[i]) then
-            G.play.cards[i].shattered = true
+        if SMODS.shatters(G.hand.cards[i]) then
+            G.hand.cards[i].shattered = true
         else 
-            G.play.cards[i].destroyed = true
+            G.hand.cards[i].destroyed = true
         end 
-        cards_destroyed[#cards_destroyed+1] = G.play.cards[i]
+        cards_destroyed[#cards_destroyed+1] = G.hand.cards[i]
     end
 end
 
