@@ -1,7 +1,5 @@
 ---@meta
 
-SMODS = {}
-
 -- Balatro vanilla classes declared here, allows typing SMODS functions. 
 ---@class Object
 ---@class Node: Object
