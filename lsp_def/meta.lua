@@ -19,3 +19,10 @@
 ---@class Card: Moveable
 ---@class Card_Character: Moveable
 ---@class CardArea: Moveable
+
+-- Commonly used functions (either typed as @class or defined)
+
+---@param hex string
+---@return table
+---Returns HEX color attributed to the string. 
+function HEX(hex) end

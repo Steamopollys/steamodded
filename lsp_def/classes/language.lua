@@ -1,6 +1,9 @@
 ---@meta
 
 ---@class SMODS.Language: SMODS.GameObject
+---@field label? string Label displayed in the language selection screen. 
+---@field font? number|table Font the in-game text uses. Using the number 1-9 uses vanilla fonts, and specifying a table uses custom font. See [SMODS.Language](https://github.com/Steamodded/smods/wiki/SMODS.Language) docs for details.
+---@field loc_key? string Key to another language. Treats it as a base, keeping any unchanged localization strings intact and adding changes to the language and fonts. 
 ---@overload fun(self: SMODS.Language): SMODS.Language
 SMODS.Language = setmetatable({}, {
     __call = function(self)

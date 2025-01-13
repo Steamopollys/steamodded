@@ -1,6 +1,10 @@
 ---@meta
 
 ---@class SMODS.Tag: SMODS.GameObject
+---@field atlas? string Key to the center's atlas. 
+---@field pos? table Position of the center's sprite. 
+---@field min_ante? number Minimum ante needed for this tag to appear. For more complex restrictions, use `SMODS.Tag:in_pool()`. 
+---@field discovered? boolean Sets the discovery state of the tag. 
 ---@overload fun(self: SMODS.Tag): SMODS.Tag
 SMODS.Tag = setmetatable({}, {
     __call = function(self)
@@ -53,3 +57,37 @@ function SMODS.Tag:take_ownership(key, obj, silent) return obj end
 ---@return table|nil table
 ---Returns an object if one matches the `key`. 
 function SMODS.Tag:get_obj(key) end
+
+---@param self SMODS.Tag
+---@param tag Tag
+---@param context table Instead of tags being restricted to self.config.type, context.type is passed. See vanilla `Tag:apply()` for details. 
+---Defines behaviour when a tag triggers. To trigger, call `Tag:yep()` (see function for details). 
+function SMODS.Tag:apply(tag, context) end
+
+---@param self SMODS.Tag
+---@param tag Tag
+---Sets up initial ability for the tag. Values should be stored in `tag.ability`. 
+function SMODS.Tag:set_ability(tag) end
+
+---@param self SMODS.Tag
+---@param info_queue table
+---@param tag Tag
+---@param desc_nodes table
+---@param specific_vars table
+---@param full_UI_table table
+---Provides more complex control over the UI display of the tag. 
+function SMODS.Tag:generate_ui(info_queue, tag, desc_nodes, specific_vars, full_UI_table) end
+
+---@param self SMODS.Tag
+---@param info_queue table
+---@param tag Tag
+---@return table { `key`?: string, `vars`?: table, `text_colour`?: table, `scale`?: number, `main_start`?: table, `main_end`?: table, `replace_debuff`?: boolean }
+---Provides simple control over displaying descriptions and tooltips of the tag. 
+function SMODS.Tag:loc_vars(info_queue, tag) end
+
+---@param self SMODS.Tag
+---@param args table
+---@return boolean allow
+---@return table config { `allow_duplicates`: boolean, allows duplicate tag spawns akin to Showman }
+---Allows configuring if the tag is allowed to spawn. 
+function SMODS.Tag:in_pool(args) end

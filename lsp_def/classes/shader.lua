@@ -1,6 +1,8 @@
 ---@meta
 
 ---@class SMODS.Shader: SMODS.GameObject
+---@field key? string Unique string to reference this object. This, `path`, and shader name in the GLSL must be the same.
+---@field path? string Name of the shader file. This, `key`, and shader name in the GLSL must be the same. 
 ---@overload fun(self: SMODS.Shader): SMODS.Shader
 SMODS.Shader = setmetatable({}, {
     __call = function(self)
@@ -47,3 +49,10 @@ function SMODS.Shader:inject() end
 ---@return SMODS.Shader obj
 ---Takes control of vanilla objects. Child class must have get_obj for this to function
 function SMODS.Shader:take_ownership(key, obj, silent) return obj end
+
+---@param self SMODS.Shader
+---@param sprite Sprite
+---@param card nil|Card `nil` if shader is not applied to the card. 
+---@return table 
+---Used to send extra args to the shader via `Shader:send(key, value)`. 
+function SMODS.Shader:send_vars(sprite, card) end

@@ -1,6 +1,9 @@
 ---@meta
 
 ---@class SMODS.ObjectType: SMODS.GameObject
+---@field default? string Key to fallback center when object pool is empty. 
+---@field cards? table List of keys to centers to auto-inject into the pool. Formatted as `{ ["j_joker"] = true }`. 
+---@field rarities? table Array of tables representing rarities. Each table must contain the key to the rarity, with an optional arg of `weight` (omitting uses rarity default, see `SMODS.Rarity.default_weight`). 
 ---@overload fun(self: SMODS.ObjectType): SMODS.ObjectType
 SMODS.ObjectType = setmetatable({}, {
     __call = function(self)
@@ -47,3 +50,13 @@ function SMODS.ObjectType:inject() end
 ---@return SMODS.ObjectType obj
 ---Takes control of vanilla objects. Child class must have get_obj for this to function
 function SMODS.ObjectType:take_ownership(key, obj, silent) return obj end
+
+---@param self SMODS.ObjectType
+---@param center table
+---Injects the center into the ObjectType pools.
+function SMODS.ObjectType:inject_card(center) end
+
+---@param self SMODS.ObjectType
+---@param center table
+---Removes the center from ObjectType pools. 
+function SMODS.ObjectType:remove_card(center) end

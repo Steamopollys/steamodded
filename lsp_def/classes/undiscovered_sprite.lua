@@ -1,6 +1,12 @@
 ---@meta
 
 ---@class SMODS.UndiscoveredSprite: SMODS.GameObject
+---@field key? string Key to the ObjectType this UndiscoveredSprite is made for. 
+---@field atlas? string Key to the undiscovered sprite's atlas. 
+---@field pos? table Position of the undiscovered sprite. 
+---@field lc_atlas? string Low constrast atlas. Used when `G.SETTINGS.colourblind_option` is `false`. 
+---@field hc_atlas? string High contrast atlas. Used when `G.SETTINGS.colourblind_option` is `true`.
+---@field no_overlay? boolean Sets whether the floating "?" is drawn or not. 
 ---@overload fun(self: SMODS.UndiscoveredSprite): SMODS.UndiscoveredSprite
 SMODS.UndiscoveredSprite = setmetatable({}, {
     __call = function(self)

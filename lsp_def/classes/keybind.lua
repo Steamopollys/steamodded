@@ -1,6 +1,10 @@
 ---@meta
 
 ---@class SMODS.Keybind: SMODS.GameObject
+---@field key_pressed? string Required key to press for this keybind to activate. Keycodes are documented [here](https://love2d.org/wiki/KeyConstant)
+---@field event? string Defines when the keybind should trigger. "pressed": on key press, "released": on key release, "held": on key hold for specified amount of time. 
+---@field held_duration? number How long the keybind needs to be pressed before activation. Only active if `event = held`. 
+---@field held_keys? table Array of keycodes additionally required to be pressed for keybind to activate. 
 ---@overload fun(self: SMODS.Keybind): SMODS.Keybind
 SMODS.Keybind = setmetatable({}, {
     __call = function(self)
@@ -47,3 +51,7 @@ function SMODS.Keybind:inject() end
 ---@return SMODS.Keybind obj
 ---Takes control of vanilla objects. Child class must have get_obj for this to function
 function SMODS.Keybind:take_ownership(key, obj, silent) return obj end
+
+---@param self SMODS.Keybind
+---Called when the keybind is triggered. 
+function SMODS.Keybind:action() end

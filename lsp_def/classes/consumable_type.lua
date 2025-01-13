@@ -1,6 +1,11 @@
 ---@meta
 
----@class SMODS.ConsumableType: SMODS.GameObject
+---@class SMODS.ConsumableType: SMODS.ObjectType
+---@field primary_colour? table HEX color used as the primary color. Set as `G.C.SET[self.key]`. 
+---@field secondary_colour? table HEX color used as the seconary color. Set as `G.C.SECONDARY_COLOUR[self.key]`. 
+---@field collection_rows? table Array of numbers indicating how many rows and how many cards per row this ConsumableType's collection has. 
+---@field shop_rate? nil|number Defining this value allows cards part of this ConsumableType to appear in the shop. Defined as `G.GAME[key:lower()..'_rate']`.  
+---@field ctype_buffer? table Array of keys to all objects registered to the ConsumableType class. 
 ---@overload fun(self: SMODS.ConsumableType): SMODS.ConsumableType
 SMODS.ConsumableType = setmetatable({}, {
     __call = function(self)
@@ -47,3 +52,8 @@ function SMODS.ConsumableType:inject() end
 ---@return SMODS.ConsumableType obj
 ---Takes control of vanilla objects. Child class must have get_obj for this to function
 function SMODS.ConsumableType:take_ownership(key, obj, silent) return obj end
+
+---@param self SMODS.ConsumableType
+---@return table UIBox
+---Creates the UIBox of the ConsumableType's collections menu. 
+function SMODS.ConsumableType:create_UIBox_your_collection() end
