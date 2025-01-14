@@ -5,7 +5,7 @@
 ---@field event? string Defines when the keybind should trigger. "pressed": on key press, "released": on key release, "held": on key hold for specified amount of time. 
 ---@field held_duration? number How long the keybind needs to be pressed before activation. Only active if `event = held`. 
 ---@field held_keys? table Array of keycodes additionally required to be pressed for keybind to activate. 
----@field __call? fun(self: table, o: SMODS.Keybind): SMODS.Keybind
+---@field __call? fun(self: SMODS.Keybind, o: SMODS.Keybind): SMODS.Keybind
 ---@field extend? fun(self: table, o: SMODS.Keybind): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table, o: SMODS.Keybind): table
 ---@field check_duplicate_key? fun(self: table): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
@@ -20,7 +20,7 @@
 ---@field take_ownership? fun(self: table, key: string, obj: table, silent?: boolean): SMODS.Keybind Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table, key: string): table|nil Returns an object if one matches the `key`. 
 ---@field action? fun(self: table) Called when the keybind is triggered. 
----@overload fun(self: table): SMODS.Keybind
+---@overload fun(self: SMODS.Keybind): SMODS.Keybind
 SMODS.Keybind = setmetatable({}, {
     __call = function(self)
         return self

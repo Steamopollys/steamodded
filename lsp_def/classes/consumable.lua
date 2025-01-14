@@ -2,7 +2,7 @@
 
 ---@class SMODS.Consumable: SMODS.Center
 ---@field hidden? table Used for legendary consumables. 
----@field __call? fun(self: table, o: SMODS.Consumable): SMODS.Consumable
+---@field __call? fun(self: SMODS.Consumable, o: SMODS.Consumable): SMODS.Consumable
 ---@field extend? fun(self: table, o: SMODS.Consumable): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table, o: SMODS.Consumable): table
 ---@field check_duplicate_key? fun(self: table): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
@@ -19,7 +19,7 @@
 ---@field use? fun(self: table, card: Card, area: CardArea, copier?: table) Defines behaviour when this consumable is used. 
 ---@field can_use? fun(self: table, card: Card): boolean Return `true` if the consumable is allowed to be used. 
 ---@field keep_on_use? fun(self: table, card: Card): boolean Return `true` if the consumable should stay after use. 
----@overload fun(self: table): SMODS.Consumable
+---@overload fun(self: SMODS.Consumable): SMODS.Consumable
 SMODS.Consumable = setmetatable({}, {
     __call = function(self)
         return self

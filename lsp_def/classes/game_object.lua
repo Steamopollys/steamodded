@@ -14,7 +14,7 @@
 ---@field set? string Important for objects wanting to follow vanilla logic that depends on `set`. For classes, this is used for logging purposes. 
 ---@field no_collection? boolean Sets whether the object shows up in collections. ---@overload fun(self: table): SMODS.GameObject
 ---@field config? table Cards/Objects representing your center will copy default values from `config` into it's `ability` table. Custom values can be stored within `extra`. 
----@field __call? fun(self: table, o: SMODS.GameObject): SMODS.GameObject
+---@field __call? fun(self: SMODS.GameObject, o: SMODS.GameObject): SMODS.GameObject
 ---@field extend? fun(self: table, o: SMODS.GameObject): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table, o: SMODS.GameObject): table
 ---@field check_duplicate_key? fun(self: table): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

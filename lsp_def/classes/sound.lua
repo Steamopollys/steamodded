@@ -25,7 +25,7 @@
 ---@field create_stop_sound? fun(self: table, key: string, times: nil|number) Supress sounds with the given sound code `times` amount of times or indefinitely. 
 ---@field register_global? fun(self: table) Registers all sound files of the current mod. 
 ---@field get_current_music? fun(self: table): nil|string Polls `SMODS.Sound:select_music_track` and returns the key to the music to play.
----@overload fun(self: table): SMODS.Sound
+---@overload fun(self: SMODS.Sound): SMODS.Sound
 SMODS.Sound = setmetatable({}, {
     __call = function(self)
         return self
