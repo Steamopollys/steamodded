@@ -4,7 +4,7 @@
 ---@field default? string Key to fallback center when object pool is empty. 
 ---@field cards? table List of keys to centers to auto-inject into the pool. Formatted as `{ ["j_joker"] = true }`. 
 ---@field rarities? table Array of tables representing rarities. Each table must contain the key to the rarity, with an optional arg of `weight` (omitting uses rarity default, see `SMODS.Rarity.default_weight`). 
----@field __call? fun(self: table, o: SMODS.ObjectType): SMODS.ObjectType
+---@field __call? fun(self: SMODS.ObjectType, o: SMODS.ObjectType): SMODS.ObjectType
 ---@field extend? fun(self: table, o: SMODS.ObjectType): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table, o: SMODS.ObjectType): table
 ---@field check_duplicate_key? fun(self: table): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
@@ -20,7 +20,7 @@
 ---@field get_obj? fun(self: table, key: string): table|nil Returns an object if one matches the `key`. 
 ---@field inject_card? fun(self: table, center: table) Injects the center into the ObjectType pools.
 ---@field remove_card? fun(self: table, center: table) Removes the center from ObjectType pools. 
----@overload fun(self: table): SMODS.ObjectType
+---@overload fun(self: SMODS.ObjectType): SMODS.ObjectType
 SMODS.ObjectType = setmetatable({}, {
     __call = function(self)
         return self
