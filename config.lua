@@ -1,8 +1,3 @@
-
-SMODS.Atlas{
-    
-}
-
 return {
     ["no_mod_badges"] = false,
     ["graphics_mipmap_level"] = 3,
