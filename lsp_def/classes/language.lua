@@ -1,12 +1,13 @@
 ---@meta
 
+---@type SMODS.Language
 ---@class SMODS.Language: SMODS.GameObject
 ---@field label? string Label displayed in the language selection screen. 
 ---@field font? number|table Font the in-game text uses. Using the number 1-9 uses vanilla fonts, and specifying a table uses custom font. See [SMODS.Language](https://github.com/Steamodded/smods/wiki/SMODS.Language) docs for details.
 ---@field loc_key? string Key to another language. Treats it as a base, keeping any unchanged localization strings intact and adding changes to the language and fonts. 
 ---@field __call? fun(self: table|SMODS.Language, o: SMODS.Language): SMODS.Language
 ---@field extend? fun(self: table|SMODS.Language, o: SMODS.Language): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Language, o: SMODS.Language): table
+---@field check_duplicate_register? fun(self: table|SMODS.Language): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Language): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Language) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Language): boolean Returns true if there's no failed dependencies, else false

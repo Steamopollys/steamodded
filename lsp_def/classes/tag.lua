@@ -7,7 +7,7 @@
 ---@field discovered? boolean Sets the discovery state of the tag. 
 ---@field __call? fun(self: table|SMODS.Tag, o: SMODS.Tag): SMODS.Tag
 ---@field extend? fun(self: table|SMODS.Tag, o: SMODS.Tag): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Tag, o: SMODS.Tag): table
+---@field check_duplicate_register? fun(self: table|SMODS.Tag): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Tag): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Tag) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Tag): boolean Returns true if there's no failed dependencies, else false

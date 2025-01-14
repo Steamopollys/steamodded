@@ -6,7 +6,7 @@
 ---@field rarities? table Array of tables representing rarities. Each table must contain the key to the rarity, with an optional arg of `weight` (omitting uses rarity default, see `SMODS.Rarity.default_weight`). 
 ---@field __call? fun(self: table|SMODS.ObjectType, o: SMODS.ObjectType): SMODS.ObjectType
 ---@field extend? fun(self: table|SMODS.ObjectType, o: SMODS.ObjectType): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.ObjectType, o: SMODS.ObjectType): table
+---@field check_duplicate_register? fun(self: table|SMODS.ObjectType): table
 ---@field check_duplicate_key? fun(self: table|SMODS.ObjectType): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.ObjectType) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.ObjectType): boolean Returns true if there's no failed dependencies, else false

@@ -7,7 +7,7 @@
 ---@field held_keys? table Array of keycodes additionally required to be pressed for keybind to activate. 
 ---@field __call? fun(self: table|SMODS.Keybind, o: SMODS.Keybind): SMODS.Keybind
 ---@field extend? fun(self: table|SMODS.Keybind, o: SMODS.Keybind): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Keybind, o: SMODS.Keybind): table
+---@field check_duplicate_register? fun(self: table|SMODS.Keybind): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Keybind): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Keybind) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Keybind): boolean Returns true if there's no failed dependencies, else false

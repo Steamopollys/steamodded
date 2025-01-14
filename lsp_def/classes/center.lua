@@ -13,7 +13,7 @@
 ---@field yes_pool_flag? string Key to the pool flag defined in `G.GAME.pool_flags`. This center is removed from it's pool as long as this flag is `false`. 
 ---@field __call? fun(self: table|SMODS.Center, o: SMODS.Center): SMODS.Center
 ---@field extend? fun(self: table|SMODS.Center, o: SMODS.Center): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Center, o: SMODS.Center): table
+---@field check_duplicate_register? fun(self: table|SMODS.Center): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Center): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Center) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Center): boolean Returns true if there's no failed dependencies, else false
@@ -25,7 +25,7 @@
 ---@field inject? fun(self: table|SMODS.Center) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: table|SMODS.Center, key: string, obj: table, silent?: boolean): SMODS.Center Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table|SMODS.Center, key: string): table|nil Returns an object if one matches the `key`. 
----@field delete? fun(self: table|SMODS.Center): boolean Removes provided center. 
+---@field delete? fun(self: table|SMODS.Center): boolean? Removes provided center. 
 ---@field generate_ui? fun(self: table|SMODS.Center, info_queue: table, card: Card, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the card. 
 ---@field loc_vars? fun(self: table|SMODS.Center, info_queue: table, card: Card): table? Provides simple control over displaying descriptions and tooltips of the card. 
 ---@field locked_loc_vars? fun(self: table|SMODS.Center, info_queue: table, card: Card): table Provides simple control over displaying descriptions and toolips of this center when not unlocked. 

@@ -5,7 +5,7 @@
 ---@field path? string Name of the shader file. This, `key`, and shader name in the GLSL must be the same. 
 ---@field __call? fun(self: table|SMODS.Shader, o: SMODS.Shader): SMODS.Shader
 ---@field extend? fun(self: table|SMODS.Shader, o: SMODS.Shader): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Shader, o: SMODS.Shader): table
+---@field check_duplicate_register? fun(self: table|SMODS.Shader): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Shader): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Shader) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Shader): boolean Returns true if there's no failed dependencies, else false

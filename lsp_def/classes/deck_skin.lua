@@ -3,7 +3,7 @@
 ---@class SMODS.DeckSkin: SMODS.GameObject
 ---@field __call? fun(self: table|SMODS.DeckSkin, o: SMODS.DeckSkin): SMODS.DeckSkin
 ---@field extend? fun(self: table|SMODS.DeckSkin, o: SMODS.DeckSkin): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.DeckSkin, o: SMODS.DeckSkin): table
+---@field check_duplicate_register? fun(self: table|SMODS.DeckSkin): table
 ---@field check_duplicate_key? fun(self: table|SMODS.DeckSkin): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.DeckSkin) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.DeckSkin): boolean Returns true if there's no failed dependencies, else false

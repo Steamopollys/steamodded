@@ -8,7 +8,7 @@
 ---@field sync? false|table Configured syncing for music tracks. Setting to `false` prevents the music track from syncing with anything. 
 ---@field __call? fun(self: table|SMODS.Sound, o: SMODS.Sound): SMODS.Sound
 ---@field extend? fun(self: table|SMODS.Sound, o: SMODS.Sound): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Sound, o: SMODS.Sound): table
+---@field check_duplicate_register? fun(self: table|SMODS.Sound): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Sound): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Sound) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Sound): boolean Returns true if there's no failed dependencies, else false

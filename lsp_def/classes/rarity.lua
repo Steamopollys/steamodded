@@ -6,7 +6,7 @@
 ---@field default_weight? number Default weight of the rarity. When referenced in ObjectTypes with just the key, this value is used as the default. 
 ---@field __call? fun(self: table|SMODS.Rarity, o: SMODS.Rarity): SMODS.Rarity
 ---@field extend? fun(self: table|SMODS.Rarity, o: SMODS.Rarity): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Rarity, o: SMODS.Rarity): table
+---@field check_duplicate_register? fun(self: table|SMODS.Rarity): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Rarity): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Rarity) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Rarity): boolean Returns true if there's no failed dependencies, else false

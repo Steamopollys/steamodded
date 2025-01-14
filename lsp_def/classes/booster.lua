@@ -7,7 +7,7 @@
 ---@field weight? number Weight of the booster pack. 
 ---@field __call? fun(self: table|SMODS.Booster, o: SMODS.Booster): SMODS.Booster
 ---@field extend? fun(self: table|SMODS.Booster, o: SMODS.Booster): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Booster, o: SMODS.Booster): table
+---@field check_duplicate_register? fun(self: table|SMODS.Booster): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Booster): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Booster) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Booster): boolean Returns true if there's no failed dependencies, else false

@@ -3,7 +3,7 @@
 ---@class SMODS.Enhancement: SMODS.Center
 ---@field __call? fun(self: table|SMODS.Enhancement, o: SMODS.Enhancement): SMODS.Enhancement
 ---@field extend? fun(self: table|SMODS.Enhancement, o: SMODS.Enhancement): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Enhancement, o: SMODS.Enhancement): table
+---@field check_duplicate_register? fun(self: table|SMODS.Enhancement): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Enhancement): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Enhancement) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Enhancement): boolean Returns true if there's no failed dependencies, else false

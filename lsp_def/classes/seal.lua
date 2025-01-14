@@ -9,7 +9,7 @@
 ---@field badge_to_key? table Contains keys to each seal indexed by seal badge (`key:lower()..'_seal`). 
 ---@field __call? fun(self: table|SMODS.Seal, o: SMODS.Seal): SMODS.Seal
 ---@field extend? fun(self: table|SMODS.Seal, o: SMODS.Seal): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Seal, o: SMODS.Seal): table
+---@field check_duplicate_register? fun(self: table|SMODS.Seal): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Seal): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Seal) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Seal): boolean Returns true if there's no failed dependencies, else false

@@ -4,7 +4,7 @@
 ---@field requires? table Array of keys to other voucher. This voucher will not appear if those are not redeemed.  
 ---@field __call? fun(self: table|SMODS.Voucher, o: SMODS.Voucher): SMODS.Voucher
 ---@field extend? fun(self: table|SMODS.Voucher, o: SMODS.Voucher): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Voucher, o: SMODS.Voucher): table
+---@field check_duplicate_register? fun(self: table|SMODS.Voucher): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Voucher): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Voucher) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Voucher): boolean Returns true if there's no failed dependencies, else false

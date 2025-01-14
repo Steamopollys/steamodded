@@ -16,7 +16,7 @@
 ---@field config? table Cards/Objects representing your center will copy default values from `config` into it's `ability` table. Custom values can be stored within `extra`. 
 ---@field __call? fun(self: table|SMODS.GameObject, o: SMODS.GameObject): SMODS.GameObject
 ---@field extend? fun(self: table|SMODS.GameObject, o: SMODS.GameObject): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.GameObject, o: SMODS.GameObject): table
+---@field check_duplicate_register? fun(self: table|SMODS.GameObject): table
 ---@field check_duplicate_key? fun(self: table|SMODS.GameObject): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.GameObject) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.GameObject): boolean Returns true if there's no failed dependencies, else false

@@ -4,7 +4,7 @@
 ---@field hidden? table Used for legendary consumables. 
 ---@field __call? fun(self: table|SMODS.Consumable, o: SMODS.Consumable): SMODS.Consumable
 ---@field extend? fun(self: table|SMODS.Consumable, o: SMODS.Consumable): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Consumable, o: SMODS.Consumable): table
+---@field check_duplicate_register? fun(self: table|SMODS.Consumable): table
 ---@field check_duplicate_key? fun(self: table|SMODS.Consumable): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Consumable) Registers the object. 
 ---@field check_dependencies? fun(self: table|SMODS.Consumable): boolean Returns true if there's no failed dependencies, else false
