@@ -13,10 +13,10 @@
 ---@field yes_pool_flag? string Key to the pool flag defined in `G.GAME.pool_flags`. This center is removed from it's pool as long as this flag is `false`. 
 ---@field __call? fun(self: table|SMODS.Center, o: table|SMODS.Center): SMODS.Center
 ---@field extend? fun(self: table|SMODS.Center, o: table|SMODS.Center): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Center): boolean
----@field check_duplicate_key? fun(self: table|SMODS.Center): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_register? fun(self: table|SMODS.Center): nil|boolean Ensures objects already registered will not register. 
+---@field check_duplicate_key? fun(self: table|SMODS.Center): nil|boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Center) Registers the object. 
----@field check_dependencies? fun(self: table|SMODS.Center): boolean Returns true if there's no failed dependencies, else false
+---@field check_dependencies? fun(self: table|SMODS.Center): nil|boolean Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: table|SMODS.Center) Called during `inject_class`. Handles injecting loc_text. 
 ---@field send_to_subclasses? fun(self: table|SMODS.Center, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: table|SMODS.Center) Called before `inject_class`. Injects and manages class information before object injection. 
@@ -25,7 +25,7 @@
 ---@field inject? fun(self: table|SMODS.Center, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: table|SMODS.Center, key: string, obj: table, silent?: boolean): nil|SMODS.Center Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table|SMODS.Center, key: string): table|nil Returns an object if one matches the `key`. 
----@field delete? fun(self: table|SMODS.Center): boolean? Removes provided center. 
+---@field delete? fun(self: table|SMODS.Center): nil|boolean? Removes provided center. 
 ---@field generate_ui? fun(self: table|SMODS.Center, info_queue: table, card: table|Card, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the card. 
 ---@field loc_vars? fun(self: table|SMODS.Center, info_queue: table, card: table|Card): table? Provides simple control over displaying descriptions and tooltips of the card. 
 ---@field locked_loc_vars? fun(self: table|SMODS.Center, info_queue: table, card: table|Card): table Provides simple control over displaying descriptions and toolips of this center when not unlocked. 
@@ -39,7 +39,7 @@
 ---@field set_ability? fun(self: table|SMODS.Center, card: table|Card, initial?: boolean, delay_sprites?: boolean) Sets up initial ability and size parameters for the card. 
 ---@field add_to_deck? fun(self: table|SMODS.Center, card: table|Card, from_debuff: boolean) Allows modifying the game state when the card is being added. 
 ---@field remove_from_deck? fun(self: table|SMODS.Center, card: table|Card, from_debuff: boolean) Allows modifying the game state when the card is being removed. 
----@field in_pool? fun(self: table|SMODS.Center, args: table): boolean?, table? Allows configuring if the card is allowed to spawn. 
+---@field in_pool? fun(self: table|SMODS.Center, args: table): nil|boolean?, table? Allows configuring if the card is allowed to spawn. 
 ---@field calculate? fun(self: table|SMODS.Center, card: table|Card, context: table): table?, boolean? Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@overload fun(self: SMODS.Center): SMODS.Center
 SMODS.Center = setmetatable({}, {

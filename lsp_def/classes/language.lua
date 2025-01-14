@@ -7,10 +7,10 @@
 ---@field loc_key? string Key to another language. Treats it as a base, keeping any unchanged localization strings intact and adding changes to the language and fonts. 
 ---@field __call? fun(self: table|SMODS.Language, o: table|SMODS.Language): SMODS.Language
 ---@field extend? fun(self: table|SMODS.Language, o: table|SMODS.Language): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.Language): boolean
----@field check_duplicate_key? fun(self: table|SMODS.Language): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_register? fun(self: table|SMODS.Language): nil|boolean Ensures objects already registered will not register. 
+---@field check_duplicate_key? fun(self: table|SMODS.Language): nil|boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.Language) Registers the object. 
----@field check_dependencies? fun(self: table|SMODS.Language): boolean Returns true if there's no failed dependencies, else false
+---@field check_dependencies? fun(self: table|SMODS.Language): nil|boolean Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: table|SMODS.Language) Called during `inject_class`. Handles injecting loc_text. 
 ---@field send_to_subclasses? fun(self: table|SMODS.Language, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: table|SMODS.Language) Called before `inject_class`. Injects and manages class information before object injection. 

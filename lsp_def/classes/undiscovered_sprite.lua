@@ -9,10 +9,10 @@
 ---@field no_overlay? boolean Sets whether the floating "?" is drawn or not. 
 ---@field __call? fun(self: table|SMODS.UndiscoveredSprite, o: table|SMODS.UndiscoveredSprite): SMODS.UndiscoveredSprite
 ---@field extend? fun(self: table|SMODS.UndiscoveredSprite, o: table|SMODS.UndiscoveredSprite): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.UndiscoveredSprite): boolean
----@field check_duplicate_key? fun(self: table|SMODS.UndiscoveredSprite): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_register? fun(self: table|SMODS.UndiscoveredSprite): nil|boolean Ensures objects already registered will not register. 
+---@field check_duplicate_key? fun(self: table|SMODS.UndiscoveredSprite): nil|boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.UndiscoveredSprite) Registers the object. 
----@field check_dependencies? fun(self: table|SMODS.UndiscoveredSprite): boolean Returns true if there's no failed dependencies, else false
+---@field check_dependencies? fun(self: table|SMODS.UndiscoveredSprite): nil|boolean Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: table|SMODS.UndiscoveredSprite) Called during `inject_class`. Handles injecting loc_text. 
 ---@field send_to_subclasses? fun(self: table|SMODS.UndiscoveredSprite, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: table|SMODS.UndiscoveredSprite) Called before `inject_class`. Injects and manages class information before object injection. 

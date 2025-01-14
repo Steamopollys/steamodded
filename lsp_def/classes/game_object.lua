@@ -18,10 +18,10 @@
 ---@field config? table Cards/Objects representing your center will copy default values from `config` into it's `ability` table. Custom values can be stored within `extra`. 
 ---@field __call? fun(self: table|SMODS.GameObject, o: table|SMODS.GameObject): SMODS.GameObject
 ---@field extend? fun(self: table|SMODS.GameObject, o: table|SMODS.GameObject): table Primary method of creating a class. 
----@field check_duplicate_register? fun(self: table|SMODS.GameObject): boolean
----@field check_duplicate_key? fun(self: table|SMODS.GameObject): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_register? fun(self: table|SMODS.GameObject): nil|boolean Ensures objects already registered will not register. 
+---@field check_duplicate_key? fun(self: table|SMODS.GameObject): nil|boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
 ---@field register? fun(self: table|SMODS.GameObject) Registers the object. 
----@field check_dependencies? fun(self: table|SMODS.GameObject): boolean Returns true if there's no failed dependencies, else false
+---@field check_dependencies? fun(self: table|SMODS.GameObject): nil|boolean Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: table|SMODS.GameObject) Called during `inject_class`. Handles injecting loc_text. 
 ---@field send_to_subclasses? fun(self: table|SMODS.GameObject, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: table|SMODS.GameObject) Called before `inject_class`. Injects and manages class information before object injection. 
