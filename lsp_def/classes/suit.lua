@@ -15,7 +15,7 @@
 ---@field inject? fun(self: table) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: table, key: string, obj: table, silent?: boolean): SMODS.Suit Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table, key: string): table|nil Returns an object if one matches the `key`. 
----@overload fun(self: SMODS.Suit): SMODS.Suit
+---@overload fun(self: table): SMODS.Suit
 SMODS.Suit = setmetatable({}, {
     __call = function(self)
         return self

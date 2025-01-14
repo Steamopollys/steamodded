@@ -5,7 +5,7 @@
 ---@field draw_hand? boolean Sets if playing cards are drawn when booster pack is opened. 
 ---@field kind? string Groups pack types together. For example, this can be used in `get_pack()` to generate a booster pack of a specific type. 
 ---@field weight? number Weight of the booster pack. 
----@field __call? fun(self: SMODS.Booster, o: SMODS.Booster): SMODS.Booster
+---@field __call? fun(self: table, o: SMODS.Booster): SMODS.Booster
 ---@field extend? fun(self: table, o: SMODS.Booster): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table, o: SMODS.Booster): table
 ---@field check_duplicate_key? fun(self: table): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
@@ -25,7 +25,7 @@
 ---@field particles? fun(self: table) Handles ambient particle effects when booster pack is opened. 
 ---@field create_UIBox? fun(self: table): table Returns booster pack UIBox. 
 ---@field take_ownership_by_kind? fun(self: table, kind: string, obj: table, silent?: boolean) Finds all booster packs with matching `kind` and applies `SMODS.Booster:take_ownership()` to each one with `obj` and `silent` args passed through. 
----@overload fun(self: SMODS.Booster): SMODS.Booster
+---@overload fun(self: table): SMODS.Booster
 SMODS.Booster = setmetatable({}, {
     __call = function(self)
         return self

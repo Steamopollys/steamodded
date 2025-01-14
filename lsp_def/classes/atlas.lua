@@ -9,7 +9,7 @@
 ---@field raw_key? boolean Sets whether the mod prefix is added to atlas key. Used for overriding vanilla sprites. 
 ---@field language? string Key to a language. Restricts the atlas to only when this language is enabled. 
 ---@field disable_mipmap? boolean Sets if the sprite is affected by the mipmap. 
----@field __call? fun(self: SMODS.Atlas, o: SMODS.Atlas): SMODS.Atlas
+---@field __call? fun(self: table, o: SMODS.Atlas): SMODS.Atlas
 ---@field extend? fun(self: table, o: SMODS.Atlas): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table, o: SMODS.Atlas): table
 ---@field check_duplicate_key? fun(self: table): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
@@ -23,7 +23,7 @@
 ---@field inject? fun(self: table) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: table, key: string, obj: table, silent?: boolean): SMODS.Atlas Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table, key: string): table|nil Returns an object if one matches the `key`. 
----@overload fun(self: SMODS.Atlas): SMODS.Atlas
+---@overload fun(self: table): SMODS.Atlas
 SMODS.Atlas = setmetatable({}, {
     __call = function(self)
         return self

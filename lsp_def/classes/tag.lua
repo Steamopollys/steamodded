@@ -24,7 +24,7 @@
 ---@field generate_ui? fun(self: table, info_queue: table, tag: Tag, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the tag. 
 ---@field loc_vars? fun(self: table, info_queue: table, tag: Tag): nil|table Provides simple control over displaying descriptions and tooltips of the tag. 
 ---@field in_pool? fun(self: table, args: table): boolean, table? Allows configuring if the tag is allowed to spawn. 
----@overload fun(self: SMODS.Tag): SMODS.Tag
+---@overload fun(self: table): SMODS.Tag
 SMODS.Tag = setmetatable({}, {
     __call = function(self)
         return self

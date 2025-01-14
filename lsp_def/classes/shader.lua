@@ -18,7 +18,7 @@
 ---@field take_ownership? fun(self: table, key: string, obj: table, silent?: boolean): SMODS.Shader Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table, key: string): table|nil Returns an object if one matches the `key`. 
 ---@field send_vars? fun(self: table, sprite: Sprite, card: nil|Card): table? Used to send extra args to the shader via `Shader:send(key, value)`. 
----@overload fun(self: SMODS.Shader): SMODS.Shader
+---@overload fun(self: table): SMODS.Shader
 SMODS.Shader = setmetatable({}, {
     __call = function(self)
         return self

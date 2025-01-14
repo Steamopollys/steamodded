@@ -1,7 +1,7 @@
 ---@meta
 
 ---@class SMODS.Enhancement: SMODS.Center
----@field __call? fun(self: SMODS.Enhancement, o: SMODS.Enhancement): SMODS.Enhancement
+---@field __call? fun(self: table, o: SMODS.Enhancement): SMODS.Enhancement
 ---@field extend? fun(self: table, o: SMODS.Enhancement): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table, o: SMODS.Enhancement): table
 ---@field check_duplicate_key? fun(self: table): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
@@ -15,7 +15,7 @@
 ---@field inject? fun(self: table) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: table, key: string, obj: table, silent?: boolean): SMODS.Enhancement Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table, key: string): table|nil Returns an object if one matches the `key`. 
----@overload fun(self: SMODS.Enhancement): SMODS.Enhancement
+---@overload fun(self: table): SMODS.Enhancement
 SMODS.Enhancement = setmetatable({}, {
     __call = function(self)
         return self

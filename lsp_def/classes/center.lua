@@ -11,7 +11,7 @@
 ---@field cost? number Sell cost of this center. 
 ---@field no_pool_flag? string Key to a pool flag defined in `G.GAME.pool_flags`. This center is removed from it's pool as long as this flag is `true`. 
 ---@field yes_pool_flag? string Key to the pool flag defined in `G.GAME.pool_flags`. This center is removed from it's pool as long as this flag is `false`. 
----@field __call? fun(self: SMODS.Center, o: SMODS.Center): SMODS.Center
+---@field __call? fun(self: table, o: SMODS.Center): SMODS.Center
 ---@field extend? fun(self: table, o: SMODS.Center): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table, o: SMODS.Center): table
 ---@field check_duplicate_key? fun(self: table): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
@@ -41,7 +41,7 @@
 ---@field remove_from_deck? fun(self: table, card: Card, from_debuff: boolean) Allows modifying the game state when the card is being removed. 
 ---@field in_pool? fun(self: table, args: table): boolean?, table? Allows configuring if the card is allowed to spawn. 
 ---@field calculate? fun(self: table, card: Card, context: table): table? Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
----@overload fun(self: SMODS.Center): SMODS.Center
+---@overload fun(self: table): SMODS.Center
 SMODS.Center = setmetatable({}, {
     __call = function(self)
         return self
