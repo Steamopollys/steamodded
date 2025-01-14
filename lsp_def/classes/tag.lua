@@ -19,10 +19,10 @@
 ---@field inject? fun(self: table|SMODS.Tag, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: table|SMODS.Tag, key: string, obj: table, silent?: boolean): nil|SMODS.Tag Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table|SMODS.Tag, key: string): table|nil Returns an object if one matches the `key`. 
----@field apply? fun(self: table|SMODS.Tag, tag: Tag, context: table) Defines behaviour when a tag triggers. To trigger, call `Tag:yep()`. See [SMODS.Tag](https://github.com/Steamodded/smods/wiki/SMODS.Tag) wiki for details. 
----@field set_ability? fun(self: table|SMODS.Tag, tag: Tag) Sets up initial ability for the tag. Values should be stored in `tag.ability`. 
----@field generate_ui? fun(self: table|SMODS.Tag, info_queue: table, tag: Tag, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the tag. 
----@field loc_vars? fun(self: table|SMODS.Tag, info_queue: table, tag: Tag): nil|table Provides simple control over displaying descriptions and tooltips of the tag. 
+---@field apply? fun(self: table|SMODS.Tag, tag: table|Tag, context: table): any? Defines behaviour when a tag triggers. To trigger, call `Tag:yep()`. See [SMODS.Tag](https://github.com/Steamodded/smods/wiki/SMODS.Tag) wiki for details. 
+---@field set_ability? fun(self: table|SMODS.Tag, tag: table|Tag) Sets up initial ability for the tag. Values should be stored in `tag.ability`. 
+---@field generate_ui? fun(self: table|SMODS.Tag, info_queue: table, tag: table|Tag, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the tag. 
+---@field loc_vars? fun(self: table|SMODS.Tag, info_queue: table, tag: table|Tag): nil|table Provides simple control over displaying descriptions and tooltips of the tag. 
 ---@field in_pool? fun(self: table|SMODS.Tag, args: table): boolean, table? Allows configuring if the tag is allowed to spawn. 
 ---@overload fun(self: SMODS.Tag): SMODS.Tag
 SMODS.Tag = setmetatable({}, {
