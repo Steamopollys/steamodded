@@ -17,7 +17,7 @@
 ---@field inject? fun(self: table|SMODS.Joker, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: table|SMODS.Joker, key: string, obj: table, silent?: boolean): nil|SMODS.Joker Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table|SMODS.Joker, key: string): table|nil Returns an object if one matches the `key`. 
----@field calc_dollar_bonus? fun(self: table|SMODS.Joker, card: Card): nil|number Calculates reward money. 
+---@field calc_dollar_bonus? fun(self: table|SMODS.Joker, card: table|Card): nil|number Calculates reward money. 
 ---@field new? fun(self, name, slug, config, spritePos, loc_txt, rarity, cost, unlocked, discovered,blueprint_compat, eternal_compat, effect, atlas, soul_pos): any DEPRECATED. DO NOT USE
 ---@overload fun(self: SMODS.Joker): SMODS.Joker
 SMODS.Joker = setmetatable({}, {

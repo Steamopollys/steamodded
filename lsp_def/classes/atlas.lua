@@ -1,8 +1,8 @@
 ---@meta
 
 ---@class SMODS.Atlas: SMODS.GameObject
----@field px? number Width of individual sprites using this atlas. 
----@field py? number Height of individual sprite using this atlas. 
+---@field px? string|number Width of individual sprites using this atlas. 
+---@field py? string|number Height of individual sprite using this atlas. 
 ---@field path? string Name of the image file, including extension. 
 ---@field atlas_table? string Type of atlas. `ASSET_ATLAS`: non-animated sprites, `ANIMATION_ATLAS`: animated sprites, `ASSET_IMAGES`: anything else. 
 ---@field frames? number Number of frames in the animation. 

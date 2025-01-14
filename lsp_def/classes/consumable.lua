@@ -16,9 +16,9 @@
 ---@field inject? fun(self: table|SMODS.Consumable, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: table|SMODS.Consumable, key: string, obj: table, silent?: boolean): nil|SMODS.Consumable Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table|SMODS.Consumable, key: string): table|nil Returns an object if one matches the `key`. 
----@field use? fun(self: table|SMODS.Consumable, card: Card, area: CardArea, copier?: table) Defines behaviour when this consumable is used. 
----@field can_use? fun(self: table|SMODS.Consumable, card: Card): boolean Return `true` if the consumable is allowed to be used. 
----@field keep_on_use? fun(self: table|SMODS.Consumable, card: Card): boolean Return `true` if the consumable should stay after use. 
+---@field use? fun(self: table|SMODS.Consumable, card: table|Card, area: table|CardArea, copier?: table) Defines behaviour when this consumable is used. 
+---@field can_use? fun(self: table|SMODS.Consumable, card: table|Card): boolean Return `true` if the consumable is allowed to be used. 
+---@field keep_on_use? fun(self: table|SMODS.Consumable, card: table|Card): boolean Return `true` if the consumable should stay after use. 
 ---@overload fun(self: SMODS.Consumable): SMODS.Consumable
 SMODS.Consumable = setmetatable({}, {
     __call = function(self)

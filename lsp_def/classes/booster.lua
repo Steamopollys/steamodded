@@ -19,7 +19,7 @@
 ---@field inject? fun(self: table|SMODS.Booster, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: table|SMODS.Booster, key: string, obj: table, silent?: boolean): nil|SMODS.Booster Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table|SMODS.Booster, key: string): table|nil Returns an object if one matches the `key`. 
----@field create_card? fun(self: table|SMODS.Booster, card: Card, i: number): table|Card Creates the cards inside the booster pack. Returning a table will create a Card through `SMODS.create_card`. 
+---@field create_card? fun(self: table|SMODS.Booster, card: table|Card, i: number): table|Card Creates the cards inside the booster pack. Returning a table will create a Card through `SMODS.create_card`. 
 ---@field update_pack? fun(self: table|SMODS.Booster, dt: number) Handles booster pack UI when opened. 
 ---@field ease_background_colour? fun(self: table|SMODS.Booster) Changes background colour when booster pack is opened. 
 ---@field particles? fun(self: table|SMODS.Booster) Handles ambient particle effects when booster pack is opened. 

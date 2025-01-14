@@ -17,6 +17,7 @@
 ---@class AnimatedSprite: Sprite
 ---@class Blind: Moveable
 ---@class Card: Moveable
+---@field ability? table
 ---@class Card_Character: Moveable
 ---@class CardArea: Moveable
 

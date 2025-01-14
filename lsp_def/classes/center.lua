@@ -26,21 +26,21 @@
 ---@field take_ownership? fun(self: table|SMODS.Center, key: string, obj: table, silent?: boolean): nil|SMODS.Center Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table|SMODS.Center, key: string): table|nil Returns an object if one matches the `key`. 
 ---@field delete? fun(self: table|SMODS.Center): boolean? Removes provided center. 
----@field generate_ui? fun(self: table|SMODS.Center, info_queue: table, card: Card, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the card. 
----@field loc_vars? fun(self: table|SMODS.Center, info_queue: table, card: Card): table? Provides simple control over displaying descriptions and tooltips of the card. 
----@field locked_loc_vars? fun(self: table|SMODS.Center, info_queue: table, card: Card): table Provides simple control over displaying descriptions and toolips of this center when not unlocked. 
+---@field generate_ui? fun(self: table|SMODS.Center, info_queue: table, card: table|Card, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the card. 
+---@field loc_vars? fun(self: table|SMODS.Center, info_queue: table, card: table|Card): table? Provides simple control over displaying descriptions and tooltips of the card. 
+---@field locked_loc_vars? fun(self: table|SMODS.Center, info_queue: table, card: table|Card): table Provides simple control over displaying descriptions and toolips of this center when not unlocked. 
 ---@field check_for_unlock? fun(self: table|SMODS.Center, args: table): nil|boolean Configures unlock conditions. See vanilla implementation of `check_for_unlock` for details on `args` parameters. 
----@field set_badges? fun(self: table|SMODS.Center, card: Card, badges: table) Append `badges` for additional badges on the UI display of the card. To override the rarity/card type badge, see `SMODS.Center:set_card_type_badge()`. 
----@field set_card_type_badge? fun(self: table|SMODS.Center, card: Card, badges: table) Overrides the rarity/card type badges, allowing you to Append `badges` to replace them. To add extra badges, see `SMODS.Center:sset_badges()`. 
----@field draw? fun(self: table|SMODS.Center, card: Card, layer: string) Draws the sprite and shader of the card. 
----@field update? fun(self: table|SMODS.Center, card: Card, dt: number) Allows logic to be run per-frame. 
----@field set_sprites? fun(self: table|SMODS.Center, card: Card, front?: Card) Used for setting and manipulating sprites of the card when created or loaded. 
----@field load? fun(self: table|SMODS.Center, card: Card, card_table: table) Used when the card itself is being reloaded. 
----@field set_ability? fun(self: table|SMODS.Center, card: Card, initial?: boolean, delay_sprites?: boolean) Sets up initial ability and size parameters for the card. 
----@field add_to_deck? fun(self: table|SMODS.Center, card: Card, from_debuff: boolean) Allows modifying the game state when the card is being added. 
----@field remove_from_deck? fun(self: table|SMODS.Center, card: Card, from_debuff: boolean) Allows modifying the game state when the card is being removed. 
+---@field set_badges? fun(self: table|SMODS.Center, card: table|Card, badges: table) Append `badges` for additional badges on the UI display of the card. To override the rarity/card type badge, see `SMODS.Center:set_card_type_badge()`. 
+---@field set_card_type_badge? fun(self: table|SMODS.Center, card: table|Card, badges: table) Overrides the rarity/card type badges, allowing you to Append `badges` to replace them. To add extra badges, see `SMODS.Center:sset_badges()`. 
+---@field draw? fun(self: table|SMODS.Center, card: table|Card, layer: string) Draws the sprite and shader of the card. 
+---@field update? fun(self: table|SMODS.Center, card: table|Card, dt: number) Allows logic to be run per-frame. 
+---@field set_sprites? fun(self: table|SMODS.Center, card: table|Card, front?: table|Card) Used for setting and manipulating sprites of the card when created or loaded. 
+---@field load? fun(self: table|SMODS.Center, card: table|Card, card_table: table, other_card?: table) Used when the card itself is being reloaded. 
+---@field set_ability? fun(self: table|SMODS.Center, card: table|Card, initial?: boolean, delay_sprites?: boolean) Sets up initial ability and size parameters for the card. 
+---@field add_to_deck? fun(self: table|SMODS.Center, card: table|Card, from_debuff: boolean) Allows modifying the game state when the card is being added. 
+---@field remove_from_deck? fun(self: table|SMODS.Center, card: table|Card, from_debuff: boolean) Allows modifying the game state when the card is being removed. 
 ---@field in_pool? fun(self: table|SMODS.Center, args: table): boolean?, table? Allows configuring if the card is allowed to spawn. 
----@field calculate? fun(self: table|SMODS.Center, card: Card, context: table): table? Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
+---@field calculate? fun(self: table|SMODS.Center, card: table|Card, context: table): table?, boolean? Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@overload fun(self: SMODS.Center): SMODS.Center
 SMODS.Center = setmetatable({}, {
     __call = function(self)
