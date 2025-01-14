@@ -8,7 +8,7 @@
 ---@field subclasses? table Array of child classes. 
 ---@field super? table Parent class. 
 ---@field key? string Unique string to reference this object. 
----@field class_prefix? string All objects created with this class will have their key prefixed with this string. 
+---@field class_prefix? boolean|string All objects created with this class will have their key prefixed with this string. 
 ---@field prefix_config? boolean|table Controls how prefixes are applied. By default, class_prefix and mod_prefix are applied to all registered objects. 
 ---@field required_params? table Array of parameters required for objects created by this class. 
 ---@field set? string Important for objects wanting to follow vanilla logic that depends on `set`. For classes, this is used for logging purposes. 

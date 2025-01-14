@@ -17,6 +17,7 @@
 ---@field take_ownership? fun(self: table, key: string, obj: table, silent?: boolean): SMODS.Voucher Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table, key: string): table|nil Returns an object if one matches the `key`. 
 ---@field redeem? fun(self: table) Defines behaviour when this voucher is redeemed. 
+---@field new? fun(self, name, slug, config, pos, loc_txt, cost, unlocked, discovered, available, requires, atlas): any DEPRECATED. DO NOT USE
 ---@overload fun(self: SMODS.Voucher): SMODS.Voucher
 SMODS.Voucher = setmetatable({}, {
     __call = function(self)
