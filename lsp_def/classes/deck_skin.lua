@@ -1,49 +1,23 @@
 ---@meta
 
 ---@class SMODS.DeckSkin: SMODS.GameObject
+---@field __call? fun(self: SMODS.DeckSkin, o: SMODS.DeckSkin): SMODS.DeckSkin
+---@field extend? fun(self: SMODS.DeckSkin, o: SMODS.DeckSkin): table Primary method of creating a class. 
+---@field check_duplicate_register? fun(self: SMODS.DeckSkin, o: SMODS.DeckSkin): table
+---@field check_duplicate_key? fun(self: SMODS.DeckSkin): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field register? fun(self: SMODS.DeckSkin) Registers the object. 
+---@field check_dependencies? fun(self: SMODS.DeckSkin): boolean Returns true if there's no failed dependencies, else false
+---@field process_loc_text? fun(self: SMODS.DeckSkin) Called during `inject_class`. Handles injecting loc_text. 
+---@field send_to_subclasses? fun(self: SMODS.DeckSkin, ...: any): string Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field pre_inject_class? fun(self: SMODS.DeckSkin) Called before `inject_class`. Injects and manages class information before object injection. 
+---@field post_inject_class? fun(self: SMODS.DeckSkin) Called after `inject_class`. Injects and manages class information after object injection. 
+---@field inject_class? fun(self: SMODS.DeckSkin) Inject all direct instances of `o` of the class by calling `o:inject`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
+---@field inject? fun(self: SMODS.DeckSkin) Called during `inject_class`. Injects the object into the game. 
+---@field take_ownership? fun(self: SMODS.DeckSkin, key: string, obj: table, silent?: boolean): SMODS.DeckSkin Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.DeckSkin, key: string): table|nil Returns an object if one matches the `key`. 
 ---@overload fun(self: SMODS.DeckSkin): SMODS.DeckSkin
 SMODS.DeckSkin = setmetatable({}, {
     __call = function(self)
         return self
     end
 })
-
----@param self SMODS.DeckSkin Class to extend
----@param o SMODS.DeckSkin Class to create
----@return table o
----Primary method of creating a class. 
-function SMODS.DeckSkin:extend(o) return o end
-
----@param self SMODS.DeckSkin
----Registers the object. 
-function SMODS.DeckSkin:register() end
-
----@param self SMODS.DeckSkin
----Called during `inject_class`. Handles injecting loc_text. 
-function SMODS.DeckSkin:process_loc_text() end
-
----@param self SMODS.DeckSkin
----Called before `inject_class`. Injects and manages class information before object injection. 
-function SMODS.DeckSkin:pre_inject_class() end
-
----@param self SMODS.DeckSkin
----Called after `inject_class`. Injects and manages class information after object injection. 
-function SMODS.DeckSkin:post_inject_class() end
-
----@param self SMODS.DeckSkin
----Inject all direct instances of `o` of the class by calling `o:inject`. 
----Also injects anything necessary for the class itself. 
----Only called if class has defined both `obj_table` and `obj_buffer`. 
-function SMODS.DeckSkin:inject_class() end
-
----@param self SMODS.DeckSkin
----Called during `inject_class`. Injects the object into the game. 
-function SMODS.DeckSkin:inject() end
-
----@param self SMODS.DeckSkin
----@param key string
----@param obj table
----@param silent? boolean
----@return SMODS.DeckSkin obj
----Takes control of vanilla objects. Child class must have get_obj for this to function
-function SMODS.DeckSkin:take_ownership(key, obj, silent) return obj end

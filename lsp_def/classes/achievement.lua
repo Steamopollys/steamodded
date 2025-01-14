@@ -8,55 +8,24 @@
 ---@field bypass_all_unlocked? boolean Sets whether the achievement can be earned on profiles that pressed the "Unlock All" button. 
 ---@field hidden_name? boolean Sets if the name of the achievement is hidden when not earned. 
 ---@field hidden_text? boolean Sets if the description of the achievement is hidden when not earned. 
+---@field __call? fun(self: SMODS.Achievement, o: SMODS.Achievement): SMODS.Achievement
+---@field extend? fun(self: SMODS.Achievement, o: SMODS.Achievement): table Primary method of creating a class. 
+---@field check_duplicate_register? fun(self: SMODS.Achievement, o: SMODS.Achievement): table
+---@field check_duplicate_key? fun(self: SMODS.Achievement): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field register? fun(self: SMODS.Achievement) Registers the object. 
+---@field check_dependencies? fun(self: SMODS.Achievement): boolean Returns true if there's no failed dependencies, else false
+---@field process_loc_text? fun(self: SMODS.Achievement) Called during `inject_class`. Handles injecting loc_text. 
+---@field send_to_subclasses? fun(self: SMODS.Achievement, ...: any): string Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field pre_inject_class? fun(self: SMODS.Achievement) Called before `inject_class`. Injects and manages class information before object injection. 
+---@field post_inject_class? fun(self: SMODS.Achievement) Called after `inject_class`. Injects and manages class information after object injection. 
+---@field inject_class? fun(self: SMODS.Achievement) Inject all direct instances of `o` of the class by calling `o:inject`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
+---@field inject? fun(self: SMODS.Achievement) Called during `inject_class`. Injects the object into the game. 
+---@field take_ownership? fun(self: SMODS.Achievement, key: string, obj: table, silent?: boolean): SMODS.Achievement Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Achievement, key: string): table|nil Returns an object if one matches the `key`. 
+---@field unlock_condition? fun(self: SMODS.Achievement, args: table): nil|boolean Controls when the achievement is unlocked. 
 ---@overload fun(self: SMODS.Achievement): SMODS.Achievement
 SMODS.Achievement = setmetatable({}, {
     __call = function(self)
         return self
     end
 })
-
----@param self SMODS.Achievement Class to extend
----@param o SMODS.Achievement Class to create
----@return table o
----Primary method of creating a class. 
-function SMODS.Achievement:extend(o) return o end
-
----@param self SMODS.Achievement
----Registers the object. 
-function SMODS.Achievement:register() end
-
----@param self SMODS.Achievement
----Called during `inject_class`. Handles injecting loc_text. 
-function SMODS.Achievement:process_loc_text() end
-
----@param self SMODS.Achievement
----Called before `inject_class`. Injects and manages class information before object injection. 
-function SMODS.Achievement:pre_inject_class() end
-
----@param self SMODS.Achievement
----Called after `inject_class`. Injects and manages class information after object injection. 
-function SMODS.Achievement:post_inject_class() end
-
----@param self SMODS.Achievement
----Inject all direct instances of `o` of the class by calling `o:inject`. 
----Also injects anything necessary for the class itself. 
----Only called if class has defined both `obj_table` and `obj_buffer`. 
-function SMODS.Achievement:inject_class() end
-
----@param self SMODS.Achievement
----Called during `inject_class`. Injects the object into the game. 
-function SMODS.Achievement:inject() end
-
----@param self SMODS.Achievement
----@param key string
----@param obj table
----@param silent? boolean
----@return SMODS.Achievement obj
----Takes control of vanilla objects. Child class must have get_obj for this to function
-function SMODS.Achievement:take_ownership(key, obj, silent) return obj end
-
----@param self SMODS.Achievement
----@param args table See vanilla `check_for_unlock` function for pre-built args. 
----@return nil|boolean # `true` = achievemnt unlocked. 
----Controls when the achievement is unlocked. 
-function SMODS.Achievement:unlock_condition(args) end

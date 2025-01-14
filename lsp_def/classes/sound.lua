@@ -6,74 +6,28 @@
 ---@field volume? number Volume for music tracks. 
 ---@field replace? string|table Replaces specific sound with this sound whenever played. Behaves like `SMODS.Sound:create_replace_sound()`. 
 ---@field sync? false|table Configured syncing for music tracks. Setting to `false` prevents the music track from syncing with anything. 
+---@field __call? fun(self: SMODS.Sound, o: SMODS.Sound): SMODS.Sound
+---@field extend? fun(self: SMODS.Sound, o: SMODS.Sound): table Primary method of creating a class. 
+---@field check_duplicate_register? fun(self: SMODS.Sound, o: SMODS.Sound): table
+---@field check_duplicate_key? fun(self: SMODS.Sound): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field register? fun(self: SMODS.Sound) Registers the object. 
+---@field check_dependencies? fun(self: SMODS.Sound): boolean Returns true if there's no failed dependencies, else false
+---@field process_loc_text? fun(self: SMODS.Sound) Called during `inject_class`. Handles injecting loc_text. 
+---@field send_to_subclasses? fun(self: SMODS.Sound, ...: any): string Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field pre_inject_class? fun(self: SMODS.Sound) Called before `inject_class`. Injects and manages class information before object injection. 
+---@field post_inject_class? fun(self: SMODS.Sound) Called after `inject_class`. Injects and manages class information after object injection. 
+---@field inject_class? fun(self: SMODS.Sound) Inject all direct instances of `o` of the class by calling `o:inject`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
+---@field inject? fun(self: SMODS.Sound) Called during `inject_class`. Injects the object into the game. 
+---@field take_ownership? fun(self: SMODS.Sound, key: string, obj: table, silent?: boolean): SMODS.Sound Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Sound, key: string): table|nil Returns an object if one matches the `key`. 
+---@field select_music_track? fun(self: SMODS.Sound): nil|number Called each frame. Determines what music track to play. Music track with the highest number is played. 
+---@field create_replace_sound? fun(self: SMODS.Sound, replace: string|table) Replaces another sound with this one. 
+---@field create_stop_sound? fun(self: SMODS.Sound, key: string, times: nil|number) Supress sounds with the given sound code `times` amount of times or indefinitely. 
+---@field register_global? fun(self: SMODS.Sound) Registers all sound files of the current mod. 
+---@field get_current_music? fun(self: SMODS.Sound): nil|string Polls `SMODS.Sound:select_music_track` and returns the key to the music to play.
 ---@overload fun(self: SMODS.Sound): SMODS.Sound
 SMODS.Sound = setmetatable({}, {
     __call = function(self)
         return self
     end
 })
-
----@param self SMODS.Sound Class to extend
----@param o SMODS.Sound Class to create
----@return table o
----Primary method of creating a class. 
-function SMODS.Sound:extend(o) return o end
-
----@param self SMODS.Sound
----Registers the object. 
-function SMODS.Sound:register() end
-
----@param self SMODS.Sound
----Called during `inject_class`. Handles injecting loc_text. 
-function SMODS.Sound:process_loc_text() end
-
----@param self SMODS.Sound
----Called before `inject_class`. Injects and manages class information before object injection. 
-function SMODS.Sound:pre_inject_class() end
-
----@param self SMODS.Sound
----Called after `inject_class`. Injects and manages class information after object injection. 
-function SMODS.Sound:post_inject_class() end
-
----@param self SMODS.Sound
----Inject all direct instances of `o` of the class by calling `o:inject`. 
----Also injects anything necessary for the class itself. 
----Only called if class has defined both `obj_table` and `obj_buffer`. 
-function SMODS.Sound:inject_class() end
-
----@param self SMODS.Sound
----Called during `inject_class`. Injects the object into the game. 
-function SMODS.Sound:inject() end
-
----@param self SMODS.Sound
----@param key string
----@param obj table
----@param silent? boolean
----@return SMODS.Sound obj
----Takes control of vanilla objects. Child class must have get_obj for this to function
-function SMODS.Sound:take_ownership(key, obj, silent) return obj end
-
----@param self SMODS.Sound
----@return nil|number # Returning any truthy value will be converted to 0. 
----Called each frame. Determines what music track to play. Music track with the highest number is played. 
-function SMODS.Sound:select_music_track() end
-
----@param self SMODS.Sound
----@param replace string|table If string, indefinitely replace the sound. If table, the sound key is in `replace.key`, total times to replace in `replace.times`, and extra args in `replace.args`. 
----Replaces another sound with this one. 
-function SMODS.Sound:create_replace_sound(replace) end
-
----@param self SMODS.Sound
----@param key string
----@param times nil|number
----Supress sounds with the given sound code `times` amount of times or indefinitely. 
-function SMODS.Sound:create_stop_sound(key, times) end
-
----@param self SMODS.Sound
----Registers all sound files of the current mod. 
-function SMODS.Sound:registr_global() end
-
----@param self SMODS.Sound
----@return nil|string
----Polls `SMODS.Sound:select_music_track` and returns the key to the music to play.
-function SMODS.Sound:get_current_music() end

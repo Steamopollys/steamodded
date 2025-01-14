@@ -3,56 +3,24 @@
 ---@class SMODS.Shader: SMODS.GameObject
 ---@field key? string Unique string to reference this object. This, `path`, and shader name in the GLSL must be the same.
 ---@field path? string Name of the shader file. This, `key`, and shader name in the GLSL must be the same. 
+---@field __call? fun(self: SMODS.Shader, o: SMODS.Shader): SMODS.Shader
+---@field extend? fun(self: SMODS.Shader, o: SMODS.Shader): table Primary method of creating a class. 
+---@field check_duplicate_register? fun(self: SMODS.Shader, o: SMODS.Shader): table
+---@field check_duplicate_key? fun(self: SMODS.Shader): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field register? fun(self: SMODS.Shader) Registers the object. 
+---@field check_dependencies? fun(self: SMODS.Shader): boolean Returns true if there's no failed dependencies, else false
+---@field process_loc_text? fun(self: SMODS.Shader) Called during `inject_class`. Handles injecting loc_text. 
+---@field send_to_subclasses? fun(self: SMODS.Shader, ...: any): string Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field pre_inject_class? fun(self: SMODS.Shader) Called before `inject_class`. Injects and manages class information before object injection. 
+---@field post_inject_class? fun(self: SMODS.Shader) Called after `inject_class`. Injects and manages class information after object injection. 
+---@field inject_class? fun(self: SMODS.Shader) Inject all direct instances of `o` of the class by calling `o:inject`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
+---@field inject? fun(self: SMODS.Shader) Called during `inject_class`. Injects the object into the game. 
+---@field take_ownership? fun(self: SMODS.Shader, key: string, obj: table, silent?: boolean): SMODS.Shader Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Shader, key: string): table|nil Returns an object if one matches the `key`. 
+---@field send_vars? fun(self: SMODS.Shader, sprite: Sprite, card: nil|Card): table? Used to send extra args to the shader via `Shader:send(key, value)`. 
 ---@overload fun(self: SMODS.Shader): SMODS.Shader
 SMODS.Shader = setmetatable({}, {
     __call = function(self)
         return self
     end
 })
-
----@param self SMODS.Shader Class to extend
----@param o SMODS.Shader Class to create
----@return table o
----Primary method of creating a class. 
-function SMODS.Shader:extend(o) return o end
-
----@param self SMODS.Shader
----Registers the object. 
-function SMODS.Shader:register() end
-
----@param self SMODS.Shader
----Called during `inject_class`. Handles injecting loc_text. 
-function SMODS.Shader:process_loc_text() end
-
----@param self SMODS.Shader
----Called before `inject_class`. Injects and manages class information before object injection. 
-function SMODS.Shader:pre_inject_class() end
-
----@param self SMODS.Shader
----Called after `inject_class`. Injects and manages class information after object injection. 
-function SMODS.Shader:post_inject_class() end
-
----@param self SMODS.Shader
----Inject all direct instances of `o` of the class by calling `o:inject`. 
----Also injects anything necessary for the class itself. 
----Only called if class has defined both `obj_table` and `obj_buffer`. 
-function SMODS.Shader:inject_class() end
-
----@param self SMODS.Shader
----Called during `inject_class`. Injects the object into the game. 
-function SMODS.Shader:inject() end
-
----@param self SMODS.Shader
----@param key string
----@param obj table
----@param silent? boolean
----@return SMODS.Shader obj
----Takes control of vanilla objects. Child class must have get_obj for this to function
-function SMODS.Shader:take_ownership(key, obj, silent) return obj end
-
----@param self SMODS.Shader
----@param sprite Sprite
----@param card nil|Card `nil` if shader is not applied to the card. 
----@return table 
----Used to send extra args to the shader via `Shader:send(key, value)`. 
-function SMODS.Shader:send_vars(sprite, card) end

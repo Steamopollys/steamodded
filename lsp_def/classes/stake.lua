@@ -1,55 +1,23 @@
 ---@meta
 
 ---@class SMODS.Stake: SMODS.GameObject
+---@field __call? fun(self: SMODS.Stake, o: SMODS.Stake): SMODS.Stake
+---@field extend? fun(self: SMODS.Stake, o: SMODS.Stake): table Primary method of creating a class. 
+---@field check_duplicate_register? fun(self: SMODS.Stake, o: SMODS.Stake): table
+---@field check_duplicate_key? fun(self: SMODS.Stake): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field register? fun(self: SMODS.Stake) Registers the object. 
+---@field check_dependencies? fun(self: SMODS.Stake): boolean Returns true if there's no failed dependencies, else false
+---@field process_loc_text? fun(self: SMODS.Stake) Called during `inject_class`. Handles injecting loc_text. 
+---@field send_to_subclasses? fun(self: SMODS.Stake, ...: any): string Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field pre_inject_class? fun(self: SMODS.Stake) Called before `inject_class`. Injects and manages class information before object injection. 
+---@field post_inject_class? fun(self: SMODS.Stake) Called after `inject_class`. Injects and manages class information after object injection. 
+---@field inject_class? fun(self: SMODS.Stake) Inject all direct instances of `o` of the class by calling `o:inject`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
+---@field inject? fun(self: SMODS.Stake) Called during `inject_class`. Injects the object into the game. 
+---@field take_ownership? fun(self: SMODS.Stake, key: string, obj: table, silent?: boolean): SMODS.Stake Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Stake, key: string): table|nil Returns an object if one matches the `key`. 
 ---@overload fun(self: SMODS.Stake): SMODS.Stake
 SMODS.Stake = setmetatable({}, {
     __call = function(self)
         return self
     end
 })
-
----@param self SMODS.Stake Class to extend
----@param o SMODS.Stake Class to create
----@return table o
----Primary method of creating a class. 
-function SMODS.Stake:extend(o) return o end
-
----@param self SMODS.Stake
----Registers the object. 
-function SMODS.Stake:register() end
-
----@param self SMODS.Stake
----Called during `inject_class`. Handles injecting loc_text. 
-function SMODS.Stake:process_loc_text() end
-
----@param self SMODS.Stake
----Called before `inject_class`. Injects and manages class information before object injection. 
-function SMODS.Stake:pre_inject_class() end
-
----@param self SMODS.Stake
----Called after `inject_class`. Injects and manages class information after object injection. 
-function SMODS.Stake:post_inject_class() end
-
----@param self SMODS.Stake
----Inject all direct instances of `o` of the class by calling `o:inject`. 
----Also injects anything necessary for the class itself. 
----Only called if class has defined both `obj_table` and `obj_buffer`. 
-function SMODS.Stake:inject_class() end
-
----@param self SMODS.Stake
----Called during `inject_class`. Injects the object into the game. 
-function SMODS.Stake:inject() end
-
----@param self SMODS.Stake
----@param key string
----@param obj table
----@param silent? boolean
----@return SMODS.Stake obj
----Takes control of vanilla objects. Child class must have get_obj for this to function
-function SMODS.Stake:take_ownership(key, obj, silent) return obj end
-
----@param self SMODS.Stake
----@param key string
----@return table|nil table
----Returns an object if one matches the `key`. 
-function SMODS.Stake:get_obj(key) end

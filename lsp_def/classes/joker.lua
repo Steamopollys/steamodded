@@ -3,55 +3,24 @@
 ---@class SMODS.Joker: SMODS.Center
 ---@field eternal_compat? boolean Sets whether the Joker can have Eternal sticker. 
 ---@field perishable_compat? boolean Sets whether the Joker can have Perishable sticker. 
+---@field __call? fun(self: SMODS.Joker, o: SMODS.Joker): SMODS.Joker
+---@field extend? fun(self: SMODS.Joker, o: SMODS.Joker): table Primary method of creating a class. 
+---@field check_duplicate_register? fun(self: SMODS.Joker, o: SMODS.Joker): table
+---@field check_duplicate_key? fun(self: SMODS.Joker): boolean Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field register? fun(self: SMODS.Joker) Registers the object. 
+---@field check_dependencies? fun(self: SMODS.Joker): boolean Returns true if there's no failed dependencies, else false
+---@field process_loc_text? fun(self: SMODS.Joker) Called during `inject_class`. Handles injecting loc_text. 
+---@field send_to_subclasses? fun(self: SMODS.Joker, ...: any): string Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field pre_inject_class? fun(self: SMODS.Joker) Called before `inject_class`. Injects and manages class information before object injection. 
+---@field post_inject_class? fun(self: SMODS.Joker) Called after `inject_class`. Injects and manages class information after object injection. 
+---@field inject_class? fun(self: SMODS.Joker) Inject all direct instances of `o` of the class by calling `o:inject`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
+---@field inject? fun(self: SMODS.Joker) Called during `inject_class`. Injects the object into the game. 
+---@field take_ownership? fun(self: SMODS.Joker, key: string, obj: table, silent?: boolean): SMODS.Joker Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Joker, key: string): table|nil Returns an object if one matches the `key`. 
+---@field calc_dollar_bonus? fun(self: SMODS.Joker, card: Card): nil|number Calculates reward money. 
 ---@overload fun(self: SMODS.Joker): SMODS.Joker
 SMODS.Joker = setmetatable({}, {
     __call = function(self)
         return self
     end
 })
-
----@param self SMODS.Joker Class to extend
----@param o SMODS.Joker Class to create
----@return table o
----Primary method of creating a class. 
-function SMODS.Joker:extend(o) return o end
-
----@param self SMODS.Joker
----Registers the object. 
-function SMODS.Joker:register() end
-
----@param self SMODS.Joker
----Called during `inject_class`. Handles injecting loc_text. 
-function SMODS.Joker:process_loc_text() end
-
----@param self SMODS.Joker
----Called before `inject_class`. Injects and manages class information before object injection. 
-function SMODS.Joker:pre_inject_class() end
-
----@param self SMODS.Joker
----Called after `inject_class`. Injects and manages class information after object injection. 
-function SMODS.Joker:post_inject_class() end
-
----@param self SMODS.Joker
----Inject all direct instances of `o` of the class by calling `o:inject`. 
----Also injects anything necessary for the class itself. 
----Only called if class has defined both `obj_table` and `obj_buffer`. 
-function SMODS.Joker:inject_class() end
-
----@param self SMODS.Joker
----Called during `inject_class`. Injects the object into the game. 
-function SMODS.Joker:inject() end
-
----@param self SMODS.Joker
----@param key string
----@param obj table
----@param silent? boolean
----@return SMODS.Joker obj
----Takes control of vanilla objects. Child class must have get_obj for this to function
-function SMODS.Joker:take_ownership(key, obj, silent) return obj end
-
----@param self SMODS.Center
----@param card Card
----@return number
----Calculates reward money. 
-function SMODS.Joker:calc_dollar_bonus(card) end
