@@ -21,7 +21,7 @@
 ---@field get_weight? fun(self: table, weight: number, object_type: SMODS.ObjectType): number Used for finer control over this rarity's weight. 
 ---@field gradient? fun(self: table, dt: number) Used to make a gradient for this rarity's `badge_colour`. 
 ---@field get_rarity_badge? fun(self: table, rarity: string): string Returns loclaized rarity key. 
----@overload fun(self: table): SMODS.Rarity
+---@overload fun(self: SMODS.Rarity): SMODS.Rarity
 SMODS.Rarity = setmetatable({}, {
     __call = function(self)
         return self
