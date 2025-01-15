@@ -6,7 +6,7 @@
 ---@field collection_rows? table Array of numbers indicating how many rows and how many cards per row this ConsumableType's collection has. 
 ---@field shop_rate? nil|number Defining this value allows cards part of this ConsumableType to appear in the shop. Defined as `G.GAME[key:lower()..'_rate']`.  
 ---@field ctype_buffer? table Array of keys to all objects registered to the ConsumableType class. 
----@field __call? fun(self: table|SMODS.ConsumableType, o: table|SMODS.ConsumableType): SMODS.ConsumableType
+---@field __call? fun(self: table|SMODS.ConsumableType, o: table|SMODS.ConsumableType): nil|SMODS.ConsumableType
 ---@field extend? fun(self: table|SMODS.ConsumableType, o: table|SMODS.ConsumableType): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.ConsumableType): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.ConsumableType): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

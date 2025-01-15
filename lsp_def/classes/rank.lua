@@ -1,7 +1,7 @@
 ---@meta
 
 ---@class SMODS.Rank: SMODS.GameObject
----@field __call? fun(self: table|SMODS.Rank, o: table|SMODS.Rank): SMODS.Rank
+---@field __call? fun(self: table|SMODS.Rank, o: table|SMODS.Rank): nil|SMODS.Rank
 ---@field extend? fun(self: table|SMODS.Rank, o: table|SMODS.Rank): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Rank): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.Rank): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

@@ -9,7 +9,7 @@
 ---@field raw_key? boolean Sets whether the mod prefix is added to atlas key. Used for overriding vanilla sprites. 
 ---@field language? string Key to a language. Restricts the atlas to only when this language is enabled. 
 ---@field disable_mipmap? boolean Sets if the sprite is affected by the mipmap. 
----@field __call? fun(self: table|SMODS.Atlas, o: table|SMODS.Atlas): SMODS.Atlas
+---@field __call? fun(self: table|SMODS.Atlas, o: table|SMODS.Atlas): nil|SMODS.Atlas
 ---@field extend? fun(self: table|SMODS.Atlas, o: table|SMODS.Atlas): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Atlas): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.Atlas): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

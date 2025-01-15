@@ -4,7 +4,7 @@
 ---@field pools? table Table with a list of ObjectTypes keys this rarity should be added to.
 ---@field badge_colour? table HEX color the rarity badge uses. 
 ---@field default_weight? number Default weight of the rarity. When referenced in ObjectTypes with just the key, this value is used as the default. 
----@field __call? fun(self: table|SMODS.Rarity, o: table|SMODS.Rarity): SMODS.Rarity
+---@field __call? fun(self: table|SMODS.Rarity, o: table|SMODS.Rarity): nil|SMODS.Rarity
 ---@field extend? fun(self: table|SMODS.Rarity, o: table|SMODS.Rarity): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Rarity): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.Rarity): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

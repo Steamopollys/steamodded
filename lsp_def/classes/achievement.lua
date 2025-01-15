@@ -8,7 +8,7 @@
 ---@field bypass_all_unlocked? boolean Sets whether the achievement can be earned on profiles that pressed the "Unlock All" button. 
 ---@field hidden_name? boolean Sets if the name of the achievement is hidden when not earned. 
 ---@field hidden_text? boolean Sets if the description of the achievement is hidden when not earned. 
----@field __call? fun(self: table|SMODS.Achievement, o: table|SMODS.Achievement): SMODS.Achievement
+---@field __call? fun(self: table|SMODS.Achievement, o: table|SMODS.Achievement): nil|SMODS.Achievement
 ---@field extend? fun(self: table|SMODS.Achievement, o: table|SMODS.Achievement): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Achievement): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.Achievement): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

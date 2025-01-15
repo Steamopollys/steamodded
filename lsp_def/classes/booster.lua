@@ -5,7 +5,7 @@
 ---@field draw_hand? boolean Sets if playing cards are drawn when booster pack is opened. 
 ---@field kind? string Groups pack types together. For example, this can be used in `get_pack()` to generate a booster pack of a specific type. 
 ---@field weight? number Weight of the booster pack. 
----@field __call? fun(self: table|SMODS.Booster, o: table|SMODS.Booster): SMODS.Booster
+---@field __call? fun(self: table|SMODS.Booster, o: table|SMODS.Booster): nil|SMODS.Booster
 ---@field extend? fun(self: table|SMODS.Booster, o: table|SMODS.Booster): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Booster): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.Booster): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

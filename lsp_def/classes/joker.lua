@@ -3,7 +3,7 @@
 ---@class SMODS.Joker: SMODS.Center
 ---@field eternal_compat? boolean Sets whether the Joker can have Eternal sticker. 
 ---@field perishable_compat? boolean Sets whether the Joker can have Perishable sticker. 
----@field __call? fun(self: table|SMODS.Joker, o: table|SMODS.Joker): SMODS.Joker
+---@field __call? fun(self: table|SMODS.Joker, o: table|SMODS.Joker): nil|SMODS.Joker
 ---@field extend? fun(self: table|SMODS.Joker, o: table|SMODS.Joker): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Joker): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.Joker): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

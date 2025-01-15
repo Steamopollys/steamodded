@@ -6,7 +6,7 @@
 ---@field volume? number Volume for music tracks. 
 ---@field replace? string|table Replaces specific sound with this sound whenever played. Behaves like `SMODS.Sound:create_replace_sound()`. 
 ---@field sync? false|table Configured syncing for music tracks. Setting to `false` prevents the music track from syncing with anything. 
----@field __call? fun(self: table|SMODS.Sound, o: table|SMODS.Sound): SMODS.Sound
+---@field __call? fun(self: table|SMODS.Sound, o: table|SMODS.Sound): nil|SMODS.Sound
 ---@field extend? fun(self: table|SMODS.Sound, o: table|SMODS.Sound): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Sound): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.Sound): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

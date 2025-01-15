@@ -14,9 +14,9 @@
 ---@field prefix_config? boolean|table Controls how prefixes are applied. By default, class_prefix and mod_prefix are applied to all registered objects. 
 ---@field required_params? table Array of parameters required for objects created by this class. 
 ---@field set? string Important for objects wanting to follow vanilla logic that depends on `set`. For classes, this is used for logging purposes. 
----@field no_collection? boolean Sets whether the object shows up in collections. ---@overload fun(self: SMODS.GameObject): SMODS.GameObject
+---@field no_collection? boolean Sets whether the object shows up in collections.
 ---@field config? table Cards/Objects representing your center will copy default values from `config` into it's `ability` table. Custom values can be stored within `extra`. 
----@field __call? fun(self: table|SMODS.GameObject, o: table|SMODS.GameObject): SMODS.GameObject
+---@field __call? fun(self: table|SMODS.GameObject, o: table|SMODS.GameObject): nil|SMODS.GameObject
 ---@field extend? fun(self: table|SMODS.GameObject, o: table|SMODS.GameObject): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.GameObject): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.GameObject): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

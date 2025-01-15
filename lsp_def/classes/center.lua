@@ -7,11 +7,11 @@
 ---@field discovered? boolean Sets the discovery state of the center. 
 ---@field no_collection? boolean Sets whether the card shows up in the collections menu. 
 ---@field loc_txt? table Contains data used for displaying text related to this object. See SMODS documentation for the class on format. 
----@field pools? table Array of keys to ObjectType pools this center will be added to.---@overload fun(self: SMODS.Center): SMODS.Center
+---@field pools? table Array of keys to ObjectType pools this center will be added to.
 ---@field cost? number Sell cost of this center. 
 ---@field no_pool_flag? string Key to a pool flag defined in `G.GAME.pool_flags`. This center is removed from it's pool as long as this flag is `true`. 
 ---@field yes_pool_flag? string Key to the pool flag defined in `G.GAME.pool_flags`. This center is removed from it's pool as long as this flag is `false`. 
----@field __call? fun(self: table|SMODS.Center, o: table|SMODS.Center): SMODS.Center
+---@field __call? fun(self: table|SMODS.Center, o: table|SMODS.Center): nil|SMODS.Center
 ---@field extend? fun(self: table|SMODS.Center, o: table|SMODS.Center): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Center): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.Center): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

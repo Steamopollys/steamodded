@@ -5,7 +5,7 @@
 ---@field pos? table Position of the center's sprite. 
 ---@field min_ante? number Minimum ante needed for this tag to appear. For more complex restrictions, use `SMODS.Tag:in_pool()`. 
 ---@field discovered? boolean Sets the discovery state of the tag. 
----@field __call? fun(self: table|SMODS.Tag, o: table|SMODS.Tag): SMODS.Tag
+---@field __call? fun(self: table|SMODS.Tag, o: table|SMODS.Tag): nil|SMODS.Tag
 ---@field extend? fun(self: table|SMODS.Tag, o: table|SMODS.Tag): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Tag): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.Tag): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

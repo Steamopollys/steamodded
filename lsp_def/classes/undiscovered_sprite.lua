@@ -7,7 +7,7 @@
 ---@field lc_atlas? string Low constrast atlas. Used when `G.SETTINGS.colourblind_option` is `false`. 
 ---@field hc_atlas? string High contrast atlas. Used when `G.SETTINGS.colourblind_option` is `true`.
 ---@field no_overlay? boolean Sets whether the floating "?" is drawn or not. 
----@field __call? fun(self: table|SMODS.UndiscoveredSprite, o: table|SMODS.UndiscoveredSprite): SMODS.UndiscoveredSprite
+---@field __call? fun(self: table|SMODS.UndiscoveredSprite, o: table|SMODS.UndiscoveredSprite): nil|SMODS.UndiscoveredSprite
 ---@field extend? fun(self: table|SMODS.UndiscoveredSprite, o: table|SMODS.UndiscoveredSprite): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.UndiscoveredSprite): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.UndiscoveredSprite): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

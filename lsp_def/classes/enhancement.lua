@@ -1,7 +1,7 @@
 ---@meta
 
 ---@class SMODS.Enhancement: SMODS.Center
----@field __call? fun(self: table|SMODS.Enhancement, o: table|SMODS.Enhancement): SMODS.Enhancement
+---@field __call? fun(self: table|SMODS.Enhancement, o: table|SMODS.Enhancement): nil|SMODS.Enhancement
 ---@field extend? fun(self: table|SMODS.Enhancement, o: table|SMODS.Enhancement): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Enhancement): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.Enhancement): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 

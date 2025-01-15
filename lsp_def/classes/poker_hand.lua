@@ -1,7 +1,7 @@
 ---@meta
 
 ---@class SMODS.PokerHand: SMODS.GameObject
----@field __call? fun(self: table|SMODS.PokerHand, o: table|SMODS.PokerHand): SMODS.PokerHand
+---@field __call? fun(self: table|SMODS.PokerHand, o: table|SMODS.PokerHand): nil|SMODS.PokerHand
 ---@field extend? fun(self: table|SMODS.PokerHand, o: table|SMODS.PokerHand): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.PokerHand): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.PokerHand): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
@@ -23,7 +23,7 @@ SMODS.PokerHand = setmetatable({}, {
 })
 
 ---@class SMODS.PokerHandPart: SMODS.GameObject
----@field __call? fun(self: table|SMODS.PokerHandPart, o: table|SMODS.PokerHandPart): SMODS.PokerHandPart
+---@field __call? fun(self: table|SMODS.PokerHandPart, o: table|SMODS.PokerHandPart): nil|SMODS.PokerHandPart
 ---@field extend? fun(self: table|SMODS.PokerHandPart, o: table|SMODS.PokerHandPart): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.PokerHandPart): nil|boolean?Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: table|SMODS.PokerHandPart): nil|boolean?Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
