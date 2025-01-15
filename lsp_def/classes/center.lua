@@ -40,7 +40,7 @@
 ---@field add_to_deck? fun(self: table|SMODS.Center, card: table|Card, from_debuff: boolean) Allows modifying the game state when the card is being added. 
 ---@field remove_from_deck? fun(self: table|SMODS.Center, card: table|Card, from_debuff: boolean) Allows modifying the game state when the card is being removed. 
 ---@field in_pool? fun(self: table|SMODS.Center, args: table): nil|boolean?, table? Allows configuring if the card is allowed to spawn. 
----@field calculate? fun(self: table|SMODS.Center, card: table|Card, context: table): table?, boolean? Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
+---@field calculate? fun(self: table|SMODS.Center, card: table|Card, context: table): nil|table?, nil|boolean? Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@overload fun(self: SMODS.Center): SMODS.Center
 SMODS.Center = setmetatable({}, {
     __call = function(self)

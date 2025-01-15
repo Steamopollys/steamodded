@@ -22,7 +22,7 @@
 ---@field take_ownership? fun(self: table|SMODS.Seal, key: string, obj: table, silent?: boolean): nil|SMODS.Seal Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table|SMODS.Seal, key: string): table|nil Returns an object if one matches the `key`. 
 ---@field loc_vars? fun(self: table|SMODS.Seal, info_queue: table, card: table|Card): table? Provides control over displaying the tooltip of this seal. 
----@field calculate? fun(self: table|SMODS.Seal, card: table|Card, context: table): table?, boolean? Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
+---@field calculate? fun(self: table|SMODS.Seal, card: table|Card, context: table): nil|table?, nil|boolean? Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@field get_p_dollars? fun(self: table|SMODS.Seal, card: table|Card): number? Gives money when a card with this seal is played. 
 ---@field draw? fun(self: table|SMODS.Seal, card: table|Card, layer: string) Draws the sprite and shader of the seal. 
 ---@field update? fun(self: table|SMODS.Seal, card: table|Card, dt: number) Called every frame. 

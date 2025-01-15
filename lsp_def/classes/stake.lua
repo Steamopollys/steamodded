@@ -1,6 +1,14 @@
 ---@meta
 
 ---@class SMODS.Stake: SMODS.GameObject
+---@field applied_stakes? table Array of keys to stakes that should be applied when this stake is active. 
+---@field atlas? string Key to the center's atlas. 
+---@field pos? table Position of the center's sprite. 
+---@field sticker_atlas? string Atlas for stake's win sticker. 
+---@field sticker_pos? table Position of the stake's win sticker sprite. 
+---@field above_stake? string Key to the stake that this stake appeard above in the run menu. By default, stakes are added on top of the last injected stake. 
+---@field colour? table HEX color of the stake in the stake selection menu. 
+---@field unlocked? boolean Sets if the stake is unlocked by default. 
 ---@field __call? fun(self: table|SMODS.Stake, o: table|SMODS.Stake): nil|SMODS.Stake
 ---@field extend? fun(self: table|SMODS.Stake, o: table|SMODS.Stake): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: table|SMODS.Stake): nil|boolean?Ensures objects already registered will not register. 
@@ -15,9 +23,25 @@
 ---@field inject? fun(self: table|SMODS.Stake, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: table|SMODS.Stake, key: string, obj: table, silent?: boolean): nil|SMODS.Stake Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: table|SMODS.Stake, key: string): table|nil Returns an object if one matches the `key`. 
+---@field modifiers? fun() Applies changes to the game state when this stake is applied at the start of a run. 
 ---@overload fun(self: SMODS.Stake): SMODS.Stake
 SMODS.Stake = setmetatable({}, {
     __call = function(self)
         return self
     end
 })
+
+---@param stake table|SMODS.Stake
+---@param applied nil|table
+---@return nil|table applied
+---Builds the stake chain. 
+function SMODS.build_stake_chain(stake, applied) end
+
+---@param i number 
+---Sets up stakes after deck select, calls `SMODS.Stake.modifier()` on all applied stakes. 
+function SMODS.setup_stake(i) end
+
+---@param index number
+---@return number|string
+---Given an index from the Stake pool, return corresponding key or `"error"` if it doesn't exist
+function SMODS.stake_from_index(index) end
