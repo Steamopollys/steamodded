@@ -62,7 +62,42 @@ return {
                     'This mod has been',
                     '{C:attention}disabled!{}'
                 }
-            }
+            },
+            card_extra_mult = {
+                text = {
+                    "{C:mult}+#1#{} extra Mult",
+                },
+            },
+            card_extra_x_mult = {
+                text = {
+                    "{X:mult,C:white}X#1#{} extra Mult",
+                },
+            },
+            card_extra_p_dollars = {
+                text = {
+                    "{C:money}$#1#{} when scored",
+                },
+            },
+            card_extra_h_chips = {
+                text = {
+                    "{C:chips}+#1#{} chips when held",
+                },
+            },
+            card_extra_h_mult = {
+                text = {
+                    "{C:mult}+#1#{} Mult when held",
+                },
+            },
+            card_extra_h_x_mult = {
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult when held",
+                },
+            },
+            card_extra_h_dollars = {
+                text = {
+                    "{C:money}$#1#{} if held at end of round",
+                },
+            },
         },
         Edition = {
             e_negative_playing_card = {

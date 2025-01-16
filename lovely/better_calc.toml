@@ -270,6 +270,11 @@ position = "at"
 payload = """
 if context.cardarea == G.hand and context.main_scoring then
     ret.playing_card = {}
+    local h_chips = card:get_chip_h_bonus()
+    if h_chips ~= 0 then
+        ret.playing_card.h_chips = h_chips
+    end
+
     local h_mult = card:get_chip_h_mult()
     if h_mult ~= 0 then 
         ret.playing_card.h_mult = h_mult
