@@ -851,6 +851,9 @@ function Card:calculate_enhancement(context)
 end
 
 function SMODS.get_enhancements(card, extra_only)
+    local ret = SMODS.get_enh_cache(card, extra_only)
+    if ret then return ret end
+
     if card.extra_enhancements and next(card.extra_enhancements) then
         if extra_only then
             local extras = copy_table(card.extra_enhancements)
@@ -881,7 +884,23 @@ function SMODS.get_enhancements(card, extra_only)
         enhancements[card.config.center.key] = nil
     end
     if next(enhancements) then card.extra_enhancements = enhancements end
+    SMODS.save_enh_cache(card, extra_only, enhancements)
     return enhancements
+end
+
+function SMODS.get_enh_cache(card, extra_only)	-- could be faster if you attached the index to the card
+	if not G.enh_cache then G.enh_cache = {extra = {}, enh = {}} end
+	for i = 1, #G.enh_cache[extra_only and 'extra' or 'enh'] do
+		if G.enh_cache[extra_only and 'extra' or 'enh'][i].card == card then
+			return G.enh_cache[extra_only and 'extra' or 'enh'][i].enh
+		end
+	end
+	return nil
+end
+
+function SMODS.save_enh_cache(card, extra_only, enhancements)
+	if not G.enh_cache then G.enh_cache = {extra = {}, enh = {}} end
+	G.enh_cache[extra_only and 'extra' or 'enh'][#G.enh_cache[extra_only and 'extra' or 'enh']+1] = {card = card, enh = enhancements}
 end
 
 function SMODS.has_enhancement(card, key)

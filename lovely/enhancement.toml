@@ -284,3 +284,12 @@ pattern = "if self.seal == 'Blue' and #G.consumeables.cards + G.GAME.consumeable
 position = "at"
 payload = "if self.seal == 'Blue' and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit and not self.ability.extra_enhancement then"
 match_indent = true
+
+# Reset enh cache on game update
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "modulate_sound(dt)"
+position = "after"
+payload = "G.enh_cache = {extra = {}, enh = {}}"
+match_indent = true
