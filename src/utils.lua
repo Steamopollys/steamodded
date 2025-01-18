@@ -853,7 +853,7 @@ end
 function SMODS.get_enhancements(card, extra_only)
     if not SMODS.optional_features.quantum_enhancements then
 	if extra_only then return {} end
-	return card.ability.set == 'Enhanced' and { [card.config.center.key] = true } or {} end
+	return card.ability.set == 'Enhanced' and { [card.config.center.key] = true } or {}
     end
     if card.extra_enhancements and next(card.extra_enhancements) then
         if extra_only then
