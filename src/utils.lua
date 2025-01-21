@@ -300,14 +300,16 @@ end
 function SMODS.find_card(key, count_debuffed)
     local results = {}
     if not G.jokers or not G.jokers.cards then return {} end
-    for k, v in pairs(G.jokers.cards) do
-        if v and type(v) == 'table' and v.config.center.key == key and (count_debuffed or not v.debuff) then
-            table.insert(results, v)
-        end
-    end
-    for k, v in pairs(G.consumeables.cards) do
-        if v and type(v) == 'table' and v.config.center.key == key and (count_debuffed or not v.debuff) then
-            table.insert(results, v)
+    local areas = {
+        'jokers', 
+        'consumeables', 
+        'vouchers',
+    }
+    for _, area in ipairs(areas) do
+        for k, v in pairs(G[area].cards) do
+            if v and type(v) == 'table' and v.config.center.key == key and (count_debuffed or not v.debuff) then
+                table.insert(results, v)
+            end
         end
     end
     return results
