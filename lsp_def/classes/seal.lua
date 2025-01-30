@@ -26,6 +26,7 @@
 ---@field get_p_dollars? fun(self: table|SMODS.Seal, card: table|Card): number? Gives money when a card with this seal is played. 
 ---@field draw? fun(self: table|SMODS.Seal, card: table|Card, layer: string) Draws the sprite and shader of the seal. 
 ---@field update? fun(self: table|SMODS.Seal, card: table|Card, dt: number) Called every frame. 
+---@field generate_ui? fun(self: table|SMODS.Seal, info_queue: table, card: table|Card, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the seal. 
 ---@field new? fun(self, name, label, full_name, pos, loc_txt, atlas, discovered, color): any DEPRECATED. DO NOT USE
 ---@overload fun(self: SMODS.Seal): SMODS.Seal
 SMODS.Seal = setmetatable({}, {

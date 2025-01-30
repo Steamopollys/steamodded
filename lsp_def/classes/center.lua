@@ -41,6 +41,7 @@
 ---@field remove_from_deck? fun(self: table|SMODS.Center, card: table|Card, from_debuff: boolean) Allows modifying the game state when the card is being removed. 
 ---@field in_pool? fun(self: table|SMODS.Center, args: table): nil|boolean?, table? Allows configuring if the card is allowed to spawn. 
 ---@field calculate? fun(self: table|SMODS.Center, card: table|Card, context: table): nil|table?, nil|boolean? Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
+---@field create_fake_card? fun(self: table|SMODS.Center): table Creates a fake card representing this center. Used internally for `generate_ui` in cases where recieved `card` param is nil. 
 ---@overload fun(self: SMODS.Center): SMODS.Center
 SMODS.Center = setmetatable({}, {
     __call = function(self)
