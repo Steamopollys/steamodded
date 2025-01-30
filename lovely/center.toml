@@ -40,14 +40,16 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = 'if self.ability.set == "Planet" and not self.debuff then'
-position = 'before'
+pattern = '''function Card:calculate_joker(context)
+    if self.debuff then return nil end
+'''
+position = 'after'
 payload = '''
-local obj = self.config.center
-if self.ability.set ~= "Enhanced" and obj.calculate and type(obj.calculate) == 'function' then
-    local o, t = obj:calculate(self, context)
-    if o or t then return o, t end
-end'''
+    local obj = self.config.center
+    if self.ability.set ~= "Enhanced" and obj.calculate and type(obj.calculate) == 'function' then
+        local o, t = obj:calculate(self, context)
+        if o or t then return o, t end
+    end'''
 match_indent = true
 
 # Card:update()
@@ -113,10 +115,13 @@ position = 'at'
 payload = '''
 local res = {}
 if _c.locked_loc_vars and type(_c.locked_loc_vars) == 'function' then
-    res = _c:locked_loc_vars(info_queue) or {}
+    local _card = _c.create_fake_card and _c:create_fake_card()
+    res = _c:locked_loc_vars(info_queue, _card) or {}
     loc_vars = res.vars or {}
     specific_vars = specific_vars or {}
     specific_vars.not_hidden = res.not_hidden or specific_vars.not_hidden
+    if res.main_start then desc_nodes[#desc_nodes+1] = res.main_start end
+    main_end = res.main_end or main_end
 elseif $rest'''
 
 [[patches]]
@@ -410,19 +415,15 @@ if card.ability.consumeable then
         nc = obj:keep_on_use(card)
     end
 end
-if not nc and card.area then card.area:remove_card(card) end'''
+if card.area and (not nc or card.area == G.pack_cards) then card.area:remove_card(card) end'''
 
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
 pattern = "else draw_card(G.hand, G.play, 1, 'up', true, card, nil, mute) end"
 match_indent = true
-position = 'before'
-payload = '''
-elseif nc then
-    area:remove_from_highlighted(card)
-    play_sound('cardSlide2', nil, 0.3)
-    dont_dissolve = true'''
+position = 'at'
+payload = '''elseif not nc then draw_card(G.hand, G.play, 1, 'up', true, card, nil, mute) end'''
 
 # Card:set_sprites()
 [[patches]]
@@ -513,3 +514,38 @@ match_indent = true
 position = 'at'
 pattern = 'if other_joker and other_joker ~= self then'
 payload = 'if other_joker and other_joker ~= self and not context.no_blueprint then'
+
+# extract joker loc_vars
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+match_indent = true
+position = 'at'
+pattern = 'function Card:generate_UIBox_ability_table()'
+payload = 'function Card:generate_UIBox_ability_table(vars_only)'
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+match_indent = true
+position = 'before'
+pattern = 'local badges = {}'
+payload = 'if vars_only then return loc_vars, main_start, main_end end'
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+match_indent = true
+position = 'after'
+pattern = "elseif _c.set == 'Joker' then"
+payload = '''
+    if not card then
+        local ability = copy_table(_c.config)
+        ability.set = 'Joker'
+        ability.name = _c.name
+        local ret = {Card.generate_UIBox_ability_table({ ability = ability, config = { center = _c }, bypass_lock = true}, true)}
+        specific_vars = ret[1]
+        if ret[2] then desc_nodes[#desc_nodes+1] = ret[2] end
+        main_end = ret[3]
+    end
+    '''

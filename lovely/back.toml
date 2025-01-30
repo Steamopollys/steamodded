@@ -63,9 +63,11 @@ payload = '''
 		if next(o) ~= nil then return unpack(o) end
 	elseif type(obj.trigger_effect) == 'function' then
 		-- kept for compatibility
-		sendWarnMessage(('Found `trigger_effect` function on SMODS.Back object "%s". This field is deprecated; please use `calculate` instead.'):format(obj.key), 'Back')
 		local o = {obj:trigger_effect(args)}
-		if next(o) ~= nil then return unpack(o) end
+		if next(o) ~= nil then
+			sendWarnMessage(('Found `trigger_effect` function on SMODS.Back object "%s". This field is deprecated; please use `calculate` instead.'):format(obj.key), 'Back')
+			return unpack(o)
+		end
 	end'''
 
 ## Back:generate_UI

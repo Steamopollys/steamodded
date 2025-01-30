@@ -1043,7 +1043,13 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
             self = nil
             return true
         end,
+        create_fake_card = function(self)
+	        return { ability = copy_table(self.config), fake_card = true }
+        end,
         generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+            if not card then
+                card = self:create_fake_card()
+            end
             local target = {
                 type = 'descriptions',
                 key = self.key,
@@ -1155,6 +1161,11 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
             SMODS.remove_pool(G.P_CENTER_POOLS['Consumeables'], self.key)
             SMODS.Consumable.super.delete(self)
         end,
+        create_fake_card = function(self)
+            local ret = SMODS.Center.create_fake_card(self)
+            ret.ability.consumeable = copy_table(self.config)
+            return ret
+	end,
         loc_vars = function(self, info_queue)
             return {}
         end
@@ -1192,6 +1203,20 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
             'key',
         }
     }
+
+    SMODS.Voucher:take_ownership('observatory', {
+        calculate = function(self, card, context)
+            if 
+                context.other_consumeable and
+                context.other_consumeable.ability.set == 'Planet' and
+                context.other_consumeable.ability.consumeable.hand_type == context.scoring_name
+            then
+                return {
+                    x_mult = card.ability.extra
+                }
+            end
+        end,
+    })
 
     -------------------------------------------------------------------------------------------------
     ------- API CODE GameObject.Center.Back
@@ -1259,6 +1284,9 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
             return { vars = {card.ability.choose, card.ability.extra} }
         end,
         generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+            if not card then
+                card = self:create_fake_card()
+            end
             local target = {
                 type = 'other',
                 key = self.key,
@@ -1647,8 +1675,45 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
             SMODS.process_loc_text(G.localization.descriptions.Other, self.key:lower() .. '_seal', self.loc_txt)
             SMODS.process_loc_text(G.localization.misc.labels, self.key:lower() .. '_seal', self.loc_txt, 'label')
         end,
-        get_obj = function(self, key) return G.P_SEALS[key] end
+        get_obj = function(self, key) return G.P_SEALS[key] end,
+        generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+            local target = {
+                type = 'other',
+                set = 'Other',
+                key = self.key:lower()..'_seal',
+                nodes = desc_nodes,
+                vars = specific_vars or {},
+            }
+            local res = {}
+            if self.loc_vars and type(self.loc_vars) == 'function' then
+                res = self:loc_vars(info_queue, card) or {}
+                target.vars = res.vars or target.vars
+                target.key = res.key or target.key
+                if res.set then
+                    target.type = 'descriptions'
+                    target.set = res.set
+                end
+                target.scale = res.scale
+                target.text_colour = res.text_colour
+            end
+            if desc_nodes == full_UI_table.main and not full_UI_table.name then
+                full_UI_table.name = localize { type = 'name', set = target.set, key = res.name_key or target.key, nodes = full_UI_table.name, vars = res.name_vars or target.vars or {} }
+            elseif desc_nodes ~= full_UI_table.main and not desc_nodes.name then
+                desc_nodes.name = localize{type = 'name_text', key = res.name_key or target.key, set = target.set }
+            end
+            if res.main_start then
+                desc_nodes[#desc_nodes + 1] = res.main_start
+            end
+            localize(target)
+            if res.main_end then
+                desc_nodes[#desc_nodes + 1] = res.main_end
+            end
+            desc_nodes.background_colour = res.background_colour
+        end,
     }
+    for _,v in ipairs { 'Purple', 'Gold', 'Blue', 'Red' } do
+        SMODS.Seal:take_ownership(v, { badge_colour = G.C[v:upper()], pos = G.shared_seals[v].sprite_pos, generate_ui = SMODS.Seal.generate_ui })
+    end
 
     -------------------------------------------------------------------------------------------------
     ----- API CODE GameObject.Suit
@@ -2499,6 +2564,9 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
             SMODS.insert_pool(G.P_CENTER_POOLS[self.set], self)
         end,
         generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+            if not card then
+                card = { config = copy_table(self.config), fake_tag = true}
+            end
             local target = {
                 type = 'descriptions',
                 key = self.key,

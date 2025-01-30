@@ -949,9 +949,26 @@ function SMODS.load_mod_config(mod)
     end)
     if not s1 or type(config) ~= 'table' then config = {} end
     if not s2 or type(default_config) ~= 'table' then default_config = {} end
-    mod.config = {} 
-    for k, v in pairs(default_config) do mod.config[k] = v end
-    for k, v in pairs(config) do mod.config[k] = v end
+    mod.config = default_config
+    
+    local function insert_saved_config(savedCfg, defaultCfg)
+        for savedKey, savedVal in pairs(savedCfg) do
+            local savedValType = type(savedVal)
+            local defaultValType = type(defaultCfg[savedKey])
+            if not defaultCfg[savedKey] then
+                defaultCfg[savedKey] = savedVal
+            elseif savedValType ~= defaultValType then
+            elseif savedValType == "table" and defaultValType == "table" then
+                insert_saved_config(savedVal, defaultCfg[savedKey])
+            elseif savedVal ~= defaultCfg[savedKey] then
+                defaultCfg[savedKey] = savedVal
+            end
+            
+        end
+    end
+
+    insert_saved_config(config, mod.config)
+
     return mod.config
 end
 SMODS:load_mod_config()

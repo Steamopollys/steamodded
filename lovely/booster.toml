@@ -36,16 +36,6 @@ elseif self.ability.name:find('Arcana') then
     if G.GAME.used_vouchers.v_omen_globe and pseudorandom('omen_globe') > 0.8 then'''
 line_prepend = '$indent'
 
-## Stop cards from boosters getting double emplaced
-# Card:open
-[[patches]]
-[patches.pattern]
-target = "functions/button_callbacks.lua"
-pattern = "G.pack_cards:emplace(v)"
-position = "at"
-payload = "--G.pack_cards:emplace(v)"
-match_indent = true
-
 # Game:set_globals
 [[patches]]
 [patches.regex]
@@ -127,21 +117,27 @@ position = "at"
 payload = "if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED then"
 match_indent = true
 
-# G.FUNC.use_card()
+# G.FUNCS.use_card()
 [[patches]]
 [patches.pattern]
 target = "functions/button_callbacks.lua"
 pattern = "if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SPECTRAL_PACK then"
 position = "at"
-payload = "if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED and not nc then"
+payload = """
+if nc then
+    if area then area:remove_from_highlighted(card) end
+    play_sound('cardSlide2', nil, 0.3)
+    dont_dissolve = true
+end
+if (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED) then"""
 match_indent = true
 
 # G.FUNC.use_card()
 [[patches]]
 [patches.pattern]
 target = "functions/button_callbacks.lua"
-pattern = 'elseif G.GAME.pack_choices and G.GAME.pack_choices > 1 then'
-position = 'after'
+pattern = 'if area == G.consumeables then'
+position = 'before'
 match_indent = true
 payload = '''
 if nc and area == G.pack_cards then G.pack_cards:remove_card(card); G.consumeables:emplace(card) end'''

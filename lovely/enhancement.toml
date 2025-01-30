@@ -178,23 +178,6 @@ match_indent = true
 position = "at"
 payload = "elseif specific_vars.playing_card then"
 
-# Game:update_draw_to_hand()
-
-[[patches]]
-[patches.pattern]
-target = "game.lua"
-pattern = "G.GAME.current_round.discards_used == 0 and G.GAME.facing_blind then"
-match_indent = true
-position = "after"
-payload = """
-for i = 1, #G.hand.cards do
-    eval_card(G.hand.cards[i], {first_hand_drawn = true})
-end"""
-
-# G.FUNCS.discard_cards_from_highlighted()
-
-
-
 
 ## Allow cards to function as multiple enhancements (e.g. from jokers)
 # Calculate extra enhancements when held in hand at end of round
