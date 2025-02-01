@@ -2,7 +2,7 @@
 
 ---@class SMODS.Voucher: SMODS.Center
 ---@field super? SMODS.GameObject|table Parent class. 
----@field requires? table[] Array of keys to other voucher. This voucher will not appear if those are not redeemed.  
+---@field requires? string[] Array of keys to other voucher. This voucher will not appear if those are not redeemed.  
 ---@field __call? fun(self: SMODS.Voucher|table, o: SMODS.Voucher|table): nil|SMODS.Voucher
 ---@field extend? fun(self: SMODS.Voucher|table, o: SMODS.Voucher|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Voucher|table): boolean? Ensures objects already registered will not register. 

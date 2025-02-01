@@ -8,7 +8,7 @@
 ---@field discovered? boolean Sets the discovery state of the center. 
 ---@field no_collection? boolean Sets whether the card shows up in the collections menu. 
 ---@field loc_txt? table Contains data used for displaying text related to this object. See SMODS documentation for the class on format. 
----@field pools? table[] Array of keys to ObjectType pools this center will be added to.
+---@field pools? string[] Array of keys to ObjectType pools this center will be added to.
 ---@field cost? number Sell cost of this center. 
 ---@field no_pool_flag? string Key to a pool flag defined in `G.GAME.pool_flags`. This center is removed from it's pool as long as this flag is `true`. 
 ---@field yes_pool_flag? string Key to the pool flag defined in `G.GAME.pool_flags`. This center is removed from it's pool as long as this flag is `false`. 

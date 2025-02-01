@@ -2,7 +2,7 @@
 
 ---@class SMODS.Stake: SMODS.GameObject
 ---@field super? SMODS.GameObject|table Parent class. 
----@field applied_stakes? table[] Array of keys to stakes that should be applied when this stake is active. 
+---@field applied_stakes? string[] Array of keys to stakes that should be applied when this stake is active. 
 ---@field atlas? string Key to the center's atlas. 
 ---@field pos? table Position of the center's sprite. 
 ---@field sticker_atlas? string Atlas for stake's win sticker. 

@@ -4,9 +4,9 @@
 ---@field super? SMODS.ObjectType|table Parent class. 
 ---@field primary_colour? table HEX color used as the primary color. Set as `G.C.SET[self.key]`. 
 ---@field secondary_colour? table HEX color used as the seconary color. Set as `G.C.SECONDARY_COLOUR[self.key]`. 
----@field collection_rows? table[] Array of numbers indicating how many rows and how many cards per row this ConsumableType's collection has. 
+---@field collection_rows? number[] Array of numbers indicating how many rows and how many cards per row this ConsumableType's collection has. 
 ---@field shop_rate? nil|number Defining this value allows cards part of this ConsumableType to appear in the shop. Defined as `G.GAME[key:lower()..'_rate']`.  
----@field ctype_buffer? table[] Array of keys to all objects registered to the ConsumableType class. 
+---@field ctype_buffer? string[] Array of keys to all objects registered to the ConsumableType class. 
 ---@field __call? fun(self: SMODS.ConsumableType|table, o: SMODS.ConsumableType|table): nil|SMODS.ConsumableType
 ---@field extend? fun(self: SMODS.ConsumableType|table, o: SMODS.ConsumableType|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.ConsumableType|table): boolean? Ensures objects already registered will not register. 

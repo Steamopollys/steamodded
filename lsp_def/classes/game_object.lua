@@ -6,14 +6,14 @@
 ---@field mod? table Mod this object is created by. 
 ---@field registered? boolean
 ---@field obj_table? table Table of objects registered to this class. 
----@field obj_buffer? table[] Array of keys to all objects registered to this class. 
----@field dependencies? table[] Array of mod IDs. Object will fail to register if any specified mods cannot load. 
+---@field obj_buffer? string[] Array of keys to all objects registered to this class. 
+---@field dependencies? string[] Array of mod IDs. Object will fail to register if any specified mods cannot load. 
 ---@field subclasses? table[] Array of child classes. 
 ---@field super? table Parent class. 
 ---@field key? string Unique string to reference this object. 
 ---@field class_prefix? boolean|string All objects created with this class will have their key prefixed with this string. 
 ---@field prefix_config? boolean|table Controls how prefixes are applied. By default, class_prefix and mod_prefix are applied to all registered objects. 
----@field required_params? table[] Array of parameters required for objects created by this class. 
+---@field required_params? string[] Array of parameters required for objects created by this class. 
 ---@field set? string Important for objects wanting to follow vanilla logic that depends on `set`. For classes, this is used for logging purposes. 
 ---@field no_collection? boolean Sets whether the object shows up in collections.
 ---@field config? table Cards/Objects representing your center will copy default values from `config` into it's `ability` table. Custom values can be stored within `extra`. 

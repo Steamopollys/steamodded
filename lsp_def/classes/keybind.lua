@@ -5,7 +5,7 @@
 ---@field key_pressed? string Required key to press for this keybind to activate. Keycodes are documented [here](https://love2d.org/wiki/KeyConstant)
 ---@field event? string Defines when the keybind should trigger. "pressed": on key press, "released": on key release, "held": on key hold for specified amount of time. 
 ---@field held_duration? number How long the keybind needs to be pressed before activation. Only active if `event = held`. 
----@field held_keys? table[] Array of keycodes additionally required to be pressed for keybind to activate. 
+---@field held_keys? string[] Array of keycodes additionally required to be pressed for keybind to activate. 
 ---@field __call? fun(self: SMODS.Keybind|table, o: SMODS.Keybind|table): nil|SMODS.Keybind
 ---@field extend? fun(self: SMODS.Keybind|table, o: SMODS.Keybind|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Keybind|table): boolean? Ensures objects already registered will not register. 
