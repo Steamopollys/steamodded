@@ -21,7 +21,7 @@
 ---@class Card_Character: Moveable
 ---@class CardArea: Moveable
 
--- Commonly used functions (either typed as @class or defined)
+-- Commonly used functions in vanilla (either typed as @class or defined)
 
 ---@param hex string
 ---@return table

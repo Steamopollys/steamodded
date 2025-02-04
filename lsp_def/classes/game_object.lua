@@ -1,9 +1,9 @@
 ---@meta
 
 ---@class SMODS.GameObject: Object 
+---@field mod? Mod|table The mod this object is created by. 
 ---@field log_interval? number
 ---@field loc_txt? table Contains data used for displaying text related to this object. See SMODS documentation for each class on the format. 
----@field mod? table Mod this object is created by. 
 ---@field registered? boolean
 ---@field obj_table? table Table of objects registered to this class. 
 ---@field obj_buffer? string[] Array of keys to all objects registered to this class. 
