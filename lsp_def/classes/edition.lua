@@ -12,7 +12,7 @@
 ---@field badge_colour? table HEX color of the Edition's badge
 ---@field sound? table|{sound: string, per?: number, vol?: number} Used to set a custom sound when the Edition is applied. 
 ---@field disable_shadow? boolean Sets if the shadow is drawn under the card with this Edition. 
----@field disabke_base_shader? boolean Sets if the default shader for the card is disabled. 
+---@field disable_base_shader? boolean Sets if the default shader for the card is disabled. 
 ---@field super? SMODS.Center|table Parent class. 
 ---@field __call? fun(self: SMODS.Edition|table, o: SMODS.Edition|table): nil|SMODS.Edition
 ---@field extend? fun(self: SMODS.Edition|table, o: SMODS.Edition|table): table Primary method of creating a class. 
