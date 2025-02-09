@@ -1,5 +1,6 @@
 ---@meta
 
+--- Core SMODS classes/functions
 SMODS = {}
 
 ---@class Mod

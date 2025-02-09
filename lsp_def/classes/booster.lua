@@ -7,7 +7,7 @@
 ---@field draw_hand? boolean Sets if playing cards are drawn when booster pack is opened. 
 ---@field kind? string Groups pack types together. For example, this can be used in `get_pack()` to generate a booster pack of a specific type. 
 ---@field weight? number Weight of the booster pack. 
----@field select_card? string Key to the CardArea (e.x. `G[SMODS.Booster.select_card]`). Consumables inside this booster pack will be "selected" and emplaced into a CardArea instead of used. 
+---@field select_card? string|{[string]: string} Key to the CardArea (e.x. `G[SMODS.Booster.select_card]`). Consumables inside this booster pack will be "selected" and emplaced into a CardArea instead of used. As a table, each key-value pair is a card set as key and CardArea string as values.  
 ---@field __call? fun(self: SMODS.Booster|table, o: SMODS.Booster|table): nil|SMODS.Booster
 ---@field extend? fun(self: SMODS.Booster|table, o: SMODS.Booster|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Booster|table): boolean? Ensures objects already registered will not register. 
@@ -35,6 +35,6 @@ SMODS.Booster = setmetatable({}, {
     end
 })
 
----@type Card|table?
+---@type Card|table|nil
 ---Last opened Booster Pack. 
-SMODS.OPENED_BOOSTER = {}
+SMODS.OPENED_BOOSTER = nil

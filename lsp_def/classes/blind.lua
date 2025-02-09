@@ -9,7 +9,7 @@
 ---@field mult? number Required score multiplier relative to the Ante's Base score. 
 ---@field boss? table Marks this Blind as a Boss Blind. `min` indicates minimum Ante for this Blind to appear. `showdown` indicates this Blind is a Final Boss Blind. For complex conditions, use `in_pool`. 
 ---@field boss_colour? table HEX color for the background when playing this Blind. 
----@field debuff? table Configures vanilla blind effects related to debuffing, see [Blind Documentation](https://github.com/Steamodded/smods/wiki/SMODS.Blind#api-documentation-smodsblind). Ignored if Blind defines `debuff_hand` or `debuff_card`. 
+---@field debuff? table Configures vanilla blind effects related to debuffing, see [SMODS.Blind](https://github.com/Steamodded/smods/wiki/SMODS.Blind#api-documentation-smodsblind) Documentation. Ignored if Blind defines `debuff_hand` or `debuff_card`. 
 ---@field ignore_showdown_check? boolean Sets if `in_pool` should be respected regardless of whether a showdown Boss Blind was requested or not. 
 ---@field vars? table Variables for this Blind's description in the collection. 
 ---@field __call? fun(self: SMODS.Blind|table, o: SMODS.Blind|table): nil|SMODS.Blind
