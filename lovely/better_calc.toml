@@ -571,7 +571,7 @@ for _, _area in ipairs(SMODS.get_card_areas('jokers')) do
         if _card.ability.consumeable then other_key = 'other_consumeable' end
         if _card.ability.set == 'Voucher' then other_key = 'other_voucher' end
         -- TARGET: add context.other_something identifier to your cards
-        local joker_eval,post = eval_card(_joker, {full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, [other_key] = _card })
+        local joker_eval,post = eval_card(_joker, {full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, [other_key] = _card, other_main = _card })
         if next(joker_eval) then
             if joker_eval.edition then joker_eval.edition = {} end
             joker_eval.jokers.juice_card = _joker
@@ -1264,4 +1264,35 @@ payload = '''self.discard_pos = {
     x = 0, 
     y = 0,
 }
+'''
+
+# xchip support
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+elseif (eval_type == 'x_mult') or (eval_type == 'h_x_mult') then 
+'''
+payload = '''
+elseif eval_type == 'x_chips' then 
+        sound = 'xchips'
+        volume = 0.7
+        amt = amt
+        text = localize{type='variable',key='a_xchips'..(amt<0 and '_minus' or ''),vars={math.abs(amt)}}
+        colour = G.C.BLUE
+        config.type = 'fade'
+        config.scale = 0.7
+'''
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+match_indent = true
+position = 'at'
+pattern = '''
+if extra.chip_mod then
+'''
+payload = '''
+if extra.chip_mod or extra.Xchip_mod then
 '''
