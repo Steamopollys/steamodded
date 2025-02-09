@@ -41,7 +41,7 @@
 ---@field add_to_deck? fun(self: SMODS.Center|table, card: Card|table, from_debuff: boolean) Allows modifying the game state when the card is being added. 
 ---@field remove_from_deck? fun(self: SMODS.Center|table, card: Card|table, from_debuff: boolean) Allows modifying the game state when the card is being removed. 
 ---@field in_pool? fun(self: SMODS.Center|table, args: table): boolean? , table? Allows configuring if the card is allowed to spawn. 
----@field calculate? fun(self: SMODS.Center|table, card: Card|table, context: CalcContext|table): nil|table?, boolean?  Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
+---@field calculate? fun(self: SMODS.Center|table, card: Card|table, context: CalcContext|table): table?, boolean?  Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@field create_fake_card? fun(self: SMODS.Center|table): table Creates a fake card representing this center. Used internally for `generate_ui` in cases where recieved `card` param is nil. 
 ---@overload fun(self: SMODS.Center): SMODS.Center
 SMODS.Center = setmetatable({}, {

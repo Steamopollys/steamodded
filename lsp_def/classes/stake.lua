@@ -34,8 +34,8 @@ SMODS.Stake = setmetatable({}, {
 })
 
 ---@param stake SMODS.Stake|table
----@param applied nil|table
----@return nil|table applied
+---@param applied table?
+---@return table? applied
 ---Builds the stake chain. 
 function SMODS.build_stake_chain(stake, applied) end
 

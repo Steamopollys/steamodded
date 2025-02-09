@@ -9,7 +9,7 @@
 ---@field full_hand? Card[]|table[] All play or selected cards. 
 ---@field scoring_hand? Card[]|table[] All scoring cards in played hand. 
 ---@field scoring_name? string Key to the scoring poker hand. 
----@field poker_hands? table<string, Card[]|table[]> All poker hand parts this 
+---@field poker_hands? table<string, Card[]|table[]> All poker hand parts the played hand can form. 
 ---@field other_card? Card|table The individual card being checked during scoring. 
 ---@field other_joker? Card|table The individual Joker being checked during scoring. 
 ---@field card_effects? table Table of effects that have been calculated. 
