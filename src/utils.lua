@@ -583,7 +583,6 @@ function V.is_valid(v, allow_wildcard)
     return(pcall(function() return V() <= v and (allow_wildcard or (v.minor ~= -2 and v.patch ~= -2 and v.rev ~= '~')) end))
 end
 
----@param ... table<integer, any> 
 -- Flatten the given arrays of arrays into one, then
 -- add elements of each table to a new table in order,
 -- skipping any duplicates.
