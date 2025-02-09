@@ -4,7 +4,7 @@
 ---@field loc_txt? table|{name: string, text: string[], label: string} Contains strings used for displaying text related to this object. 
 ---@field shader? string|false Key to the shader drawn on cards with this Edition. If set to `false`, a shader will not be drawn. 
 ---@field atlas? string Defines the atlas for the card this Edition is drawn on in the collection. 
----@field pos? table Defined the position of the card's sprite this Edition is drawn on in the collection.
+---@field pos? table|{x: integer, y: integer} Defined the position of the card's sprite this Edition is drawn on in the collection.
 ---@field in_shop? boolean Sets if the Edition spawns naturally in the shop. 
 ---@field weight? number The weight of the Edition. 
 ---@field extra_cost? number Extra cost applied to cards in the shop with this Edition. 
@@ -21,7 +21,7 @@
 ---@field register? fun(self: SMODS.Edition|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Edition|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Edition|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.Edition|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.Edition|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Edition|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.Edition|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Edition|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 

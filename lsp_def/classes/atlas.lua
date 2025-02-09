@@ -1,6 +1,7 @@
 ---@meta
 
 ---@class SMODS.Atlas: SMODS.GameObject
+---@field obj_table? table<string, SMODS.Atlas|table> Table of objects registered to this class. 
 ---@field super? SMODS.GameObject|table Parent class. 
 ---@field px? string|number Width of individual sprites using this atlas. 
 ---@field py? string|number Height of individual sprite using this atlas. 
@@ -17,7 +18,7 @@
 ---@field register? fun(self: SMODS.Atlas|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Atlas|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Atlas|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.Atlas|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.Atlas|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Atlas|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.Atlas|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Atlas|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
@@ -30,3 +31,6 @@ SMODS.Atlas = setmetatable({}, {
         return self
     end
 })
+
+---@type table<string, SMODS.Atlas|table>
+SMODS.Atlases = {}

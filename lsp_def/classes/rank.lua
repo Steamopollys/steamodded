@@ -1,6 +1,7 @@
 ---@meta
 
 ---@class SMODS.Rank: SMODS.GameObject
+---@field obj_table? table<string, SMODS.Rank|table> Table of objects registered to this class. 
 ---@field loc_txt? table|{name: string} Contains strings used for displaying text related to this object. 
 ---@field super? SMODS.GameObject|table Parent class. 
 ---@field __call? fun(self: SMODS.Rank|table, o: SMODS.Rank|table): nil|SMODS.Rank
@@ -10,7 +11,7 @@
 ---@field register? fun(self: SMODS.Rank|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Rank|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Rank|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.Rank|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.Rank|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Rank|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.Rank|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Rank|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
@@ -23,3 +24,6 @@ SMODS.Rank = setmetatable({}, {
         return self
     end
 })
+
+---@type table<string, SMODS.Rank|table>
+SMODS.Ranks = {}

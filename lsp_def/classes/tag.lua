@@ -1,9 +1,10 @@
 ---@meta
 
 ---@class SMODS.Tag: SMODS.GameObject
+---@field obj_table? table<string, SMODS.Tag|table> Table of objects registered to this class. 
 ---@field super? SMODS.GameObject|table Parent class. 
 ---@field atlas? string Key to the center's atlas. 
----@field pos? table Position of the center's sprite. 
+---@field pos? table|{x: integer, y: integer} Position of the center's sprite. 
 ---@field min_ante? number Minimum ante needed for this tag to appear. For more complex restrictions, use `SMODS.Tag:in_pool()`. 
 ---@field discovered? boolean Sets the discovery state of the tag. 
 ---@field __call? fun(self: SMODS.Tag|table, o: SMODS.Tag|table): nil|SMODS.Tag
@@ -13,7 +14,7 @@
 ---@field register? fun(self: SMODS.Tag|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Tag|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Tag|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.Tag|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.Tag|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Tag|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.Tag|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Tag|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
@@ -31,3 +32,6 @@ SMODS.Tag = setmetatable({}, {
         return self
     end
 })
+
+---@type table<string, SMODS.Tag|table>
+SMODS.Tags = {}

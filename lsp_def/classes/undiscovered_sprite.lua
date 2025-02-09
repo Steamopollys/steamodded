@@ -1,10 +1,11 @@
 ---@meta
 
 ---@class SMODS.UndiscoveredSprite: SMODS.GameObject
+---@field obj_table? table<string, SMODS.UndiscoveredSprite|table> Table of objects registered to this class. 
 ---@field super? SMODS.GameObject|table Parent class. 
 ---@field key? string Key to the ObjectType this UndiscoveredSprite is made for. 
 ---@field atlas? string Key to the undiscovered sprite's atlas. 
----@field pos? table Position of the undiscovered sprite. 
+---@field pos? table|{x: integer, y: integer} Position of the undiscovered sprite. 
 ---@field lc_atlas? string Low constrast atlas. Used when `G.SETTINGS.colourblind_option` is `false`. 
 ---@field hc_atlas? string High contrast atlas. Used when `G.SETTINGS.colourblind_option` is `true`.
 ---@field no_overlay? boolean Sets whether the floating "?" is drawn or not. 
@@ -15,7 +16,7 @@
 ---@field register? fun(self: SMODS.UndiscoveredSprite|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.UndiscoveredSprite|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.UndiscoveredSprite|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.UndiscoveredSprite|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.UndiscoveredSprite|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.UndiscoveredSprite|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.UndiscoveredSprite|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.UndiscoveredSprite|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
@@ -28,3 +29,6 @@ SMODS.UndiscoveredSprite = setmetatable({}, {
         return self
     end
 })
+
+---@type table<string, SMODS.UndiscoveredSprite|table>
+SMODS.UndiscoveredSprites = {}

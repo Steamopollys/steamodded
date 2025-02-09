@@ -20,5 +20,6 @@
 ---@class Blind: Moveable
 ---@class Card: Moveable
 ---@field ability? table
+Card = function(self, X, Y, W, H, card, center, params) return self end
 ---@class Card_Character: Moveable
 ---@class CardArea: Moveable

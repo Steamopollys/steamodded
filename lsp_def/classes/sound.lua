@@ -1,6 +1,7 @@
 ---@meta
 
 ---@class SMODS.Sound: SMODS.GameObject
+---@field obj_table? table<string, SMODS.Sound|table> Table of objects registered to this class. 
 ---@field super? SMODS.GameObject|table Parent class. 
 ---@field path? string Name of the sound file, including extension. 
 ---@field pitch? number Pitch for music tracks. 
@@ -14,7 +15,7 @@
 ---@field register? fun(self: SMODS.Sound|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Sound|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Sound|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.Sound|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.Sound|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Sound|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.Sound|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Sound|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
@@ -32,3 +33,6 @@ SMODS.Sound = setmetatable({}, {
         return self
     end
 })
+
+---@type table<string, SMODS.Sound|table>
+SMODS.Sounds = {}

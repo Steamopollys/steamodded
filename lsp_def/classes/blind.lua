@@ -1,13 +1,14 @@
 ---@meta
 
 ---@class SMODS.Blind: SMODS.GameObject
+---@field obj_table? table<string, SMODS.Blind|table> Table of objects registered to this class. 
 ---@field super? SMODS.GameObject|table Parent class. 
 ---@field atlas? string Key to the blind's atlas. 
----@field pos? table Position of the blind's sprite. 
+---@field pos? table|{x: integer, y: integer} Position of the blind's sprite. 
 ---@field discovered? boolean Sets the discovery state of the blind. 
 ---@field dollars? number Amount of money earned when defeated. 
 ---@field mult? number Required score multiplier relative to the Ante's Base score. 
----@field boss? table Marks this Blind as a Boss Blind. `min` indicates minimum Ante for this Blind to appear. `showdown` indicates this Blind is a Final Boss Blind. For complex conditions, use `in_pool`. 
+---@field boss? table|{min: integer, max: integer, showdown: boolean} Marks this Blind as a Boss Blind. `min` indicates minimum Ante for this Blind to appear. `showdown` indicates this Blind is a Final Boss Blind. For complex conditions, use `in_pool`. 
 ---@field boss_colour? table HEX color for the background when playing this Blind. 
 ---@field debuff? table Configures vanilla blind effects related to debuffing, see [SMODS.Blind](https://github.com/Steamodded/smods/wiki/SMODS.Blind#api-documentation-smodsblind) Documentation. Ignored if Blind defines `debuff_hand` or `debuff_card`. 
 ---@field ignore_showdown_check? boolean Sets if `in_pool` should be respected regardless of whether a showdown Boss Blind was requested or not. 
@@ -19,7 +20,7 @@
 ---@field register? fun(self: SMODS.Blind|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Blind|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Blind|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.Blind|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.Blind|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Blind|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.Blind|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Blind|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
@@ -46,3 +47,6 @@ SMODS.Blind = setmetatable({}, {
         return self
     end
 })
+
+---@type table<string, SMODS.Blind|table>
+SMODS.Blinds = {}

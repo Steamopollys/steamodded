@@ -1,14 +1,15 @@
 ---@meta
 
 ---@class SMODS.Seal: SMODS.GameObject
+---@field obj_table? table<string, SMODS.Seal|table> Table of objects registered to this class. 
 ---@field loc_txt? table|{name: string, text: string[], label: string} Contains strings used for displaying text related to this object. 
 ---@field super? SMODS.GameObject|table Parent class. 
 ---@field atlas? string Key to the seal's atlas. 
----@field pos? table Position of the seal's sprite. 
+---@field pos? table|{x: integer, y: integer} Position of the seal's sprite. 
 ---@field unlocked? boolean Sets the unlock state of the center. 
 ---@field badge_colour? table HEX color the seal badge uses. 
----@field sound? table Controls the sound that plays when the seal is applied. `sound`: Key to the sound, `per`: Sound pitch, `vol`: Sound volume. 
----@field badge_to_key? table Contains keys to each seal indexed by seal badge (`key:lower()..'_seal`). 
+---@field sound? table|{} Controls the sound that plays when the seal is applied. `sound`: Key to the sound, `per`: Sound pitch, `vol`: Sound volume. 
+---@field badge_to_key? string[] Contains keys to each seal indexed by seal badge (`key:lower()..'_seal`). 
 ---@field __call? fun(self: SMODS.Seal|table, o: SMODS.Seal|table): nil|SMODS.Seal
 ---@field extend? fun(self: SMODS.Seal|table, o: SMODS.Seal|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Seal|table): boolean? Ensures objects already registered will not register. 
@@ -16,7 +17,7 @@
 ---@field register? fun(self: SMODS.Seal|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Seal|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Seal|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.Seal|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.Seal|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Seal|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.Seal|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Seal|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
@@ -36,3 +37,6 @@ SMODS.Seal = setmetatable({}, {
         return self
     end
 })
+
+---@type table<string, SMODS.Seal|table>
+SMODS.Seals = {}

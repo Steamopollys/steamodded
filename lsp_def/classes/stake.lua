@@ -1,13 +1,14 @@
 ---@meta
 
 ---@class SMODS.Stake: SMODS.GameObject
+---@field obj_table? table<string, SMODS.Stake|table> Table of objects registered to this class. 
 ---@field loc_txt? table|{name: string, text: string[], sticker: table|{name: string, text: string[]} } Contains strings used for displaying text related to this object. 
 ---@field super? SMODS.GameObject|table Parent class. 
 ---@field applied_stakes? string[] Array of keys to stakes that should be applied when this stake is active. 
 ---@field atlas? string Key to the center's atlas. 
----@field pos? table Position of the center's sprite. 
+---@field pos? table|{x: integer, y: integer} Position of the center's sprite. 
 ---@field sticker_atlas? string Atlas for stake's win sticker. 
----@field sticker_pos? table Position of the stake's win sticker sprite. 
+---@field sticker_pos? table|{x: integer, y: integer} Position of the stake's win sticker sprite. 
 ---@field above_stake? string Key to the stake that this stake appeard above in the run menu. By default, stakes are added on top of the last injected stake. 
 ---@field colour? table HEX color of the stake in the stake selection menu. 
 ---@field unlocked? boolean Sets if the stake is unlocked by default. 
@@ -18,7 +19,7 @@
 ---@field register? fun(self: SMODS.Stake|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Stake|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Stake|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.Stake|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.Stake|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Stake|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.Stake|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Stake|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
@@ -33,9 +34,12 @@ SMODS.Stake = setmetatable({}, {
     end
 })
 
+---@type table<string, SMODS.Stake|table>
+SMODS.Stakes = {}
+
 ---@param stake SMODS.Stake|table
 ---@param applied table?
----@return table? applied
+---@return table applied
 ---Builds the stake chain. 
 function SMODS.build_stake_chain(stake, applied) end
 

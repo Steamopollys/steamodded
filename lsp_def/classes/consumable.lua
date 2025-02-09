@@ -2,7 +2,7 @@
 
 ---@class SMODS.Consumable: SMODS.Center
 ---@field super? SMODS.Center|table Parent class. 
----@field hidden? table Used for legendary consumables. 
+---@field hidden? table|{soul_set: string, soul_rate: integer, can_repeat_soul: boolean} Used for legendary consumables. 
 ---@field __call? fun(self: SMODS.Consumable|table, o: SMODS.Consumable|table): nil|SMODS.Consumable
 ---@field extend? fun(self: SMODS.Consumable|table, o: SMODS.Consumable|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Consumable|table): boolean? Ensures objects already registered will not register. 
@@ -10,7 +10,7 @@
 ---@field register? fun(self: SMODS.Consumable|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Consumable|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Consumable|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.Consumable|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.Consumable|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Consumable|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.Consumable|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Consumable|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 

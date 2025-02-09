@@ -14,7 +14,7 @@ SMODS = {}
 ---@field prefix string Unique string. All objects created by this mod have this string appended to their key. 
 ---@field version? string Mod version. 
 ---@field dump_loc? true Dumps G.localization table into this mod's directory. 
----@field dependencies? table[] All mods in this array must be installed and loaded for this mod to load. 
+---@field dependencies? string[] All mods in this array must be installed and loaded for this mod to load. 
 ---@field conflicts? table[] No mods in this array can be installed for this mod to load. 
 ---@field provides? table[] If any of the mods in this array are not installed or loaded, this mod will act as a stand in. 
 ---@field main_file string Path to the main .lua file of this mod. 

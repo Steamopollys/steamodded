@@ -5,7 +5,7 @@
 ---@field log_interval? number
 ---@field loc_txt? table|{name: string, text: string[]} Contains strings used for displaying text related to this object. 
 ---@field registered? boolean
----@field obj_table? table Table of objects registered to this class. 
+---@field obj_table? table<string, SMODS.GameObject|table> Table of objects registered to this class. 
 ---@field obj_buffer? string[] Array of keys to all objects registered to this class. 
 ---@field dependencies? string[] Array of mod IDs. Object will fail to register if any specified mods cannot load. 
 ---@field subclasses? table[] Array of child classes. 
@@ -24,7 +24,7 @@
 ---@field register? fun(self: SMODS.GameObject|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.GameObject|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.GameObject|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.GameObject|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.GameObject|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.GameObject|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.GameObject|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.GameObject|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 

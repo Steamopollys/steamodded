@@ -1,6 +1,7 @@
 ---@meta
 
 ---@class SMODS.ObjectType: SMODS.GameObject
+---@field obj_table? table<string, SMODS.ObjectType|table> Table of objects registered to this class. 
 ---@field super? SMODS.GameObject|table Parent class. 
 ---@field default? string Key to fallback center when object pool is empty. 
 ---@field cards? table List of keys to centers to auto-inject into the pool. Formatted as `{ ["j_joker"] = true }`. 
@@ -12,7 +13,7 @@
 ---@field register? fun(self: SMODS.ObjectType|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.ObjectType|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.ObjectType|table) Called during `inject_class`. Handles injecting loc_text. 
----@field send_to_subclasses? fun(self: SMODS.ObjectType|table, func: function, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
+---@field send_to_subclasses? fun(self: SMODS.ObjectType|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.ObjectType|table) Called before `inject_class`. Injects and manages class information before object injection. 
 ---@field post_inject_class? fun(self: SMODS.ObjectType|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.ObjectType|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
@@ -27,3 +28,6 @@ SMODS.ObjectType = setmetatable({}, {
         return self
     end
 })
+
+---@type table<string, SMODS.ObjectType|table>
+SMODS.ObjectTypes = {}
