@@ -21,6 +21,9 @@ end
 
 local gameMainMenuRef = Game.main_menu
 function Game:main_menu(change_context)
+    for k, v in pairs(G.C.SUITS) do
+        G.FUNCS.update_suit_colours(k, G.SETTINGS.CUSTOM_DECK.Collabs[k])
+    end
     gameMainMenuRef(self, change_context)
     UIBox({
         definition = {
@@ -245,7 +248,7 @@ function buildModDescTab(mod)
             if (G.localization.descriptions.Mod or {})[mod.id] then
                 modNodes[#modNodes + 1] = {}
                 local loc_vars = mod.description_loc_vars and mod:description_loc_vars() or {}
-                localize { type = 'descriptions', key = loc_vars.key or mod.id, set = 'Mod', nodes = modNodes[#modNodes], vars = loc_vars.vars, scale = loc_vars.scale, text_colour = loc_vars.text_colour }
+                localize { type = 'descriptions', key = loc_vars.key or mod.id, set = 'Mod', nodes = modNodes[#modNodes], vars = loc_vars.vars, scale = loc_vars.scale, text_colour = loc_vars.text_colour, shadow = loc_vars.shadow }
                 modNodes[#modNodes] = desc_from_rows(modNodes[#modNodes])
                 modNodes[#modNodes].config.colour = loc_vars.background_colour or modNodes[#modNodes].config.colour
             else

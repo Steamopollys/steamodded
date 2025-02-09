@@ -193,3 +193,72 @@ if self.cost ~= 0 then
     inc_career_stat('c_shop_dollars_spent', self.cost)
 end'''
 line_prepend = '$indent'
+
+# Add support for saving consumables
+# comment
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+if card.ability.consumeable then
+    if (card.area == G.pack_cards and G.pack_cards) then
+'''
+payload = '''
+if card.ability.consumeable and booster_obj and booster_obj.select_card then
+    if (card.area == G.pack_cards and G.pack_cards) then
+        return {n=G.UIT.ROOT, config = {padding = 0, colour = G.C.CLEAR}, nodes={
+                {n=G.UIT.R, config={ref_table = card, r = 0.08, padding = 0.1, align = "bm", minw = 0.5*card.T.w - 0.15, maxw = 0.9*card.T.w - 0.15, minh = 0.3*card.T.h, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'use_card', func = 'can_select_from_booster'}, nodes={
+                {n=G.UIT.T, config={text = localize('b_select'),colour = G.C.UI.TEXT_LIGHT, scale = 0.45, shadow = true}}
+                }},
+            }}
+    end
+end
+'''
+
+# comment
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+match_indent = true
+position = 'at'
+pattern = '''
+if card.ability.consumeable then
+      if nc then
+'''
+payload = '''
+if booster_obj and booster_obj.select_card then
+    local area = type(booster_obj.select_card) == 'table' and (booster_obj.select_card[e.config.ref_table.ability.set] or nil) or booster_obj.select_card
+    G[area]:emplace(card)
+    play_sound('card1', 0.8, 0.6)
+    play_sound('generic1')
+    dont_dissolve = true
+    delay_fac = 0.2
+elseif card.ability.consumeable then
+      if nc then
+'''
+# comment
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+if area == G.consumeables then
+'''
+payload = '''
+booster_obj = nil
+'''
+# comment
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+match_indent = true
+position = 'after'
+pattern = '''
+G.FUNCS.skip_booster = function(e)
+'''
+payload = '''
+booster_obj = nil
+'''

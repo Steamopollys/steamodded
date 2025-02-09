@@ -778,7 +778,7 @@ function SMODS.poll_enhancement(args)
     local options = args.options or get_current_pool("Enhanced")
     if args.no_replace then
         for i, k in pairs(options) do
-            if G.P_CENTERS[k].replace_base_card then
+            if G.P_CENTERS[k] and G.P_CENTERS[k].replace_base_card then
                 options[i] = 'UNAVAILABLE'
             end
         end
@@ -831,6 +831,20 @@ function time(func, ...)
     local end_time = love.timer.getTime()
     return 1000*(end_time-start_time)
 end
+
+function Card:add_sticker(sticker, bypass_check)
+    local sticker = SMODS.Stickers[sticker]
+    if bypass_check or (sticker and sticker.should_apply and type(sticker.should_apply) == 'function' and sticker:should_apply(self, self.config.center, self.area, true)) then
+        sticker:apply(self, true)
+    end
+end
+
+function Card:remove_sticker(sticker)
+    if self.ability[sticker] then
+        SMODS.Stickers[sticker]:apply(self, false)
+    end
+end
+
 
 function Card:calculate_sticker(context, key)
     local sticker = SMODS.Stickers[key]
@@ -983,7 +997,86 @@ SMODS.find_mod = function(id)
     return ret
 end
 
+local function bufferCardLimitForSmallDS(cards, scaleFactor)
+    local cardCount = #cards
+    if type(scaleFactor) ~= "number" or scaleFactor <= 0 then
+        sendWarnMessage("scaleFactor must be a positive number")
+        return cardCount
+    end
+    -- Ensure card_limit is always at least the number of cards
+    G.cdds_cards.config.card_limit = math.max(G.cdds_cards.config.card_limit, cardCount)
+    -- Calculate the buffer size dynamically based on the scale factor
+    local buffer = 0
+    if cardCount < G.cdds_cards.rankCount then
+        -- Buffer decreases as cardCount approaches G.cdds_cards.rankCount, modulated by scaleFactor
+        buffer = math.ceil(((G.cdds_cards.rankCount - cardCount) / scaleFactor))
+    end
+    G.cdds_cards.config.card_limit = math.max(cardCount, cardCount + buffer)
 
+    return G.cdds_cards.config.card_limit
+end
+
+G.FUNCS.update_collab_cards = function(key, suit, silent)
+    if type(key) == "number" then
+        key = G.COLLABS.options[suit][key]
+    end
+    if not G.cdds_cards then return end
+    local cards = {}
+    local cards_order = {}
+    local deckskin = SMODS.DeckSkins[key]
+    local palette = deckskin.palette_map and deckskin.palette_map[G.SETTINGS.colour_palettes[suit] or ''] or (deckskin.palettes or {})[1]
+    local suit_data = SMODS.Suits[suit]
+    local d_ranks = (palette and (palette.display_ranks or palette.ranks)) or deckskin.display_ranks or deckskin.ranks
+    if deckskin.outdated then
+        local reversed = {}
+        for i = #d_ranks, 1, -1 do
+           table.insert(reversed, d_ranks[i])
+        end
+        d_ranks = reversed
+    end
+
+    local diff_order
+    if #G.cdds_cards.cards ~= #d_ranks then
+        diff_order = true
+    else
+        for i,v in ipairs(G.cdds_cards.cards) do
+            if v.config.card_key ~= suit_data.card_key..'_'..SMODS.Ranks[d_ranks[i]].card_key then
+                diff_order = true
+                break
+            end
+        end
+    end
+
+    if diff_order then
+        for i = #G.cdds_cards.cards, 1, -1 do
+            G.cdds_cards:remove_card(G.cdds_cards.cards[i]):remove()
+        end
+        for i, r in ipairs(d_ranks) do
+            local rank = SMODS.Ranks[r]
+            local card_code = suit_data.card_key .. '_' .. rank.card_key
+            cards_order[#cards_order+1] = card_code
+            local card = Card(G.cdds_cards.T.x+G.cdds_cards.T.w/2, G.cdds_cards.T.y+G.cdds_cards.T.h/2, G.CARD_W*1.2, G.CARD_H*1.2, G.P_CARDS[card_code], G.P_CENTERS.c_base)
+            -- Instead of no ui it would be nice to pass info queue to this so that artist credits can be done?
+            card.no_ui = true
+    
+            G.cdds_cards:emplace(card)
+        end
+    end
+    G.cdds_cards.config.card_limit = bufferCardLimitForSmallDS(cards, 2.5)
+end
+
+G.FUNCS.update_suit_colours = function(suit, skin, palette_num)
+    skin = skin and SMODS.DeckSkins[skin] or nil
+    local new_colour_proto = G.C.SO_1[suit]
+    if G.SETTINGS.colour_palettes[suit] == 'lc' or G.SETTINGS.colour_palettes[suit] == 'hc' then
+        new_colour_proto = G.C["SO_"..((G.SETTINGS.colour_palettes[suit] == 'hc' and 2) or (G.SETTINGS.colour_palettes[suit] == 'lc' and 1))][suit]
+    end
+    if skin and not skin.outdated then
+        local palette = (palette_num and skin.palettes[palette_num]) or skin.palette_map and skin.palette_map[G.SETTINGS.colour_palettes[suit] or '']
+        new_colour_proto = palette and palette.colour or new_colour_proto
+    end
+    G.C.SUITS[suit] = new_colour_proto
+end
 
 -- This function handles the calculation of each effect returned to evaluate play.
 -- Can easily be hooked to add more calculation effects ala Talisman
@@ -1038,13 +1131,32 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
         end
         return true
     end
+
+    if (key == 'x_chips' or key == 'xchips' or key == 'Xchip_mod') and amount ~= 1 then 
+        hand_chips = mod_chips(hand_chips * amount)
+        update_hand_text({delay = 0}, {chips = hand_chips, mult = mult})
+        if not effect.remove_default_message then
+            if from_edition then
+                card_eval_status_text(scored_card, 'jokers', nil, percent, nil, {message = localize{type='variable',key= amount > 0 and 'a_xchips' or 'a_xchips_minus',vars={amount}}, Xchips_mod =  amount, colour =  G.C.EDITION, edition = true})
+            else
+                if key ~= 'Xchip_mod' then
+                    if effect.xchip_message then
+                        card_eval_status_text(scored_card or effect.card or effect.focus, 'extra', nil, percent, nil, effect.xchip_message)
+                    else
+                        card_eval_status_text(scored_card or effect.card or effect.focus, 'x_chips', amount, percent)
+                    end
+                end
+            end
+        end
+        return true
+    end
     
     if (key == 'x_mult' or key == 'xmult' or key == 'Xmult' or key == 'x_mult_mod' or key == 'Xmult_mod') and amount ~= 1 then 
         mult = mod_mult(mult * amount)
         update_hand_text({delay = 0}, {chips = hand_chips, mult = mult})
         if not effect.remove_default_message then
             if from_edition then
-                card_eval_status_text(scored_card, 'jokers', nil, percent, nil, {message = localize{type='variable',key= amount > 0 and 'a_xmult' or 'a_xmult_minus',vars={amount}}, x_mult_mod =  amount, colour =  G.C.EDITION, edition = true})
+                card_eval_status_text(scored_card, 'jokers', nil, percent, nil, {message = localize{type='variable',key= amount > 0 and 'a_xmult' or 'a_xmult_minus',vars={amount}}, Xmult_mod =  amount, colour =  G.C.EDITION, edition = true})
             else
                 if key ~= 'Xmult_mod' then
                     if effect.xmult_message then
@@ -1109,11 +1221,11 @@ SMODS.calculate_effect = function(effect, scored_card, from_edition, pre_jokers)
     local calculated = false
     for _, key in ipairs(SMODS.calculation_keys) do
         if effect[key] then
+            if effect.juice_card then G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function () effect.juice_card:juice_up(0.1); scored_card:juice_up(0.1); return true end})) end
             calculated = SMODS.calculate_individual_effect(effect, scored_card, key, effect[key], from_edition, pre_jokers)
             percent = (percent or 0) + (percent_delta or 0.08)
         end
     end
-    if effect.juice_card then G.E_MANAGER:add_event(Event({trigger = 'immediate', func = function () effect.juice_card:juice_up(0.1); scored_card:juice_up(0.1) return true end})) end
     if effect.effect then calculated = true end
     if effect.remove then calculated = true end
     return calculated
@@ -1122,6 +1234,7 @@ end
 SMODS.calculation_keys = {
     'chips', 'h_chips', 'chip_mod',
     'mult', 'h_mult', 'mult_mod',
+    'x_chips', 'xchips', 'Xchip_mod',
     'x_mult', 'Xmult', 'xmult', 'x_mult_mod', 'Xmult_mod',
     'p_dollars', 'dollars', 'h_dollars',
     'swap',
@@ -1138,6 +1251,7 @@ SMODS.calculate_repetitions = function(card, context, reps)
         if value.repetitions then
             for h=1, value.repetitions do
                 value.card = value.card or card
+                value.message = value.message or (not value.remove_default_message and localize('k_again_ex'))
                 reps[#reps+1] = {key = value}
             end
         end
@@ -1155,6 +1269,7 @@ SMODS.calculate_repetitions = function(card, context, reps)
 
                     for h=1, value.repetitions do
                         value.card = value.card or _card
+                        value.message = value.message or (not value.remove_default_message and localize('k_again_ex'))
                         reps[#reps+1] = {key = value}
                         for i=1, rt do
                             local rt_eval, rt_post = eval_card(_card, context)
@@ -1188,6 +1303,7 @@ SMODS.calculate_retriggers = function(card, context, _ret)
                 if value.repetitions then
                     for h=1, value.repetitions do
                         value.retrigger_card = _card
+                        value.message = value.message or (not value.remove_default_message and localize('k_again_ex'))
                         retriggers[#retriggers + 1] = value
                     end
                 end
@@ -1328,7 +1444,7 @@ function SMODS.score_card(card, context)
                     --calculate the joker individual card effects
                     local eval, post = eval_card(_card, context)
                     if next(eval) then
-                        eval.juice_card = eval.card
+                        if eval.jokers then eval.jokers.juice_card = eval.jokers.juice_card or eval.jokers.card or _card end
                         table.insert(effects, eval)
                         for _, v in ipairs(post) do effects[#effects+1] = v end
                         if eval.retriggers then
@@ -1663,3 +1779,14 @@ SMODS.get_optional_features = function()
         end
     end
 end
+
+G.FUNCS.can_select_from_booster = function(e)
+    local area = booster_obj and booster_obj.select_card and (type(booster_obj.select_card) == 'table' and (booster_obj.select_card[e.config.ref_table.ability.set] or nil) or booster_obj.select_card) or nil
+    if area and #G[area].cards < G[area].config.card_limit then 
+        e.config.colour = G.C.GREEN
+        e.config.button = 'use_card'
+    else
+      e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+      e.config.button = nil
+    end
+  end
