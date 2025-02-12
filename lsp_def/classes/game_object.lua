@@ -7,7 +7,7 @@
 ---@field registered? boolean
 ---@field obj_table? table<string, SMODS.GameObject|table> Table of objects registered to this class. 
 ---@field obj_buffer? string[] Array of keys to all objects registered to this class. 
----@field dependencies? string[] Array of mod IDs. Object will fail to register if any specified mods cannot load. 
+---@field dependencies? string|string[] Array of mod IDs. Object will fail to register if any specified mods cannot load. 
 ---@field subclasses? table[] Array of child classes. 
 ---@field super? table Parent class. 
 ---@field key? string Unique string to reference this object. 

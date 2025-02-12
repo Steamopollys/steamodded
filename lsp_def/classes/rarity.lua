@@ -40,7 +40,7 @@ SMODS.Rarities = {}
 ---Polls all rarities tied to provided ObjectType. 
 function SMODS.poll_rarity(_pool_key, _rand_key) end
 
----@param object_type SMODS.ObjectType
+---@param object_type SMODS.ObjectType|table
 ---@param rarity SMODS.Rarity
 ---Injects `rarity` into `object_type`. 
 function SMODS.inject_rarity(object_type, rarity) end
