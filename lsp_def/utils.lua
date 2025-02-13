@@ -67,3 +67,112 @@ function SMODS.merge_lists(...) end
 ---@return table
 ---Returns HEX color attributed to the string. 
 function HEX(hex) end
+
+---@param context CalcContext|table 
+---@param return_table table 
+--- Used to calculate contexts across `G.jokers`, `scoring_hand` (if present), `G.play` and `G.GAME.selected_back`.
+--- Hook this function to add different areas to MOST calculations
+function SMODS.calculate_context(context, return_table) end
+
+---@param card Card|table
+---@param context CalcContext|table
+--- Scores the provided `card`. 
+function SMODS.score_card(card, context) end
+
+---@param context CalcContext|table
+---@param scoring_hand Card[]|table[]?
+--- Handles calculating the scoring hand. Defaults to `context.cardarea.cards` if `scoring_hand` is not provided.
+function SMODS.calculate_main_scoring(context, scoring_hand) end
+
+---@param context CalcContext|table
+--- Handles calculating end of round effects. 
+function SMODS.calculate_end_of_round_effects(context) end
+
+---@param context CalcContext|table
+---@param cards_destroyed Card[]|table[]
+---@param scoring_hand Card[]|table[]
+--- Handles calculating destroyed cards. 
+function SMODS.calculate_destroying_cards(context, cards_destroyed, scoring_hand) end
+
+---@param effect table
+---@param scored_card Card|table
+---@param key string
+---@param amount number|boolean 
+---@param from_edition boolean
+---@return boolean?
+--- This function handles the calculation of each effect returned to evaluate play.
+--- Can easily be hooked to add more calculation effects ala Talisman
+function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition) end
+
+---@param effect table
+---@param scored_card Card|table
+---@param from_edition boolean 
+---@return table
+--- Handles calculating effects on provided `scored_card`. 
+function SMODS.calculate_effect(effect, scored_card, from_edition, pre_jokers) end
+
+---@param effects table
+---@param card Card|table
+--- Used to calculate a table of effects generated in evaluate_play
+function SMODS.trigger_effects(effects, card) end
+
+---@param card Card|table
+---@param context CalcContext|table
+---@param _ret table
+---@return number[]
+--- Calculate retriggers on provided `card`. 
+function SMODS.calculate_retriggers(card, context, _ret) end
+
+---@param card Card|table
+---@param context CalcContext|table
+---@param reps table[]
+function SMODS.calculate_repetitions(card, context, reps) end
+
+---@param _type string
+---@param _context string
+---@return CardArea[]|table[]
+--- Returns table of CardAreas. 
+function SMODS.get_card_areas(_type, _context) end
+
+---@param card Card|table
+---@param extra_only boolean? Return table will not have the card's actual enhancement. 
+---@return table<string, true> enhancements
+--- Returns table of enhancements the provided `card` has. 
+function SMODS.get_enhancements(card, extra_only) end
+
+---@param card Card|table
+---@param key string
+---@return boolean 
+--- Checks if this card a specific enhancement. 
+function SMODS.has_enhancement(card, key) end
+
+---@param card Card|table
+---@param effects table
+---@param context CalcContext|table
+--- Calculates quantum Enhancements. Require `SMODS.optional_features.quantum_enhancements` to be `true`. 
+function SMODS.calculate_quantum_enhancements(card, effects, context) end
+
+---@param card Card|table
+---@return boolean?
+--- Check if the card shoud shatter. 
+function SMODS.shatters(card) end
+
+---@param card Card|table
+---@return boolean?
+--- Checks if the card counts as having no suit. 
+function SMODS.has_no_suit(card) end
+
+---@param card Card|table
+---@return boolean?
+--- Checks if the card counts as having all suits. 
+function SMODS.has_any_suit(card) end
+
+---@param card Card|table
+---@return boolean?
+--- Checks if the card counts as having no rank. 
+function SMODS.has_no_rank(card) end
+
+---@param card Card|table
+---@return boolean?
+--- Checks if the card counts as always scoring. 
+function SMODS.always_scores(card) end
