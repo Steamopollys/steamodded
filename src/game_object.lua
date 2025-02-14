@@ -1025,7 +1025,7 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
                 -- Should "cards" be formatted as `{[<center key>] = true}` or {<center key>}?
                 -- Changing "cards" and "pools" wouldn't be hard to do, just depends on preferred format
                 if ((self.pools and self.pools[k]) or (v.cards and v.cards[self.key])) then
-                    SMODS.ObjectTypes[k]:inject_card(self)
+                    v:inject_card(self)
                 end
             end
         end,
@@ -1034,7 +1034,7 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
             SMODS.remove_pool(G.P_CENTER_POOLS[self.set], self.key)
             for k, v in pairs(SMODS.ObjectTypes) do
                 if ((self.pools and self.pools[k]) or (v.cards and v.cards[self.key])) then
-                    SMODS.ObjectTypes[k]:remove_card(self)
+                    v:delete_card(self)
                 end
             end
             local j

@@ -393,7 +393,7 @@ function SMODS.create_mod_badges(obj, badges)
         badges.mod_set[obj.mod.id] = true
         if obj.dependencies then
             for _, v in ipairs(obj.dependencies) do
-                local m = SMODS.Mods[v]
+                local m = assert(SMODS.find_mod(v)[1])
                 if not badges.mod_set[m.id] then
                     table.insert(mods, m)
                     badges.mod_set[m.id] = true
@@ -869,7 +869,7 @@ function Card:calculate_enhancement(context)
 end
 
 function SMODS.get_enhancements(card, extra_only)
-    if not SMODS.optional_features.quantum_enhancements then
+    if not SMODS.optional_features.quantum_enhancements or not G.hand then
         return not extra_only and card.ability.set == 'Enhanced' and { [card.config.center.key] = true } or {}
     end
     if card.extra_enhancements and next(card.extra_enhancements) then
@@ -969,6 +969,11 @@ function SMODS.always_scores(card)
     card.extra_enhancements = nil
     for k, _ in pairs(SMODS.get_enhancements(card)) do
         if k == 'm_stone' or G.P_CENTERS[k].always_scores then return true end
+    end
+    if (G.P_CENTERS[(card.edition or {}).key] or {}).always_scores then return true end
+    if (G.P_SEALS[card.seal or {}] or {}).always_scores then return true end
+    for k, v in pairs(SMODS.Stickers) do
+        if v.always_scores and card.ability[k] then return true end
     end
 end
 
@@ -1652,8 +1657,20 @@ local flat_copy_table = function(tbl)
     return new
 end
 
----Seatch for val anywhere deep in tbl. Return a table of finds, or the first found if immediate is provided.
-SMODS.deepfind = function(tbl, val, immediate)
+---Seatch for val anywhere deep in tbl. Return a table of finds, or the first found if args.immediate is provided.
+SMODS.deepfind = function(tbl, val, mode, immediate)
+    --backwards compat (remove later probably)
+    if mode == true then
+        mode = "v"
+        immediate = true
+    end
+    if mode == "index" then
+        mode = "i"
+    elseif mode == "value" then
+        mode = "v"
+    elseif mode ~= "v" and mode ~= "i" then
+        mode = "v"
+    end
     local seen = {[tbl] = true}
     local collector = {}
     local stack = { {tbl = tbl, path = {}, objpath = {}} }
@@ -1672,7 +1689,7 @@ SMODS.deepfind = function(tbl, val, immediate)
         --for every table that we have
         for i, v in pairs(currentTbl) do
             --if the value matches
-            if v == val then
+            if (mode == "v" and v == val) or (mode == "i") and i == val then
                 --copy our values and store it in the collector
                 local newPath = flat_copy_table(currentPath)
                 local newObjPath = flat_copy_table(currentObjPath)
@@ -1699,51 +1716,9 @@ SMODS.deepfind = function(tbl, val, immediate)
     return collector
 end
 
---Seatch for val as an index anywhere deep in tbl. Return a table of finds, or the first found if immediate is provided.
+--backwards compat (remove later probably)
 SMODS.deepfindbyindex = function(tbl, val, immediate)
-    local seen = {[tbl] = true}
-    local collector = {}
-    local stack = { {tbl = tbl, path = {}, objpath = {}} }
-
-    --while there are any elements to traverse
-    while #stack > 0 do
-        --pull the top off of the stack and start traversing it (by default this will be the last element of the last traversed table found in pairs)
-        local current = table.remove(stack)
-        --the current table we wish to traverse
-        local currentTbl = current.tbl
-        --the current path
-        local currentPath = current.path
-        --the current object path
-        local currentObjPath = current.objpath
-
-        --for every table that we have
-        for i, v in pairs(currentTbl) do
-            --if the value matches
-            if i == val then
-                --copy our values and store it in the collector
-                local newPath = flat_copy_table(currentPath)
-                local newObjPath = flat_copy_table(currentObjPath)
-                table.insert(newPath, i)
-                table.insert(newObjPath, v)
-                table.insert(collector, {table = currentTbl, index = i, tree = newPath, objtree = newObjPath})
-                if immediate then
-                    return collector
-                end
-                --otherwise, if its a traversable table we havent seen yet
-            elseif type(v) == "table" and not seen[v] then
-                --make sure we dont see it again
-                seen[v] = true
-                --and then place it on the top of the stack
-                local newPath = flat_copy_table(currentPath)
-                local newObjPath = flat_copy_table(currentObjPath)
-                table.insert(newPath, i)
-                table.insert(newObjPath, v)
-                table.insert(stack, {tbl = v, path = newPath, objpath = newObjPath})
-            end
-        end
-    end
-
-    return collector
+    return SMODS.deepfind(tbl, val, "i", immediate)
 end
 
 -- this is for debugging
@@ -1780,7 +1755,7 @@ SMODS.get_optional_features = function()
 end
 
 G.FUNCS.can_select_from_booster = function(e)
-    local area = booster_obj and booster_obj.select_card and (type(booster_obj.select_card) == 'table' and (booster_obj.select_card[e.config.ref_table.ability.set] or nil) or booster_obj.select_card) or nil
+    local area = booster_obj and e.config.ref_table:selectable_from_pack(booster_obj)
     if area and #G[area].cards < G[area].config.card_limit then 
         e.config.colour = G.C.GREEN
         e.config.button = 'use_card'
@@ -1789,3 +1764,17 @@ G.FUNCS.can_select_from_booster = function(e)
       e.config.button = nil
     end
   end
+
+function Card.selectable_from_pack(card, pack)
+    if pack.select_exclusions then
+        for _, key in ipairs(pack.select_exclusions) do
+            if key == card.config.center_key then return false end
+        end
+    end
+    if pack.select_card then
+        if type(pack.select_card) == 'table' then
+            if pack.select_card[card.ability.set] then return pack.select_card[card.ability.set] else return false end
+        end
+        return pack.select_card
+    end
+end

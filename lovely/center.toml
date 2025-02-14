@@ -325,7 +325,7 @@ position = 'before'
 payload = '''
 local obj = center or self.config.center
 if obj.redeem and type(obj.redeem) == 'function' then
-    obj:redeem(self)
+    obj:redeem(card_to_save)
     return
 end'''
 
@@ -409,12 +409,14 @@ match_indent = true
 position = 'at'
 payload = '''
 local nc
-if card.ability.consumeable then
+local select_to = card.area == G.pack_cards and booster_obj and booster_obj.select_card and card:selectable_from_pack(booster_obj)
+if card.ability.consumeable and not select_to then
     local obj = card.config.center
     if obj.keep_on_use and type(obj.keep_on_use) == 'function' then
         nc = obj:keep_on_use(card)
     end
 end
+if not card.from_area then card.from_area = card.area end
 if card.area and (not nc or card.area == G.pack_cards) then card.area:remove_card(card) end'''
 
 [[patches]]
