@@ -45,7 +45,7 @@ return {
                 text = {
                     '{C:attention}Conflit de Préfixe!{}',
                     'Le préfixe de ce mod est',
-                    'Le même que celui d\'un autre mod.',
+                    'le même que celui d\'un autre mod.',
                     '({C:attention}#1#{})'
                 }
             },
@@ -53,7 +53,7 @@ return {
                 text = {
                     '{C:attention}Fichier principal manquant!{}',
                     'Le fichier principal de ce mod',
-                    'N\'a pas pu être trouvé.',
+                    'n\'a pas pu être trouvé.',
                     '({C:attention}#1#{})'
                 }
             },
