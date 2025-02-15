@@ -3,9 +3,17 @@
 --- Core SMODS classes/functions
 SMODS = {}
 
+---@type string
+--- Current SMODS version
+MODDED_VERSION = ""
+
+---@type string
+--- Path to SMODS directory
+SMODS.path = ""
+
 ---@class Mod
 ---@field id string Unique ID. 
----@field name string Name of the mod. 
+---@field name? string Name of the mod. 
 ---@field display_name? string Display name of the mod. 
 ---@field description string Mod description. 
 ---@field priority? number Loaded mods are sorted via priority. 
@@ -29,3 +37,31 @@ SMODS = {}
 ---@field set_ability_reset_keys? fun(): table When a card's `ability` table is changed, values with a key matching inside this table will not persist. 
 ---@field reset_game_globals? fun(run_start: boolean) Allows resetting global values every new run or round. 
 ---@field set_debuff? fun(card: Card|table): boolean|string? Allows controlling when a card is debuffed or not. Return `"prevent_debuff"` to force a card to be undebuffable. 
+---@field meta_mod? boolean Marked as a "meta mod" by SMODS. Only "Steamodded", "Lovely", and "Balatro" are provided by default.
+
+---@type table<string, Mod|table>
+SMODS.Mods = {}
+
+SMODS.Mods["Steamodded"] = SMODS
+SMODS.Mods["Lovely"] = {
+    id = "Lovely",
+    can_load = true,
+    meta_mod = true
+}
+SMODS.Mods["Balatro"] = {
+    id = "Balatro",
+    can_load = true,
+    meta_mod = true
+}
+
+---@param modsDirectory string
+--- Loads mods. 
+function loadMods(modsDirectory) end
+
+--- Initializes Steamodded. 
+function initSteamodded() end
+
+--- Injects all classes and items. 
+function SMODS.injectItems() end
+
+

@@ -46,6 +46,7 @@
 ---@field in_pool? fun(self: SMODS.Center|table, args: table): boolean? , table? Allows configuring if the card is allowed to spawn. 
 ---@field calculate? fun(self: SMODS.Center|table, card: Card|table, context: CalcContext|table): table?, boolean?  Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@field create_fake_card? fun(self: SMODS.Center|table): table Creates a fake card representing this center. Used internally for `generate_ui` in cases where recieved `card` param is nil. 
+---@field on_select? fun(self: SMODS.Center|table, card: Card|table)
 ---@overload fun(self: SMODS.Center): SMODS.Center
 SMODS.Center = setmetatable({}, {
     __call = function(self)

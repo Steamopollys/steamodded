@@ -55,6 +55,8 @@
 ---@field playing_card_added? true Check if `true` for effects after a playing card was added into the deck. 
 ---@field check_enhancement? true Check if `true` for applying quantum enhancements. 
 ---@field post_trigger? true Check if `true` for effects after another Joker is triggered. 
+---@field modify_scoring_hand? true Check if `true` for modifying the scoring hand. 
+---@field ending_booster? true Check if `true` for effects after a Booster Pack ends. 
 
 --- Util Functions
 
@@ -174,5 +176,24 @@ function SMODS.has_no_rank(card) end
 
 ---@param card Card|table
 ---@return boolean?
---- Checks if the card counts as always scoring. 
+--- Checks if the card should score. 
 function SMODS.always_scores(card) end
+
+---@param card Card|table
+--- Checks if the card should not score. 
+function SMODS.never_scores(card) end
+
+---@param path string Path to the file (excluding `mod.path`)
+---@param id string? Key to Mod ID. Default to `SMODS.current_mod` if not provided. 
+---@return function|nil 
+---@return nil|string err
+--- Loads the file from provided path. 
+function SMODS.load_file(path, id) end
+
+---@param obj SMODS.GameObject|table
+---@param prefix string
+---@param condition boolean?
+---@param key string?
+--- Modifies the object's key. 
+function SMODS.modify_key(obj, prefix, condition, key) end
+
