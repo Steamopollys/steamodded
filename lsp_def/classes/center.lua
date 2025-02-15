@@ -37,7 +37,7 @@
 ---@field set_badges? fun(self: SMODS.Center|table, card: Card|table, badges: table) Append `badges` for additional badges on the UI display of the card. To override the rarity/card type badge, see `SMODS.Center:set_card_type_badge()`. 
 ---@field set_card_type_badge? fun(self: SMODS.Center|table, card: Card|table, badges: table) Overrides the rarity/card type badges, allowing you to Append `badges` to replace them. To add extra badges, see `SMODS.Center:sset_badges()`. 
 ---@field draw? fun(self: SMODS.Center|table, card: Card|table, layer: string) Draws the sprite and shader of the card. 
----@field update? fun(self: SMODS.Center|table, card: Card|table, dt: number) Allows logic to be run per-frame. 
+---@field update? fun(self: SMODS.Center|table, card: Card|table, dt: number) Allows logic for this card to be run per-frame. 
 ---@field set_sprites? fun(self: SMODS.Center|table, card: Card|table, front?: Card|table) Used for setting and manipulating sprites of the card when created or loaded. 
 ---@field load? fun(self: SMODS.Center|table, card: Card|table, card_table: table, other_card?: table) Used when the card itself is being reloaded. 
 ---@field set_ability? fun(self: SMODS.Center|table, card: Card|table, initial?: boolean, delay_sprites?: boolean) Sets up initial ability and size parameters for the card. 
