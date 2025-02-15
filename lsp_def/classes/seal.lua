@@ -24,7 +24,7 @@
 ---@field inject? fun(self: SMODS.Seal|table, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: SMODS.Seal|table, key: string, obj: table, silent?: boolean): nil|SMODS.Seal Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: SMODS.Seal|table, key: string): table? Returns an object if one matches the `key`. 
----@field loc_vars? fun(self: SMODS.Seal|table, info_queue: table, card: Card|table): table? Provides control over displaying the tooltip of this seal. 
+---@field loc_vars? fun(self: SMODS.Seal|table, info_queue: table, card: Card|table): table? Provides control over displaying the tooltip of this seal. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for details. 
 ---@field calculate? fun(self: SMODS.Seal|table, card: Card|table, context: CalcContext|table): table?, boolean?  Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@field get_p_dollars? fun(self: SMODS.Seal|table, card: Card|table): number? Gives money when a card with this seal is played. 
 ---@field draw? fun(self: SMODS.Seal|table, card: Card|table, layer: string) Draws the sprite and shader of the seal. 

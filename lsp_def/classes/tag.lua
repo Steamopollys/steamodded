@@ -24,7 +24,7 @@
 ---@field apply? fun(self: SMODS.Tag|table, tag: Tag|table, context: table): any? Defines behaviour when a tag triggers. To trigger, call `Tag:yep()`. See [SMODS.Tag](https://github.com/Steamodded/smods/wiki/SMODS.Tag) wiki for details. 
 ---@field set_ability? fun(self: SMODS.Tag|table, tag: Tag|table) Sets up initial ability for the tag. Values should be stored in `tag.ability`. 
 ---@field generate_ui? fun(self: SMODS.Tag|table, info_queue: table, tag: Tag|table, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the tag. 
----@field loc_vars? fun(self: SMODS.Tag|table, info_queue: table, tag: Tag|table): table? Provides simple control over displaying descriptions and tooltips of the tag. 
+---@field loc_vars? fun(self: SMODS.Tag|table, info_queue: table, tag: Tag|table): table? Provides simple control over displaying descriptions and tooltips of the tag. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for details. 
 ---@field in_pool? fun(self: SMODS.Tag|table, args: table): nil|boolean, table? Allows configuring if the tag is allowed to spawn. 
 ---@overload fun(self: SMODS.Tag): SMODS.Tag
 SMODS.Tag = setmetatable({}, {

@@ -38,7 +38,7 @@
 ---@field stay_flipped? fun(self: SMODS.Blind|table, area: CardArea|table, card: Card|table): boolean Determines if a card is drawn face down. 
 ---@field modify_hand? fun(self: SMODS.Blind|table, cards: table, poker_hands: table, text: string, mult: number, hand_chips: number): number?, number?, boolean? Handles modifications of the base score for played poker hand. 
 ---@field get_loc_debuff_text? fun(self: SMODS.Blind|table): string? Handles text displayed for debuff warnings or invalid hands. 
----@field loc_vars? fun(self: SMODS.Blind|table): table? Provides control over displaying the Blind descriptions. 
+---@field loc_vars? fun(self: SMODS.Blind|table): table? Provides control over displaying the Blind descriptions. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for details. 
 ---@field collection_loc_vars? fun(self: SMODS.Blind|table): table? Provides control over displaying the Blind description in the collections menu. 
 ---@field in_pool? fun(self: SMODS.Blind|table): boolean Allows configuring if the Blind is allowed to appear. 
 ---@overload fun(self: SMODS.Blind): SMODS.Blind

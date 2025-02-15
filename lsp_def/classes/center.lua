@@ -31,7 +31,7 @@
 ---@field get_obj? fun(self: SMODS.Center|table, key: string): table? Returns an object if one matches the `key`. 
 ---@field delete? fun(self: SMODS.Center|table): boolean?  Removes provided center. 
 ---@field generate_ui? fun(self: SMODS.Center|table, info_queue: table, card: Card|table, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the card. 
----@field loc_vars? fun(self: SMODS.Center|table, info_queue: table, card: Card|table): table? Provides simple control over displaying descriptions and tooltips of the card. 
+---@field loc_vars? fun(self: SMODS.Center|table, info_queue: table, card: Card|table): table? Provides simple control over displaying descriptions and tooltips of the card. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for details. 
 ---@field locked_loc_vars? fun(self: SMODS.Center|table, info_queue: table, card: Card|table): table Provides simple control over displaying descriptions and toolips of this center when not unlocked. 
 ---@field check_for_unlock? fun(self: SMODS.Center|table, args: table): boolean? Configures unlock conditions. See vanilla implementation of `check_for_unlock` for details on `args` parameters. 
 ---@field set_badges? fun(self: SMODS.Center|table, card: Card|table, badges: table) Append `badges` for additional badges on the UI display of the card. To override the rarity/card type badge, see `SMODS.Center:set_card_type_badge()`. 

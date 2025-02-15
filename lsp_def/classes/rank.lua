@@ -4,6 +4,20 @@
 ---@field obj_table? table<string, SMODS.Rank|table> Table of objects registered to this class. 
 ---@field loc_txt? table|{name: string} Contains strings used for displaying text related to this object. 
 ---@field super? SMODS.GameObject|table Parent class. 
+---@field atlas? string Key to the rank's atlas. 
+---@field pos? table|{x: integer} Position of the center's sprite. `y` is handled automatically.
+---@field card_key? string Used for creating keys for playing cards. Card keys follow `S_R`, `S` being the rank and `R` being the rank. 
+---@field lc_atlas? string Atlas used for low-contrast cards. 
+---@field hc_atlas? string Atlas used for high-contrast cards. 
+---@field nominal? number Amount of chips this rank should score. 
+---@field shorthand? string Short description of this rank in deck preview. 
+---@field face_nominal? number Determines the displayed order of ranks with the same nominal value. 
+---@field face? boolean Sets if this rank counts as a "face" card. 
+---@field next? string[] List of keys to other ranks that come after this card. 
+---@field prev? string[] List of keys to other ranks that come before this card. Used when evaluating straights. 
+---@field strength_effect? table|{fixed?: number, random?: boolean, ignore?: boolean} Determines how cards with this rank behave when Strength is used. 
+---@field straight_edge? boolean Sets if this rank behaves like an Ace for straights. 
+---@field suit_map? table<string, number> For any suit keys in this table, use this rank's atlas over the suit's atlas. Provided number is the `y` position of the suit on the rank's atlas. 
 ---@field __call? fun(self: SMODS.Rank|table, o: SMODS.Rank|table): nil|SMODS.Rank
 ---@field extend? fun(self: SMODS.Rank|table, o: SMODS.Rank|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Rank|table): boolean? Ensures objects already registered will not register. 
@@ -18,6 +32,10 @@
 ---@field inject? fun(self: SMODS.Rank|table, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: SMODS.Rank|table, key: string, obj: table, silent?: boolean): nil|SMODS.Rank Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: SMODS.Rank|table, key: string): table? Returns an object if one matches the `key`. 
+---@field loc_vars? fun(self: SMODS.Rank|table, info_queue: table, card: Card|table) Allows adding tooltips onto cards with this suit. Return values not respected. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for details. 
+---@field draw? fun(self: SMODS.Rank|table, card: Card|table, layer: string) Allows drawing additional sprites or shaders onto cards with this suit. 
+---@field in_pool? fun(self: SMODS.Rank|table, args: table): boolean? Allows configuring if cards with this suit should spawn. 
+---@field delete? fun(self: SMODS.Rank|table) Deletes this suit. 
 ---@overload fun(self: SMODS.Rank): SMODS.Rank
 SMODS.Rank = setmetatable({}, {
     __call = function(self)
