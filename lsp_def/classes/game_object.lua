@@ -20,7 +20,7 @@
 ---@field __call? fun(self: SMODS.GameObject|table, o: SMODS.GameObject|table): nil|SMODS.GameObject
 ---@field extend? fun(self: SMODS.GameObject|table, o: SMODS.GameObject|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.GameObject|table): boolean? Ensures objects already registered will not register. 
----@field check_duplicate_key? fun(self: SMODS.GameObject|table): boolean? Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_key? fun(self: SMODS.GameObject|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.GameObject|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.GameObject|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.GameObject|table) Called during `inject_class`. Handles injecting loc_text. 

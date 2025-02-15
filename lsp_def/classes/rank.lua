@@ -21,7 +21,7 @@
 ---@field __call? fun(self: SMODS.Rank|table, o: SMODS.Rank|table): nil|SMODS.Rank
 ---@field extend? fun(self: SMODS.Rank|table, o: SMODS.Rank|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Rank|table): boolean? Ensures objects already registered will not register. 
----@field check_duplicate_key? fun(self: SMODS.Rank|table): boolean? Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_key? fun(self: SMODS.Rank|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.Rank|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Rank|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Rank|table) Called during `inject_class`. Handles injecting loc_text. 
@@ -32,7 +32,7 @@
 ---@field inject? fun(self: SMODS.Rank|table, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: SMODS.Rank|table, key: string, obj: table, silent?: boolean): nil|SMODS.Rank Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: SMODS.Rank|table, key: string): table? Returns an object if one matches the `key`. 
----@field loc_vars? fun(self: SMODS.Rank|table, info_queue: table, card: Card|table) Allows adding tooltips onto cards with this suit. Return values not respected. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for details. 
+---@field loc_vars? fun(self: SMODS.Rank|table, info_queue: table, card: Card|table) Allows adding tooltips onto cards with this suit. Return values not respected. 
 ---@field draw? fun(self: SMODS.Rank|table, card: Card|table, layer: string) Allows drawing additional sprites or shaders onto cards with this suit. 
 ---@field in_pool? fun(self: SMODS.Rank|table, args: table): boolean? Allows configuring if cards with this suit should spawn. 
 ---@field delete? fun(self: SMODS.Rank|table) Deletes this suit. 

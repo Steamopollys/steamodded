@@ -16,7 +16,7 @@
 ---@field __call? fun(self: SMODS.Sticker|table, o: SMODS.Sticker|table): nil|SMODS.Sticker
 ---@field extend? fun(self: SMODS.Sticker|table, o: SMODS.Sticker|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Sticker|table): boolean? Ensures objects already registered will not register. 
----@field check_duplicate_key? fun(self: SMODS.Sticker|table): boolean? Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_key? fun(self: SMODS.Sticker|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.Sticker|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Sticker|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Sticker|table) Called during `inject_class`. Handles injecting loc_text. 
@@ -27,7 +27,7 @@
 ---@field inject? fun(self: SMODS.Sticker|table, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: SMODS.Sticker|table, key: string, obj: table, silent?: boolean): nil|SMODS.Sticker Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: SMODS.Sticker|table, key: string): table? Returns an object if one matches the `key`. 
----@field loc_vars? fun(self: SMODS.Sticker|table, info_queue: table, card: Card|table): table? Provides control over displaying descriptions and tooltips of the sticker's tooltip. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for details. 
+---@field loc_vars? fun(self: SMODS.Sticker|table, info_queue: table, card: Card|table): table? Provides control over displaying descriptions and tooltips of the sticker's tooltip. See [SMODS.Sticker `loc_vars` implementation](https://github.com/Steamodded/smods/wiki/SMODS.Sticker#api-methods) documentation for details. 
 ---@field calculate? fun(self: SMODS.Sticker|table, card: Card|table, context: CalcContext|table): table?, boolean?  Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@field should_apply? boolean|fun(self: SMODS.Sticker|table, card: Card, center: table, area: CardArea, bypass_reroll?: boolean): boolean Determines if the sticker applies onto the card. If `bypass_reroll` is true, ignore RNG check. 
 ---@field apply? fun(self: SMODS.Sticker|table, card: Card|table, val: any) Handles applying and removing the sticker. By default, sets `card.ability[self.key] = val`. 

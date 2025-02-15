@@ -10,7 +10,7 @@
 ---@field __call? fun(self: SMODS.Tag|table, o: SMODS.Tag|table): nil|SMODS.Tag
 ---@field extend? fun(self: SMODS.Tag|table, o: SMODS.Tag|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Tag|table): boolean? Ensures objects already registered will not register. 
----@field check_duplicate_key? fun(self: SMODS.Tag|table): boolean? Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_key? fun(self: SMODS.Tag|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.Tag|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Tag|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Tag|table) Called during `inject_class`. Handles injecting loc_text. 
@@ -23,7 +23,7 @@
 ---@field get_obj? fun(self: SMODS.Tag|table, key: string): table? Returns an object if one matches the `key`. 
 ---@field apply? fun(self: SMODS.Tag|table, tag: Tag|table, context: table): any? Defines behaviour when a tag triggers. To trigger, call `Tag:yep()`. See [SMODS.Tag](https://github.com/Steamodded/smods/wiki/SMODS.Tag) wiki for details. 
 ---@field set_ability? fun(self: SMODS.Tag|table, tag: Tag|table) Sets up initial ability for the tag. Values should be stored in `tag.ability`. 
----@field generate_ui? fun(self: SMODS.Tag|table, info_queue: table, tag: Tag|table, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the tag. 
+---@field generate_ui? fun(self: SMODS.Tag|table, info_queue: table, tag: Tag|table, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the tag. See [`generate_ui` function](https://github.com/Steamodded/smods/wiki/Localization#generate_ui-advanced) documentation for details. 
 ---@field loc_vars? fun(self: SMODS.Tag|table, info_queue: table, tag: Tag|table): table? Provides simple control over displaying descriptions and tooltips of the tag. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for details. 
 ---@field in_pool? fun(self: SMODS.Tag|table, args: table): nil|boolean, table? Allows configuring if the tag is allowed to spawn. 
 ---@overload fun(self: SMODS.Tag): SMODS.Tag

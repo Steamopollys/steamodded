@@ -7,7 +7,7 @@
 ---@field __call? fun(self: SMODS.Joker|table, o: SMODS.Joker|table): nil|SMODS.Joker
 ---@field extend? fun(self: SMODS.Joker|table, o: SMODS.Joker|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Joker|table): boolean? Ensures objects already registered will not register. 
----@field check_duplicate_key? fun(self: SMODS.Joker|table): boolean? Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_key? fun(self: SMODS.Joker|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.Joker|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Joker|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Joker|table) Called during `inject_class`. Handles injecting loc_text. 

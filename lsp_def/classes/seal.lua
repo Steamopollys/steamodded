@@ -13,7 +13,7 @@
 ---@field __call? fun(self: SMODS.Seal|table, o: SMODS.Seal|table): nil|SMODS.Seal
 ---@field extend? fun(self: SMODS.Seal|table, o: SMODS.Seal|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Seal|table): boolean? Ensures objects already registered will not register. 
----@field check_duplicate_key? fun(self: SMODS.Seal|table): boolean? Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_key? fun(self: SMODS.Seal|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.Seal|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Seal|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Seal|table) Called during `inject_class`. Handles injecting loc_text. 
@@ -28,8 +28,8 @@
 ---@field calculate? fun(self: SMODS.Seal|table, card: Card|table, context: CalcContext|table): table?, boolean?  Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@field get_p_dollars? fun(self: SMODS.Seal|table, card: Card|table): number? Gives money when a card with this seal is played. 
 ---@field draw? fun(self: SMODS.Seal|table, card: Card|table, layer: string) Draws the sprite and shader of the seal. 
----@field update? fun(self: SMODS.Seal|table, card: Card|table, dt: number) Called every frame. 
----@field generate_ui? fun(self: SMODS.Seal|table, info_queue: table, card: Card|table, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the seal. 
+---@field update? fun(self: SMODS.Seal|table, card: Card|table, dt: number) Allows logic for this card to be run per-frame. 
+---@field generate_ui? fun(self: SMODS.Seal|table, info_queue: table, card: Card|table, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the seal. See [`generate_ui` function](https://github.com/Steamodded/smods/wiki/Localization#generate_ui-advanced) documentation for details. 
 ---@field new? fun(self, name, label, full_name, pos, loc_txt, atlas, discovered, color): any DEPRECATED. DO NOT USE
 ---@overload fun(self: SMODS.Seal): SMODS.Seal
 SMODS.Seal = setmetatable({}, {

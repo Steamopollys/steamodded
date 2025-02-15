@@ -16,7 +16,7 @@
 ---@field __call? fun(self: SMODS.Blind|table, o: SMODS.Blind|table): nil|SMODS.Blind
 ---@field extend? fun(self: SMODS.Blind|table, o: SMODS.Blind|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Blind|table): boolean? Ensures objects already registered will not register. 
----@field check_duplicate_key? fun(self: SMODS.Blind|table): boolean? Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_key? fun(self: SMODS.Blind|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.Blind|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Blind|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Blind|table) Called during `inject_class`. Handles injecting loc_text. 
@@ -38,7 +38,7 @@
 ---@field stay_flipped? fun(self: SMODS.Blind|table, area: CardArea|table, card: Card|table): boolean Determines if a card is drawn face down. 
 ---@field modify_hand? fun(self: SMODS.Blind|table, cards: table, poker_hands: table, text: string, mult: number, hand_chips: number): number?, number?, boolean? Handles modifications of the base score for played poker hand. 
 ---@field get_loc_debuff_text? fun(self: SMODS.Blind|table): string? Handles text displayed for debuff warnings or invalid hands. 
----@field loc_vars? fun(self: SMODS.Blind|table): table? Provides control over displaying the Blind descriptions. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for details. 
+---@field loc_vars? fun(self: SMODS.Blind|table): table? Provides control over displaying the Blind descriptions. See [SMODS.Blind `loc_vars` implementation](https://github.com/Steamodded/smods/wiki/SMODS.Blind#api-methods) documentation for return value details. 
 ---@field collection_loc_vars? fun(self: SMODS.Blind|table): table? Provides control over displaying the Blind description in the collections menu. 
 ---@field in_pool? fun(self: SMODS.Blind|table): boolean Allows configuring if the Blind is allowed to appear. 
 ---@overload fun(self: SMODS.Blind): SMODS.Blind

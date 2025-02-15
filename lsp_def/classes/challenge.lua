@@ -4,16 +4,16 @@
 ---@field obj_table? table<string, SMODS.Challenge|table> Table of objects registered to this class. 
 ---@field loc_txt? table|{name: string} Contains strings used for displaying text related to this object. 
 ---@field super? SMODS.GameObject|table Parent class. 
----@field rules? table|{custom?: table[]|{id: string, value?: any}[], modifiers?: table[]|{id: string, value?: any}} List of tables setting custom rules and modifiers. Each rule/modifier has an `id`, with optional `value` param (defaults to `true`).
+---@field rules? table|{custom?: table[]|{id: string, value?: any}[], modifiers?: table[]|{id: string, value?: any}} List of tables setting custom rules and modifiers. Each rule/modifier has an `id`, with optional `value` param (defaults to `true`). See [SMODS.Challenge](https://github.com/Steamodded/smods/wiki/SMODS.Challenge) Documentation for default rules/modifiers. 
 ---@field jokers? table[]|{id: string, edition?: string, eternal?: boolean, pinned?: boolean}[] List of tables setting jokers to start with. 
 ---@field consumeables? table[]|{id: string, edition?: string, eternal?: boolean}[] List of tables setting consumables to start with. 
 ---@field vouchers? table[]|{id: string}[] List of tables setting vouchers to start with. 
 ---@field restrictions? table|{banned_cards?: table[]|{id: string}[], banned_tags?: table[]|{id: string}[], banned_other?: table[]|{id: string, type: "blind"}[]} Contains IDs to objects to ban from the challenge. 
----@field deck? table|{type?: string|"Challenge Deck", cards?: table[], yes_ranks?: table<string, true>, yes_suits?: table<string, true>, no_ranks?: table<string, true>, no_suits?: table<string, true>, enhancement?: string, edition?: string, seal?: string} Defines the Challenge's deck. 
+---@field deck? table|{type?: string|"Challenge Deck", cards?: table[], yes_ranks?: table<string, true>, yes_suits?: table<string, true>, no_ranks?: table<string, true>, no_suits?: table<string, true>, enhancement?: string, edition?: string, seal?: string} Defines the Challenge's deck. See [SMODS.Challenge](https://github.com/Steamodded/smods/wiki/SMODS.Challenge) Documentation for details. 
 ---@field __call? fun(self: SMODS.Challenge|table, o: SMODS.Challenge|table): nil|SMODS.Challenge
 ---@field extend? fun(self: SMODS.Challenge|table, o: SMODS.Challenge|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Challenge|table): boolean? Ensures objects already registered will not register. 
----@field check_duplicate_key? fun(self: SMODS.Challenge|table): boolean? Ensures objects with duplicate keys will not register. Checked on __call but not take_ownerhsip. For take_ownership, the key must exist. 
+---@field check_duplicate_key? fun(self: SMODS.Challenge|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.Challenge|table) Registers the object. 
 ---@field check_dependencies? fun(self: SMODS.Challenge|table): boolean? Returns true if there's no failed dependencies, else false
 ---@field process_loc_text? fun(self: SMODS.Challenge|table) Called during `inject_class`. Handles injecting loc_text. 
