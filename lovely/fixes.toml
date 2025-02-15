@@ -594,6 +594,19 @@ pattern = '''and \(G\.hand\.cards\[1\] or \(G\.hand\.config\.card_limit <= 0\)\)
 position = "at"
 payload = ''' '''
 
+# Fix prng calls on collection advancing seeds
+# Keep vanilla behaviour for to-do list
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = "if key == 'seed' then return math.random() end"
+position = "after"
+payload = """
+if G.SETTINGS.paused and key ~= 'to_do' then return math.random() end
+"""
+overwrite = true
+match_indent = true
+
 # Fixes Steam API not loading on unix
 [[patches]]
 [patches.pattern]
