@@ -140,7 +140,7 @@ pattern = 'if area == G.consumeables then'
 position = 'before'
 match_indent = true
 payload = '''
-if nc and area == G.pack_cards then G.pack_cards:remove_card(card); G.consumeables:emplace(card) end'''
+if nc and area == G.pack_cards and not select_to then G.pack_cards:remove_card(card); G.consumeables:emplace(card) end'''
 
 # G.FUNC.use_card()
 [[patches]]
@@ -206,7 +206,7 @@ if card.ability.consumeable then
     if (card.area == G.pack_cards and G.pack_cards) then
 '''
 payload = '''
-if card.ability.consumeable and booster_obj and booster_obj.select_card then
+if card.ability.consumeable and card.area == G.pack_cards and booster_obj and booster_obj.select_card and card:selectable_from_pack(booster_obj) then
     if (card.area == G.pack_cards and G.pack_cards) then
         return {n=G.UIT.ROOT, config = {padding = 0, colour = G.C.CLEAR}, nodes={
                 {n=G.UIT.R, config={ref_table = card, r = 0.08, padding = 0.1, align = "bm", minw = 0.5*card.T.w - 0.15, maxw = 0.9*card.T.w - 0.15, minh = 0.3*card.T.h, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'use_card', func = 'can_select_from_booster'}, nodes={
@@ -228,9 +228,8 @@ if card.ability.consumeable then
       if nc then
 '''
 payload = '''
-if booster_obj and booster_obj.select_card then
-    local area = type(booster_obj.select_card) == 'table' and (booster_obj.select_card[e.config.ref_table.ability.set] or nil) or booster_obj.select_card
-    G[area]:emplace(card)
+if select_to then
+    G[select_to]:emplace(card)
     play_sound('card1', 0.8, 0.6)
     play_sound('generic1')
     dont_dissolve = true
@@ -245,7 +244,15 @@ target = 'functions/button_callbacks.lua'
 match_indent = true
 position = 'before'
 pattern = '''
-if area == G.consumeables then
+for i = 1, #G.GAME.tags do
+    if G.GAME.tags[i]:apply_to_run({type = 'new_blind_choice'}) then break end
+end
+
+G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.2*delayfac,
+          func = function()
+            save_run()
+            return true
+      end}))
 '''
 payload = '''
 booster_obj = nil

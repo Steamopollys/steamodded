@@ -949,6 +949,8 @@ SMODS.calculate_context({buying_card = true, card = self})
 [patches.pattern]
 target = 'game.lua'
 pattern = '''
+if G.GAME.current_round.hands_played == 0 and
+    G.GAME.current_round.discards_used == 0 and G.GAME.facing_blind then
     for i = 1, #G.jokers.cards do
         G.jokers.cards[i]:calculate_joker({first_hand_drawn = true})
     end
@@ -957,10 +959,97 @@ end
 position = 'at'
 match_indent = true
 payload = '''
-    SMODS.calculate_context({first_hand_drawn = true})
-end
-SMODS.calculate_context({hand_drawn = true})
+-- removed first hand drawn context
 '''
+# Hand Drawn Contexts
+[[patches]]
+[patches.pattern]
+target = 'cardarea.lua'
+match_indent = true
+position = 'at'
+pattern = '''
+self:emplace(card, nil, stay_flipped)
+return true
+'''
+payload = '''
+self:emplace(card, nil, stay_flipped)
+return card
+'''
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+match_indent = true
+position = 'at'
+pattern = '''
+if to:draw_card_from(from, stay_flipped, discarded_only) then drawn = true end
+'''
+payload = '''
+card = to:draw_card_from(from, stay_flipped, discarded_only)
+if card then drawn = true end
+'''
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+match_indent = true
+position = 'after'
+pattern = '''
+if sort then
+    to:sort()
+end
+'''
+payload = '''
+SMODS.drawn_cards = SMODS.drawn_cards or {}
+if card and card.playing_card then SMODS.drawn_cards[#SMODS.drawn_cards+1] = card end
+'''
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+for i=1, hand_space do --draw cards from deckL
+    if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
+        draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+    else
+        draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+    end
+end
+'''
+payload = '''
+SMODS.drawn_cards = {}
+'''
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+match_indent = true
+position = 'after'
+pattern = '''
+for i=1, hand_space do --draw cards from deckL
+    if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
+        draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+    else
+        draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+    end
+end
+'''
+payload = '''
+G.E_MANAGER:add_event(Event({
+    trigger = 'before',
+    delay = 0.4,
+    func = function()
+        if #SMODS.drawn_cards > 0 then
+            SMODS.calculate_context({first_hand_drawn = G.GAME.facing_blind and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0,
+                                    hand_drawn = G.GAME.facing_blind and SMODS.drawn_cards,
+                                    other_drawn = not G.GAME.facing_blind and SMODS.drawn_cards})
+            SMODS.drawn_cards = {}
+        end         
+        return true
+    end
+}))
+'''
+
+
+
 
 # context.using_consumeable
 [[patches]]
@@ -974,7 +1063,19 @@ pattern = '''
 position = 'at'
 match_indent = true
 payload = '''
-SMODS.calculate_context({using_consumeable = true, consumeable = card})
+SMODS.calculate_context({using_consumeable = true, consumeable = card, area = card.from_area})
+'''
+# save area of used card
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+c1.area:remove_card(c1)
+'''
+payload = '''
+c1.from_area = c1.area
 '''
 
 # context.selling_card
@@ -993,6 +1094,7 @@ match_indent = true
 payload = '''
 SMODS.calculate_context({selling_card = true, card = card})
 '''
+
 
 # context.buying_card
 [[patches]]
