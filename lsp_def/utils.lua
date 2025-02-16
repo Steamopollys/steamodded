@@ -217,7 +217,7 @@ function SMODS.SAVE_UNLOCKS() end
 ---@param ref_table table
 ---@param ref_value string
 ---@param loc_txt table|string
----@param key string?
+---@param key string? Key to the value within `loc_txt`. 
 --- Injects `loc_txt` into `G.localization`. 
 function SMODS.process_loc_text(ref_table, ref_value, loc_txt, key) end
 
@@ -349,7 +349,7 @@ function SMODS.find_mod(id) end
 
 ---@param tbl table
 ---@param val any
----@param mode ("index"|"i")|("value"|"v")? 
+---@param mode ("index"|"i")|("value"|"v")? Sets if the value is compared with th indexes or values of the table. 
 ---@param immediate  boolean?
 ---Seatch for val anywhere deep in tbl. Return a table of finds, or the first found if args.immediate is provided.
 function SMODS.deepfind(tbl, val, mode, immediate) end

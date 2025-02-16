@@ -64,5 +64,3 @@ function initSteamodded() end
 
 --- Injects all classes and items. 
 function SMODS.injectItems() end
-
-
