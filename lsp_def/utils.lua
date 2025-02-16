@@ -65,6 +65,9 @@
 ---Flattens given arrays into one, then adds elements from each table to a new one. Skips duplicates. 
 function SMODS.merge_lists(...) end
 
+--- Inserts all features mods enable into `SMODS.optional_features`. 
+function SMODS.get_optional_features() end
+
 ---@param hex string
 ---@return table
 ---Returns HEX color attributed to the string. 
@@ -182,6 +185,12 @@ function SMODS.always_scores(card) end
 ---@param card Card|table
 --- Checks if the card should not score. 
 function SMODS.never_scores(card) end
+
+---@param card Card|table
+---@param scoring_card Card[]|table[]
+---@return true?
+--- Returns `true` if provided card is inside the scoring hand. 
+function SMODS.in_scoring(card, scoring_hand) end
 
 ---@param path string Path to the file (excluding `mod.path`)
 ---@param id string? Key to Mod ID. Default to `SMODS.current_mod` if not provided. 
