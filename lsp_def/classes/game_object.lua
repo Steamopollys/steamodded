@@ -38,3 +38,16 @@ SMODS.GameObject = setmetatable({
         return self
     end
 })
+
+---@param obj SMODS.GameObject|table
+---@param prefix string
+---@param condition boolean?
+---@param key string?
+--- Modifies the object's key. 
+function SMODS.modify_key(obj, prefix, condition, key) end
+
+---@param cls SMODS.GameObject The class of this object
+---@param obj SMODS.GameObject The object
+---@param from_take_ownership true?
+--- Adds prefixes into the object. 
+function SMODS.add_prefixes(cls, obj, from_take_ownership) end

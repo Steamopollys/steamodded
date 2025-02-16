@@ -68,11 +68,6 @@ function SMODS.merge_lists(...) end
 --- Inserts all features mods enable into `SMODS.optional_features`. 
 function SMODS.get_optional_features() end
 
----@param hex string
----@return table
----Returns HEX color attributed to the string. 
-function HEX(hex) end
-
 ---@param context CalcContext|table 
 ---@param return_table table 
 --- Used to calculate contexts across `G.jokers`, `scoring_hand` (if present), `G.play` and `G.GAME.selected_back`.
@@ -187,7 +182,7 @@ function SMODS.always_scores(card) end
 function SMODS.never_scores(card) end
 
 ---@param card Card|table
----@param scoring_card Card[]|table[]
+---@param scoring_hand Card[]|table[]
 ---@return true?
 --- Returns `true` if provided card is inside the scoring hand. 
 function SMODS.in_scoring(card, scoring_hand) end
@@ -199,10 +194,171 @@ function SMODS.in_scoring(card, scoring_hand) end
 --- Loads the file from provided path. 
 function SMODS.load_file(path, id) end
 
----@param obj SMODS.GameObject|table
----@param prefix string
----@param condition boolean?
----@param key string?
---- Modifies the object's key. 
-function SMODS.modify_key(obj, prefix, condition, key) end
+---@param table table 
+---@return string
+--- Shallow inspect a table. 
+function inspect(table) end
 
+---@param table table
+---@param indent number?
+---@param depth number? Cap depth of 5
+---@return string
+--- Deep inspect a table. 
+function inspectDepth(table, indent, depth) end
+
+---@param func function
+---@return string
+--- Inspect a function. 
+function inspectFunction(func) end
+
+--- Handles saving discovery and unlocks. 
+function SMODS.SAVE_UNLOCKS() end
+
+---@param ref_table table
+---@param ref_value string
+---@param loc_txt table|string
+---@param key string?
+--- Injects `loc_txt` into `G.localization`. 
+function SMODS.process_loc_text(ref_table, ref_value, loc_txt, key) end
+
+---@param path string
+--- Handles injecting localization files. 
+function SMODS.handle_loc_file(path) end
+
+---@param pool table
+---@param center SMODS.GameObject|table
+---@param replace boolean?
+--- Injects an object into provided pool. 
+function SMODS.insert_pool(pool, center, replace) end
+
+---@param pool table
+---@param key string
+--- Removes an object from the provided pool. 
+function SMODS.remove_pool(pool, key) end
+
+--- Juices up blind. 
+function SMODS.juice_up_blind() end
+
+---@param card Card|table
+---@param suit? string Key to the suit. 
+---@param rank? string Key to the rank. 
+function SMODS.change_base(card, suit, rank) end
+
+---@param key string
+---@param count_debuffed true?
+---@return table[]
+--- Returns all cards matching provided `key`. 
+function SMODS.find_card(key, count_debuffed) end
+
+---@class CreateCard
+---@field set? string Set of the card. 
+---@field area? CardArea|table CardArea to emplace this card to. 
+---@field legendary? boolean Pools legendary cards, if applicable. 
+---@field rarity? number|string Only spawns cards with provided rarity, if applicable. 
+---@field skip_materialize? boolean Skips materialization animations. 
+---@field soulable? boolean Card could be replace by a legendary version, if applicable. 
+---@field key? string Created card is forced to have a center matching this key. 
+---@field key_append? string Appends this string to seeds. 
+---@field no_edition? boolean Ignore natural edition application. 
+---@field edition? string Apply this edition. 
+---@field enhancement? string Apply this enhancement. 
+---@field seal? string Apply this seal
+---@field stickers? string[] Apply all stickers in this array. 
+
+---@param t CreateCard|table
+---@return Card|table
+--- Creates a card. 
+function SMODS.create_card(t) end
+
+---@param t CreateCard|table
+---@return Card|table
+--- Adds + creates a card into provided `area`. 
+function SMODS.add_card(t) end
+
+---@param card Card|table
+---@param debuff boolean|"reset"?
+---@param source string?
+--- Debuffs provided `card`. 
+function SMODS.debuff_card(card, debuff, source) end
+
+---@param card Card|table
+--- Recalculate card debuffs. 
+function SMODS.recalc_debuff(card) end
+
+--- Restarts the game. 
+function SMODS.restart_game() end
+
+---@param obj SMODS.GameObject|table
+---@param badges table[]
+--- Adds the mod badge into the `badges` based on provided `obj`. 
+function SMODS.create_mod_badges(obj, badges) end
+
+--- Creates a localization dump. 
+function SMODS.create_loc_dump() end
+
+---@param t table
+---@param indent string?
+---@return string
+--- Serializes an input table in valid Lua syntax
+--- Keys must be of type number or string
+--- Values must be of type number, boolean, string or table
+function serialize(t, indent) end
+
+---@param s string
+---@return string
+--- Serializes provided string. 
+function serialize_strings(s) end
+
+---@param t false|table?
+---@param defaults false|table?
+---@return false|table?
+--- Starting with `t`, insert any key-value pairs from `defaults` that don't already
+--- exist in `t` into `t`. Modifies `t`.
+--- Returns `t`, the result of the merge.
+---
+--- `nil` inputs count as {}; `false` inputs count as a table where
+--- every possible key maps to `false`. Therefore,
+--- * `t == nil` is weak and falls back to `defaults`
+--- * `t == false` explicitly ignores `defaults`
+--- (This function might not return a table, due to the above)
+function SMODS.merge_defaults(t, defaults) end
+
+---@param num number
+---@param precision number
+---@return number
+--- Rounds provided `num`. 
+function round_number(num, precision) end
+
+---@param value number|string
+---@return string
+--- Format provided `value`
+function format_ui_value(value) end
+
+---@param ante number
+---@return number
+--- Returns the blind amount. 
+function SMODS.get_blind_amount(ante) end
+
+--- Converts save data for vanilla objects. 
+function conver_save_data() end
+
+---@param id string
+---@return Mod[]|table[]
+--- Returns table representing mods either matching provided `id` or can provide that mod. 
+function SMODS.find_mod(id) end
+
+---@param tbl table
+---@param val any
+---@param mode ("index"|"i")|("value"|"v")? 
+---@param immediate  boolean?
+---Seatch for val anywhere deep in tbl. Return a table of finds, or the first found if args.immediate is provided.
+function SMODS.deepfind(tbl, val, mode, immediate) end
+
+--- Enabled debugging Joker calculations. 
+function SMODS.debug_calculation() end
+
+---@param card Card|table
+---@param pack SMODS.Booster|table
+---@return boolean
+--- Controls if the card should be selectable from a Booster Pack. 
+function Card.selectable_from_pack(card, pack) end

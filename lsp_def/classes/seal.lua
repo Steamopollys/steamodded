@@ -40,3 +40,8 @@ SMODS.Seal = setmetatable({}, {
 
 ---@type table<string, SMODS.Seal|table>
 SMODS.Seals = {}
+
+---@param args table|{key?: string, mod?: number, guaranteed?: boolean, options?: table, type_key?: string}
+---@return string?
+--- Polls seals. 
+function SMODS.poll_seal(args) end

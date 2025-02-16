@@ -23,3 +23,10 @@
 Card = function(self, X, Y, W, H, card, center, params) return self end
 ---@class Card_Character: Moveable
 ---@class CardArea: Moveable
+
+--- Vanilla functions
+
+---@param hex string
+---@return table
+---Returns HEX color attributed to the string. 
+function HEX(hex) end
