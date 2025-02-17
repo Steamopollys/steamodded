@@ -362,3 +362,4 @@ function SMODS.debug_calculation() end
 ---@return boolean
 --- Controls if the card should be selectable from a Booster Pack. 
 function Card.selectable_from_pack(card, pack) end
+
