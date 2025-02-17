@@ -1,6 +1,6 @@
 ---@meta
 
----@class SMODS.GameObject: Object 
+---@class SMODS.GameObject: metatable 
 ---@field mod? Mod|table The mod this object is created by. 
 ---@field log_interval? number
 ---@field loc_txt? table|{name: string, text: string[]} Contains strings used for displaying text related to this object. 
