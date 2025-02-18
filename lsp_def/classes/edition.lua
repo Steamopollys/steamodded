@@ -45,3 +45,19 @@ SMODS.Edition = setmetatable({}, {
 ---@return table?
 --- Calculates Editions on cards. 
 function Card:calculate_edition(context) end
+
+---@param self Card|table
+---@param edition string|{[string]: true}? Both `string` values are the key of the edition to apply. 
+---@param immediate? boolean
+---@param silent? boolean 
+--- Sets the card's edition. 
+function Card:set_edition(edition, immediate, silent) end
+
+---@param _key string Used as the seed
+---@param _mod? number Scales the chance of landing on an Edition. 
+---@param _no_neg? boolean Exclude negative from edition polling. 
+---@param _guaranteed? boolean Function will always return an Edition. 
+---@param _options? string[]|{name: string, weight: number}[] Allows defining options for what editions should be polled. 
+---@return string?
+--- Polls editions. Returns the key of the edition if successful. 
+function poll_edition(_key, _mod, _no_neg, _guaranteed, _options) end

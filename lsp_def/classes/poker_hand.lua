@@ -54,7 +54,7 @@ SMODS.PokerHands = {}
 ---@field inject? fun(self: SMODS.PokerHandPart|table, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: SMODS.PokerHandPart|table, key: string, obj: table, silent?: boolean): nil|SMODS.PokerHandPart Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: SMODS.PokerHandPart|table, key: string): table? Returns an object if one matches the `key`. 
----@field func? fun(self: SMODS.PokerHandPart|table, hand: Card[]|table[]): Card[]|table[] Returns array of cards that are a part of this hand. 
+---@field func? fun(hand: Card[]|table[]): Card[]|table[] Returns array of cards that are a part of this hand. 
 ---@overload fun(self: SMODS.PokerHandPart): SMODS.PokerHandPart
 SMODS.PokerHandPart = setmetatable({}, {
     __call = function(self)

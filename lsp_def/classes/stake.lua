@@ -51,3 +51,9 @@ function SMODS.setup_stake(i) end
 ---@return number|string
 ---Given an index from the Stake pool, return corresponding key or `"error"` if it doesn't exist
 function SMODS.stake_from_index(index) end
+
+---@param i number
+---@param stake_desc_rows table 
+---@param num_added? { val: number }
+--- Creates "Applies X" Stake UI. 
+function SMODS.applied_stakes_UI(i, stake_desc_rows, num_added) end
