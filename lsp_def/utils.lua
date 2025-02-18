@@ -69,7 +69,7 @@ function SMODS.merge_lists(...) end
 function SMODS.get_optional_features() end
 
 ---@param context CalcContext|table 
----@param return_table table 
+---@param return_table? table 
 --- Used to calculate contexts across `G.jokers`, `scoring_hand` (if present), `G.play` and `G.GAME.selected_back`.
 --- Hook this function to add different areas to MOST calculations
 function SMODS.calculate_context(context, return_table) end
@@ -98,7 +98,7 @@ function SMODS.calculate_destroying_cards(context, cards_destroyed, scoring_hand
 ---@param scored_card Card|table
 ---@param key string
 ---@param amount number|boolean 
----@param from_edition boolean
+---@param from_edition? boolean
 ---@return boolean?
 --- This function handles the calculation of each effect returned to evaluate play.
 --- Can easily be hooked to add more calculation effects ala Talisman
@@ -106,7 +106,7 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
 
 ---@param effect table
 ---@param scored_card Card|table
----@param from_edition boolean 
+---@param from_edition? boolean 
 ---@return table
 --- Handles calculating effects on provided `scored_card`. 
 function SMODS.calculate_effect(effect, scored_card, from_edition, pre_jokers) end
@@ -225,8 +225,8 @@ function SMODS.process_loc_text(ref_table, ref_value, loc_txt, key) end
 --- Handles injecting localization files. 
 function SMODS.handle_loc_file(path) end
 
----@param pool table
----@param center SMODS.GameObject|table
+---@param pool table[]
+---@param center metatable
 ---@param replace boolean?
 --- Injects an object into provided pool. 
 function SMODS.insert_pool(pool, center, replace) end

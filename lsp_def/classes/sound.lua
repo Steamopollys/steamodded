@@ -22,7 +22,7 @@
 ---@field inject? fun(self: SMODS.Sound|table, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: SMODS.Sound|table, key: string, obj: table, silent?: boolean): nil|SMODS.Sound Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: SMODS.Sound|table, key: string): table? Returns an object if one matches the `key`. 
----@field select_music_track? fun(self: SMODS.Sound|table): nil|number Called each frame. Determines what music track to play. Music track with the highest number is played. 
+---@field select_music_track? fun(self: SMODS.Sound|table): nil|number|boolean Called each frame. Determines what music track to play. Music track with the highest number is played. 
 ---@field create_replace_sound? fun(self: SMODS.Sound|table, replace: string|table) Replaces another sound with this one. 
 ---@field create_stop_sound? fun(self: SMODS.Sound|table, key: string, times: nil|number) Supress sounds with the given sound code `times` amount of times or indefinitely. 
 ---@field register_global? fun(self: SMODS.Sound|table) Registers all sound files of the current mod. 

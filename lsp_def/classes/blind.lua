@@ -33,9 +33,9 @@
 ---@field defeat? fun(self: SMODS.Blind|table) Handles effect reverting when this Blind is defeated. 
 ---@field drawn_to_hand? fun(self: SMODS.Blind|table) Handles effects when cards are drawn to hand. 
 ---@field press_play? fun(self: SMODS.Blind|table) Handles effects when a hand is played. 
----@field recalc_debuff? fun(self: SMODS.Blind|table, card: Card|table, from_blind: boolean): nil|boolean Determines if a card should be debuffed by this blind. 
----@field debuff_hand? fun(self: SMODS.Blind|table, cards: table, hand: table, handname: string, check: nil|boolean): boolean Determines if the hand is debuffed. 
----@field stay_flipped? fun(self: SMODS.Blind|table, area: CardArea|table, card: Card|table): boolean Determines if a card is drawn face down. 
+---@field recalc_debuff? fun(self: SMODS.Blind|table, card: Card|table, from_blind: boolean): boolean? Determines if a card should be debuffed by this blind. 
+---@field debuff_hand? fun(self: SMODS.Blind|table, cards: table, hand: table, handname: string, check: nil|boolean): boolean? Determines if the hand is debuffed. 
+---@field stay_flipped? fun(self: SMODS.Blind|table, area: CardArea|table, card: Card|table): boolean? Determines if a card is drawn face down. 
 ---@field modify_hand? fun(self: SMODS.Blind|table, cards: table, poker_hands: table, text: string, mult: number, hand_chips: number): number?, number?, boolean? Handles modifications of the base score for played poker hand. 
 ---@field get_loc_debuff_text? fun(self: SMODS.Blind|table): string? Handles text displayed for debuff warnings or invalid hands. 
 ---@field loc_vars? fun(self: SMODS.Blind|table): table? Provides control over displaying the Blind descriptions. See [SMODS.Blind `loc_vars` implementation](https://github.com/Steamodded/smods/wiki/SMODS.Blind#api-methods) documentation for return value details. 

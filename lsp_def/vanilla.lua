@@ -82,6 +82,8 @@ G.GAME.blind = Blind()
 
 ---@class Card: Moveable
 ---@field ability? table
+---@field ignore_base_shader? table
+---@field ignore_shadow? table
 ---@overload fun(...: any): Card|table
 Card = {}
 function Card:__call(...) return self end

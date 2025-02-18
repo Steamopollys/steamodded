@@ -12,7 +12,7 @@ MODDED_VERSION = ""
 SMODS.path = ""
 
 ---@class Mod
----@field id string Unique ID. 
+---@field id? string Unique ID. 
 ---@field name? string Name of the mod. 
 ---@field display_name? string Display name of the mod. 
 ---@field description? string Mod description. 
@@ -42,6 +42,10 @@ SMODS.path = ""
 
 ---@type table<string, Mod|table>
 SMODS.Mods = {}
+
+---@type Mod|table?
+--- The current mod being loaded. 
+SMODS.current_mod = {}
 
 SMODS.Mods["Steamodded"] = SMODS
 SMODS.Mods["Lovely"] = {

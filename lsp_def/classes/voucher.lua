@@ -17,7 +17,7 @@
 ---@field inject? fun(self: SMODS.Voucher|table, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: SMODS.Voucher|table, key: string, obj: table, silent?: boolean): nil|SMODS.Voucher Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: SMODS.Voucher|table, key: string): table? Returns an object if one matches the `key`. 
----@field redeem? fun(self: SMODS.Voucher|table) Defines behaviour when this voucher is redeemed. 
+---@field redeem? fun(self: SMODS.Voucher|table, voucher?: Card|table) Defines behaviour when this voucher is redeemed. 
 ---@field new? fun(self, name, slug, config, pos, loc_txt, cost, unlocked, discovered, available, requires, atlas): any DEPRECATED. DO NOT USE
 ---@overload fun(self: SMODS.Voucher): SMODS.Voucher
 SMODS.Voucher = setmetatable({}, {
