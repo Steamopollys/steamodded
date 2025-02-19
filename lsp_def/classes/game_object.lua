@@ -8,7 +8,7 @@
 ---@field obj_table? table<string, SMODS.GameObject|table> Table of objects registered to this class. 
 ---@field obj_buffer? string[] Array of keys to all objects registered to this class. 
 ---@field dependencies? string|string[] Array of mod IDs. Object will fail to register if any specified mods cannot load. 
----@field subclasses? table[] Array of child classes. 
+---@field subclasses? SMODS.GameObject[]|table[] Array of child classes. 
 ---@field super? table Parent class. 
 ---@field key? string Unique string to reference this object. 
 ---@field class_prefix? boolean|string All objects created with this class will have their key prefixed with this string. 
@@ -40,7 +40,7 @@ SMODS.GameObject = setmetatable({
 })
 
 ---@param obj SMODS.GameObject|table
----@param prefix string
+---@param prefix string?
 ---@param condition boolean?
 ---@param key string?
 --- Modifies the object's key. 

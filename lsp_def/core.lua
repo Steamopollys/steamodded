@@ -68,3 +68,7 @@ function initSteamodded() end
 
 --- Injects all classes and items. 
 function SMODS.injectItems() end
+
+---@param class SMODS.GameObject|table
+--- Inject all SMODS Objects that are part of this class or a subclass.
+function SMODS.injectObjects(class) end
