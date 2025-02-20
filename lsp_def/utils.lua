@@ -340,7 +340,7 @@ function format_ui_value(value) end
 function SMODS.get_blind_amount(ante) end
 
 --- Converts save data for vanilla objects. 
-function conver_save_data() end
+function convert_save_data() end
 
 ---@param id string
 ---@return Mod[]|table[]
@@ -363,3 +363,32 @@ function SMODS.debug_calculation() end
 --- Controls if the card should be selectable from a Booster Pack. 
 function Card.selectable_from_pack(card, pack) end
 
+---@param pool (table|"UNAVAILABLE")[]
+---@return number
+--- Returns size of the provided pool (excluding `"UNAVAILABLE"`). 
+function SMODS.size_of_pool(pool) end
+
+---@param vouchers {[number]: table, spawn: table<string, true>}?
+---@return {[number]: table, spawn: table<string, true>} vouchers
+--- Returns next vouchers to spawn. 
+function SMODS.get_next_vouchers(vouchers) end
+
+---@param key string
+--- Adds a Voucher with matching `key` to the shop. 
+function SMODS.add_voucher_to_shop(key) end
+
+---@param mod number
+--- Modifies the Voucher shop limit by `mod`. 
+function SMODS.change_voucher_limit(mod) end
+
+---@param key string 
+--- Adds a Booster Pack with matching `key` to the shop. 
+function SMODS.add_booster_to_shop(key) end
+
+---@param mod number
+--- Modifies the Booster Pack shop limit by `mod`. 
+function SMODS.change_booster_limit(mod) end
+
+---@param mod number
+--- Modifies the current amount of free shop rerolls by `mod`. 
+function SMODS.change_free_rerolls(mod) end

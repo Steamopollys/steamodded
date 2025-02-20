@@ -36,7 +36,7 @@ function buildAdditionsTab(mod) end
 --- Creates the Mod's Achievements tab UIBox. 
 function buildAchievementsTab(mod, current_page) end
 
----@param pool SMODS.GameObject|table[]
+---@param pool table[]
 ---@param set string? Only objects with matching set will be tallied. 
 ---@return {tally: 0|number, of: 0|number} 
 --- Tallies all objects within `pool` that are discovered. 
