@@ -1303,6 +1303,9 @@ function Card:set_edition(edition, immediate, silent)
 		elseif self.ability.set == 'Joker' and self.area == G.jokers then
 			G.jokers.config.card_limit = G.jokers.config.card_limit - self.edition.card_limit
 		elseif self.area == G.hand then
+			if G.hand.config.real_card_limit then
+				G.hand.config.real_card_limit = G.hand.config.real_card_limit - self.edition.card_limit
+			end
 			G.hand.config.card_limit = G.hand.config.card_limit - self.edition.card_limit
 		end
 	end
