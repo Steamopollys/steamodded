@@ -1831,3 +1831,78 @@ function Card.selectable_from_pack(card, pack)
         return pack.select_card
     end
 end
+
+-- Shop functionality
+function SMODS.size_of_pool(pool)
+    local size = 0
+    for _, v in pairs(pool) do
+        if v ~= 'UNAVAILABLE' then size = size + 1 end
+    end
+    return size
+end
+
+function SMODS.get_next_vouchers(vouchers)
+    vouchers = vouchers or {spawn = {}}
+    local _pool, _pool_key = get_current_pool('Voucher')
+    for i=#vouchers+1, math.min(SMODS.size_of_pool(_pool), G.GAME.starting_params.vouchers_in_shop + (G.GAME.modifiers.extra_vouchers or 0)) do
+        local center = pseudorandom_element(_pool, pseudoseed(_pool_key))
+        local it = 1
+        while center == 'UNAVAILABLE' or vouchers.spawn[center] do
+            it = it + 1
+            center = pseudorandom_element(_pool, pseudoseed(_pool_key..'_resample'..it))
+        end
+
+        vouchers[#vouchers+1] = center
+        vouchers.spawn[center] = true
+    end
+    return vouchers
+end
+
+function SMODS.add_voucher_to_shop(key)
+    if key then assert(G.P_CENTERS[key], "Invalid voucher key: "..key) else 
+        key = get_next_voucher_key() 
+        G.GAME.current_round.voucher.spawn[key] = true
+        G.GAME.current_round.voucher[#G.GAME.current_round.voucher + 1] = key
+    end
+    local card = Card(G.shop_vouchers.T.x + G.shop_vouchers.T.w/2,
+        G.shop_vouchers.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS[key],{bypass_discovery_center = true, bypass_discovery_ui = true})
+        card.shop_voucher = true
+        create_shop_card_ui(card, 'Voucher', G.shop_vouchers)
+        card:start_materialize()
+        G.shop_vouchers:emplace(card)
+        G.shop_vouchers.config.card_limit = #G.shop_vouchers.cards
+end
+
+function SMODS.change_voucher_limit(mod)
+    G.GAME.modifiers.extra_vouchers = (G.GAME.modifiers.extra_vouchers or 0) + mod
+    if mod > 0 and G.STATE == G.STATES.SHOP then
+        for i=1, mod do
+            SMODS.add_voucher_to_shop()
+        end
+    end
+end
+
+function SMODS.add_booster_to_shop(key)
+    if key then assert(G.P_CENTERS[key], "Invalid booster key: "..key) else key = get_pack('shop_pack').key end
+    local card = Card(G.shop_booster.T.x + G.shop_booster.T.w/2,
+    G.shop_booster.T.y, G.CARD_W*1.27, G.CARD_H*1.27, G.P_CARDS.empty, G.P_CENTERS[key], {bypass_discovery_center = true, bypass_discovery_ui = true})
+    create_shop_card_ui(card, 'Booster', G.shop_booster)
+    card.ability.booster_pos = #G.shop_booster.cards + 1
+    card:start_materialize()
+    G.shop_booster:emplace(card)
+end
+
+function SMODS.change_booster_limit(mod)
+    G.GAME.modifiers.extra_boosters = (G.GAME.modifiers.extra_boosters or 0) + mod
+    if mod > 0 and G.STATE == G.STATES.SHOP then
+        for i = 1, mod do
+            SMODS.add_booster_to_shop()
+        end
+    end
+end
+
+function SMODS.change_free_rerolls(mod)
+    G.GAME.round_resets.free_rerolls = G.GAME.round_resets.free_rerolls + mod
+    G.GAME.current_round.free_rerolls = math.max(G.GAME.current_round.free_rerolls + mod, 0)
+    calculate_reroll_cost(true)
+end
