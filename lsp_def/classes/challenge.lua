@@ -10,7 +10,7 @@
 ---@field vouchers? table[]|{id: string}[] List of tables setting vouchers to start with. 
 ---@field restrictions? table|{banned_cards?: table[]|{id: string}[], banned_tags?: table[]|{id: string}[], banned_other?: table[]|{id: string, type: "blind"}[]} Contains IDs to objects to ban from the challenge. 
 ---@field deck? table|{type?: string|"Challenge Deck", cards?: table[], yes_ranks?: table<string, true>, yes_suits?: table<string, true>, no_ranks?: table<string, true>, no_suits?: table<string, true>, enhancement?: string, edition?: string, seal?: string} Defines the Challenge's deck. See [SMODS.Challenge](https://github.com/Steamodded/smods/wiki/SMODS.Challenge) Documentation for details. 
----@field __call? fun(self: SMODS.Challenge|table, o: SMODS.Challenge|table): nil|SMODS.Challenge
+---@field __call? fun(self: SMODS.Challenge|table, o: SMODS.Challenge|table): nil|table|SMODS.Challenge
 ---@field extend? fun(self: SMODS.Challenge|table, o: SMODS.Challenge|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Challenge|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Challenge|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -22,8 +22,8 @@
 ---@field post_inject_class? fun(self: SMODS.Challenge|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Challenge|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Challenge|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Challenge|table, key: string, obj: table, silent?: boolean): nil|SMODS.Challenge Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Challenge|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Challenge|table, key: string, obj: SMODS.Challenge|table, silent?: boolean): nil|table|SMODS.Challenge Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Challenge|table, key: string): SMODS.Challenge|table? Returns an object if one matches the `key`. 
 ---@field unlocked? fun(self: SMODS.Challenge|table): boolean
 ---@overload fun(self: SMODS.Challenge): SMODS.Challenge
 SMODS.Challenge = setmetatable({}, {

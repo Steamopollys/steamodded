@@ -13,7 +13,7 @@
 ---@field compat_exceptions? string[] Array of keys to centers that are exceptions to `default_compat`. 
 ---@field sets? string[] Array of keys to pools that this sticker is allowed to be applied on. 
 ---@field needs_enabled_flag? boolean Sets whether the sticker requires `G.GAME.modifiers["enable_"..key]` to be `true` before it can be applied. 
----@field __call? fun(self: SMODS.Sticker|table, o: SMODS.Sticker|table): nil|SMODS.Sticker
+---@field __call? fun(self: SMODS.Sticker|table, o: SMODS.Sticker|table): nil|table|SMODS.Sticker
 ---@field extend? fun(self: SMODS.Sticker|table, o: SMODS.Sticker|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Sticker|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Sticker|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -25,8 +25,8 @@
 ---@field post_inject_class? fun(self: SMODS.Sticker|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Sticker|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Sticker|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Sticker|table, key: string, obj: table, silent?: boolean): nil|SMODS.Sticker Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Sticker|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Sticker|table, key: string, obj: SMODS.Sticker|table, silent?: boolean): nil|table|SMODS.Sticker Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Sticker|table, key: string): SMODS.Sticker|table? Returns an object if one matches the `key`. 
 ---@field loc_vars? fun(self: SMODS.Sticker|table, info_queue: table, card: Card|table): table? Provides control over displaying descriptions and tooltips of the sticker's tooltip. See [SMODS.Sticker `loc_vars` implementation](https://github.com/Steamodded/smods/wiki/SMODS.Sticker#api-methods) documentation for details. 
 ---@field calculate? fun(self: SMODS.Sticker|table, card: Card|table, context: CalcContext|table): table?, boolean?  Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@field should_apply? boolean|fun(self: SMODS.Sticker|table, card: Card, center: table, area: CardArea, bypass_reroll?: boolean): boolean Determines if the sticker applies onto the card. If `bypass_reroll` is true, ignore RNG check. 

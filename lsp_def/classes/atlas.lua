@@ -11,7 +11,7 @@
 ---@field raw_key? boolean Sets whether the mod prefix is added to atlas key. Used for overriding vanilla sprites. 
 ---@field language? string Key to a language. Restricts the atlas to only when this language is enabled. 
 ---@field disable_mipmap? boolean Sets if the sprite is affected by the mipmap. 
----@field __call? fun(self: SMODS.Atlas|table, o: SMODS.Atlas|table): nil|SMODS.Atlas
+---@field __call? fun(self: SMODS.Atlas|table, o: SMODS.Atlas|table): nil|table|SMODS.Atlas
 ---@field extend? fun(self: SMODS.Atlas|table, o: SMODS.Atlas|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Atlas|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Atlas|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -23,8 +23,8 @@
 ---@field post_inject_class? fun(self: SMODS.Atlas|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Atlas|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Atlas|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Atlas|table, key: string, obj: table, silent?: boolean): nil|SMODS.Atlas Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Atlas|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Atlas|table, key: string, obj: SMODS.Atlas|table, silent?: boolean): nil|table|SMODS.Atlas Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Atlas|table, key: string): SMODS.Atlas|table? Returns an object if one matches the `key`. 
 ---@overload fun(self: SMODS.Atlas): SMODS.Atlas
 SMODS.Atlas = setmetatable({}, {
     __call = function(self)

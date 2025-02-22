@@ -7,7 +7,7 @@
 ---@field pools? table Table with a list of ObjectTypes keys this rarity should be added to.
 ---@field badge_colour? table HEX color the rarity badge uses. 
 ---@field default_weight? number Default weight of the rarity. When referenced in ObjectTypes with just the key, this value is used as the default. 
----@field __call? fun(self: SMODS.Rarity|table, o: SMODS.Rarity|table): nil|SMODS.Rarity
+---@field __call? fun(self: SMODS.Rarity|table, o: SMODS.Rarity|table): nil|table|SMODS.Rarity
 ---@field extend? fun(self: SMODS.Rarity|table, o: SMODS.Rarity|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Rarity|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Rarity|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -19,8 +19,8 @@
 ---@field post_inject_class? fun(self: SMODS.Rarity|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Rarity|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Rarity|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Rarity|table, key: string, obj: table, silent?: boolean): nil|SMODS.Rarity Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Rarity|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Rarity|table, key: string, obj: SMODS.Rarity|table, silent?: boolean): nil|table|SMODS.Rarity Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Rarity|table, key: string): SMODS.Rarity|table? Returns an object if one matches the `key`. 
 ---@field get_weight? fun(self: SMODS.Rarity|table, weight: number, object_type: SMODS.ObjectType): number Used for finer control over this rarity's weight. 
 ---@field gradient? fun(self: SMODS.Rarity|table, dt: number) Used to make a gradient for this rarity's `badge_colour`. 
 ---@field get_rarity_badge? fun(self: SMODS.Rarity|table, rarity: string): string Returns loclaized rarity key. 

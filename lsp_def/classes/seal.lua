@@ -10,7 +10,7 @@
 ---@field badge_colour? table HEX color the seal badge uses. 
 ---@field sound? table|{} Controls the sound that plays when the seal is applied. `sound`: Key to the sound, `per`: Sound pitch, `vol`: Sound volume. 
 ---@field badge_to_key? string[] Contains keys to each seal indexed by seal badge (`key:lower()..'_seal`). 
----@field __call? fun(self: SMODS.Seal|table, o: SMODS.Seal|table): nil|SMODS.Seal
+---@field __call? fun(self: SMODS.Seal|table, o: SMODS.Seal|table): nil|table|SMODS.Seal
 ---@field extend? fun(self: SMODS.Seal|table, o: SMODS.Seal|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Seal|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Seal|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -22,8 +22,8 @@
 ---@field post_inject_class? fun(self: SMODS.Seal|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Seal|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Seal|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Seal|table, key: string, obj: table, silent?: boolean): nil|SMODS.Seal Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Seal|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Seal|table, key: string, obj: SMODS.Seal|table, silent?: boolean): nil|table|SMODS.Seal Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Seal|table, key: string): SMODS.Seal|table? Returns an object if one matches the `key`. 
 ---@field loc_vars? fun(self: SMODS.Seal|table, info_queue: table, card: Card|table): table? Provides control over displaying the tooltip of this seal. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for details. 
 ---@field calculate? fun(self: SMODS.Seal|table, card: Card|table, context: CalcContext|table): table?, boolean?  Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@field get_p_dollars? fun(self: SMODS.Seal|table, card: Card|table): number? Gives money when a card with this seal is played. 

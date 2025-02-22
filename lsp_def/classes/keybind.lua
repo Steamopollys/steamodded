@@ -7,7 +7,7 @@
 ---@field event? "pressed"|"released"|"held" Defines when the keybind should trigger. "pressed": on key press, "released": on key release, "held": on key hold for specified amount of time. 
 ---@field held_duration? number How long the keybind needs to be pressed before activation. Only active if `event = held`. 
 ---@field held_keys? string[] Array of keycodes additionally required to be pressed for keybind to activate. 
----@field __call? fun(self: SMODS.Keybind|table, o: SMODS.Keybind|table): nil|SMODS.Keybind
+---@field __call? fun(self: SMODS.Keybind|table, o: SMODS.Keybind|table): nil|table|SMODS.Keybind
 ---@field extend? fun(self: SMODS.Keybind|table, o: SMODS.Keybind|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Keybind|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Keybind|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -19,8 +19,8 @@
 ---@field post_inject_class? fun(self: SMODS.Keybind|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Keybind|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Keybind|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Keybind|table, key: string, obj: table, silent?: boolean): nil|SMODS.Keybind Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Keybind|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Keybind|table, key: string, obj: SMODS.Keybind|table, silent?: boolean): nil|table|SMODS.Keybind Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Keybind|table, key: string): SMODS.Keybind|table? Returns an object if one matches the `key`. 
 ---@field action? fun(self: SMODS.Keybind|table) Called when the keybind is triggered. 
 ---@overload fun(self: SMODS.Keybind): SMODS.Keybind
 SMODS.Keybind = setmetatable({}, {

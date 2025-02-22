@@ -12,7 +12,7 @@
 ---@field above_stake? string Key to the stake that this stake appeard above in the run menu. By default, stakes are added on top of the last injected stake. 
 ---@field colour? table HEX color of the stake in the stake selection menu. 
 ---@field unlocked? boolean Sets if the stake is unlocked by default. 
----@field __call? fun(self: SMODS.Stake|table, o: SMODS.Stake|table): nil|SMODS.Stake
+---@field __call? fun(self: SMODS.Stake|table, o: SMODS.Stake|table): nil|table|SMODS.Stake
 ---@field extend? fun(self: SMODS.Stake|table, o: SMODS.Stake|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Stake|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Stake|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -24,8 +24,8 @@
 ---@field post_inject_class? fun(self: SMODS.Stake|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Stake|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Stake|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Stake|table, key: string, obj: table, silent?: boolean): nil|SMODS.Stake Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Stake|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Stake|table, key: string, obj: SMODS.Stake|table, silent?: boolean): nil|table|SMODS.Stake Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Stake|table, key: string): SMODS.Stake|table? Returns an object if one matches the `key`. 
 ---@field modifiers? fun() Applies changes to the game state when this stake is applied at the start of a run. 
 ---@overload fun(self: SMODS.Stake): SMODS.Stake
 SMODS.Stake = setmetatable({}, {

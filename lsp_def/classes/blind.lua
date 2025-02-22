@@ -13,7 +13,7 @@
 ---@field debuff? table Configures vanilla blind effects related to debuffing, see [SMODS.Blind](https://github.com/Steamodded/smods/wiki/SMODS.Blind#api-documentation-smodsblind) Documentation. Ignored if Blind defines `debuff_hand` or `debuff_card`. 
 ---@field ignore_showdown_check? boolean Sets if `in_pool` should be respected regardless of whether a showdown Boss Blind was requested or not. 
 ---@field vars? table Variables for this Blind's description in the collection. 
----@field __call? fun(self: SMODS.Blind|table, o: SMODS.Blind|table): nil|SMODS.Blind
+---@field __call? fun(self: SMODS.Blind|table, o: SMODS.Blind|table): nil|table|SMODS.Blind
 ---@field extend? fun(self: SMODS.Blind|table, o: SMODS.Blind|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Blind|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Blind|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -25,8 +25,8 @@
 ---@field post_inject_class? fun(self: SMODS.Blind|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Blind|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Blind|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Blind|table, key: string, obj: table, silent?: boolean): nil|SMODS.Blind Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Blind|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Blind|table, key: string, obj: SMODS.Blind|table, silent?: boolean): nil|table|SMODS.Blind Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Blind|table, key: string): SMODS.Blind|table? Returns an object if one matches the `key`. 
 ---@field new? fun(self, name, slug, loc_txt, dollars, mult, vars, debuff, pos, boss, boss_colour, defeated, atlas): any DEPRECATED. DO NOT USE
 ---@field set_blind? fun(self: SMODS.Blind|table) Handles effects when this Blind is selected. 
 ---@field disable? fun(self: SMODS.Blind|table) Handles effect reverting when this Blind is disabled. 

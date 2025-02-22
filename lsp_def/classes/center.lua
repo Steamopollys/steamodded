@@ -15,7 +15,7 @@
 ---@field yes_pool_flag? string Key to the pool flag defined in `G.GAME.pool_flags`. This center is removed from it's pool as long as this flag is `false`. 
 ---@field display_size? table|{w: integer, h: integer} Changes the display size of card. 
 ---@field pixel_size? table|{w: integer, h: integer} Change the size of the sprite drawn onto the card. 
----@field __call? fun(self: SMODS.Center|table, o: SMODS.Center|table): nil|SMODS.Center
+---@field __call? fun(self: SMODS.Center|table, o: SMODS.Center|table): nil|table|SMODS.Center
 ---@field extend? fun(self: SMODS.Center|table, o: SMODS.Center|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Center|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Center|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -27,8 +27,8 @@
 ---@field post_inject_class? fun(self: SMODS.Center|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Center|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Center|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Center|table, key: string, obj: table, silent?: boolean): nil|SMODS.Center Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Center|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Center|table, key: string, obj: SMODS.Center|table, silent?: boolean): nil|table|SMODS.Center Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Center|table, key: string): SMODS.Center|table? Returns an object if one matches the `key`. 
 ---@field delete? fun(self: SMODS.Center|table): boolean?  Removes provided center. 
 ---@field generate_ui? fun(self: SMODS.Center|table, info_queue: table, card: Card|table, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the card. See [`generate_ui` function](https://github.com/Steamodded/smods/wiki/Localization#generate_ui-advanced) documentation for details. 
 ---@field loc_vars? fun(self: SMODS.Center|table, info_queue: table, card: Card|table): table? Provides simple control over displaying descriptions and tooltips of the card. See [`loc_vars` function](https://github.com/Steamodded/smods/wiki/Localization#loc_vars) documentation for return value details. 
@@ -46,7 +46,7 @@
 ---@field in_pool? fun(self: SMODS.Center|table, args: table): boolean? , table? Allows configuring if the card is allowed to spawn. 
 ---@field calculate? fun(self: SMODS.Center|table, card: Card|table, context: CalcContext|table): table?, boolean?  Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
 ---@field create_fake_card? fun(self: SMODS.Center|table): table Creates a fake card representing this center. Used internally for `generate_ui` in cases where recieved `card` param is nil. 
----@field on_select? fun(self: SMODS.Center|table, card: Card|table)
+---@field on_select? fun(self: SMODS.Center|table, card: Card|table) Called when the card is selected from a booster pack. 
 ---@overload fun(self: SMODS.Center): SMODS.Center
 SMODS.Center = setmetatable({}, {
     __call = function(self)

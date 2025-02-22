@@ -9,7 +9,7 @@
 ---@field collection_rows? number[] Array of numbers indicating how many rows and how many cards per row this ConsumableType's collection has. 
 ---@field shop_rate? nil|number Defining this value allows cards part of this ConsumableType to appear in the shop. Defined as `G.GAME[key:lower()..'_rate']`.  
 ---@field ctype_buffer? string[] Array of keys to all objects registered to the ConsumableType class. 
----@field __call? fun(self: SMODS.ConsumableType|table, o: SMODS.ConsumableType|table): nil|SMODS.ConsumableType
+---@field __call? fun(self: SMODS.ConsumableType|table, o: SMODS.ConsumableType|table): nil|table|SMODS.ConsumableType
 ---@field extend? fun(self: SMODS.ConsumableType|table, o: SMODS.ConsumableType|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.ConsumableType|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.ConsumableType|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -21,8 +21,8 @@
 ---@field post_inject_class? fun(self: SMODS.ConsumableType|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.ConsumableType|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.ConsumableType|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.ConsumableType|table, key: string, obj: table, silent?: boolean): nil|SMODS.ConsumableType Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.ConsumableType|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.ConsumableType|table, key: string, obj: SMODS.ConsumableType|table, silent?: boolean): nil|table|SMODS.ConsumableType Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.ConsumableType|table, key: string): SMODS.ConsumableType|table? Returns an object if one matches the `key`. 
 ---@field create_UIBox_your_collection? fun(self: SMODS.ConsumableType|table): table Creates the UIBox of the ConsumableType's collections menu. 
 ---@overload fun(self: SMODS.ConsumableType): SMODS.ConsumableType
 SMODS.ConsumableType = setmetatable({}, {

@@ -12,7 +12,7 @@
 ---@field visisble? boolean Sets hand visibility in the poker hands menu. If `false`, poker hand is shown only after being played once. 
 ---@field above_hand? string Key to a poker hand. Used to order this poker hand above specified poker hand. 
 ---@field order_offset? number Adds this value to poker hand's mult and chips to offset ordering. 
----@field __call? fun(self: SMODS.PokerHand|table, o: SMODS.PokerHand|table): nil|SMODS.PokerHand
+---@field __call? fun(self: SMODS.PokerHand|table, o: SMODS.PokerHand|table): nil|table|SMODS.PokerHand
 ---@field extend? fun(self: SMODS.PokerHand|table, o: SMODS.PokerHand|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.PokerHand|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.PokerHand|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -24,8 +24,8 @@
 ---@field post_inject_class? fun(self: SMODS.PokerHand|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.PokerHand|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.PokerHand|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.PokerHand|table, key: string, obj: table, silent?: boolean): nil|SMODS.PokerHand Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.PokerHand|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.PokerHand|table, key: string, obj: SMODS.PokerHand|table, silent?: boolean): nil|table|SMODS.PokerHand Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.PokerHand|table, key: string): SMODS.PokerHand|table? Returns an object if one matches the `key`. 
 ---@field evaluate? fun(parts: table, hand: table): table? Determines if played cards contain this hand, and what cards are a part of it. 
 ---@field modify_display_text? fun(self: SMODS.PokerHand|table, cards: Card[]|table[], scoring_hand: Card[]|table[]): string? Allows modifying the display text when this poker hand's text is meant to display. 
 ---@overload fun(self: SMODS.PokerHand): SMODS.PokerHand
@@ -40,7 +40,7 @@ SMODS.PokerHands = {}
 
 ---@class SMODS.PokerHandPart: SMODS.GameObject
 ---@field super? SMODS.GameObject|table Parent class. 
----@field __call? fun(self: SMODS.PokerHandPart|table, o: SMODS.PokerHandPart|table): nil|SMODS.PokerHandPart
+---@field __call? fun(self: SMODS.PokerHandPart|table, o: SMODS.PokerHandPart|table): nil|table|SMODS.PokerHandPart
 ---@field extend? fun(self: SMODS.PokerHandPart|table, o: SMODS.PokerHandPart|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.PokerHandPart|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.PokerHandPart|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -52,8 +52,8 @@ SMODS.PokerHands = {}
 ---@field post_inject_class? fun(self: SMODS.PokerHandPart|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.PokerHandPart|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.PokerHandPart|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.PokerHandPart|table, key: string, obj: table, silent?: boolean): nil|SMODS.PokerHandPart Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.PokerHandPart|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.PokerHandPart|table, key: string, obj: SMODS.PokerHandPart|table, silent?: boolean): nil|table|SMODS.PokerHandPart Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.PokerHandPart|table, key: string): SMODS.PokerHandPart|table? Returns an object if one matches the `key`. 
 ---@field func? fun(hand: Card[]|table[]): Card[]|table[] Returns array of cards that are a part of this hand. 
 ---@overload fun(self: SMODS.PokerHandPart): SMODS.PokerHandPart
 SMODS.PokerHandPart = setmetatable({}, {

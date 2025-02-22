@@ -17,7 +17,7 @@
 ---@field set? string Important for objects wanting to follow vanilla logic that depends on `set`. For classes, this is used for logging purposes. 
 ---@field no_collection? boolean Sets whether the object shows up in collections.
 ---@field config? table Cards/Objects representing your center will copy default values from `config` into it's `ability` table. Custom values can be stored within `extra`. 
----@field __call? fun(self: SMODS.GameObject|table, o: SMODS.GameObject|table): nil|SMODS.GameObject
+---@field __call? fun(self: SMODS.GameObject|table, o: SMODS.GameObject|table): nil|table|SMODS.GameObject
 ---@field extend? fun(self: SMODS.GameObject|table, o: SMODS.GameObject|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.GameObject|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.GameObject|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -29,8 +29,8 @@
 ---@field post_inject_class? fun(self: SMODS.GameObject|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.GameObject|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.GameObject|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.GameObject|table, key: string, obj: table, silent?: boolean): nil|SMODS.GameObject Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.GameObject|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.GameObject|table, key: string, obj: SMODS.GameObject|table, silent?: boolean): nil|table|SMODS.GameObject Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.GameObject|table, key: string): SMODS.GameObject|table? Returns an object if one matches the `key`. 
 ---@field obj_list? fun(self: SMODS.GameObject|table, reversed: boolean): table Returns an object if one matches the `key`. 
 ---@overload fun(o: SMODS.GameObject): SMODS.GameObject
 SMODS.GameObject = setmetatable({

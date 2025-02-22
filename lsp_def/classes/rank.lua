@@ -18,7 +18,7 @@
 ---@field strength_effect? table|{fixed?: number, random?: boolean, ignore?: boolean} Determines how cards with this rank behave when Strength is used. 
 ---@field straight_edge? boolean Sets if this rank behaves like an Ace for straights. 
 ---@field suit_map? table<string, number> For any suit keys in this table, use this rank's atlas over the suit's atlas. Provided number is the `y` position of the suit on the rank's atlas. 
----@field __call? fun(self: SMODS.Rank|table, o: SMODS.Rank|table): nil|SMODS.Rank
+---@field __call? fun(self: SMODS.Rank|table, o: SMODS.Rank|table): nil|table|SMODS.Rank
 ---@field extend? fun(self: SMODS.Rank|table, o: SMODS.Rank|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Rank|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Rank|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -30,8 +30,8 @@
 ---@field post_inject_class? fun(self: SMODS.Rank|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Rank|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Rank|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Rank|table, key: string, obj: table, silent?: boolean): nil|SMODS.Rank Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Rank|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Rank|table, key: string, obj: SMODS.Rank|table, silent?: boolean): nil|table|SMODS.Rank Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Rank|table, key: string): SMODS.Rank|table? Returns an object if one matches the `key`. 
 ---@field loc_vars? fun(self: SMODS.Rank|table, info_queue: table, card: Card|table) Allows adding tooltips onto cards with this suit. Return values not respected. 
 ---@field draw? fun(self: SMODS.Rank|table, card: Card|table, layer: string) Allows drawing additional sprites or shaders onto cards with this suit. 
 ---@field in_pool? fun(self: SMODS.Rank|table, args: table): boolean? Allows configuring if cards with this suit should spawn. 

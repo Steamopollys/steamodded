@@ -8,7 +8,8 @@
 ---@field kind? string Groups pack types together. For example, this can be used in `get_pack()` to generate a booster pack of a specific type. 
 ---@field weight? number Weight of the booster pack. 
 ---@field select_card? string|{[string]: string} Key to the CardArea (e.x. `G[SMODS.Booster.select_card]`). Consumables inside this booster pack will be "selected" and emplaced into a CardArea instead of used. As a table, each key-value pair is a card set as key and CardArea string as values.  
----@field __call? fun(self: SMODS.Booster|table, o: SMODS.Booster|table): nil|SMODS.Booster
+---@field select_exclusions? string[] List of card sets to exclude from being "Selected". 
+---@field __call? fun(self: SMODS.Booster|table, o: SMODS.Booster|table): nil|table|SMODS.Booster
 ---@field extend? fun(self: SMODS.Booster|table, o: SMODS.Booster|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Booster|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Booster|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -20,8 +21,8 @@
 ---@field post_inject_class? fun(self: SMODS.Booster|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Booster|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Booster|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Booster|table, key: string, obj: table, silent?: boolean): nil|SMODS.Booster Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Booster|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Booster|table, key: string, obj: SMODS.Booster|table, silent?: boolean): nil|table|SMODS.Booster Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Booster|table, key: string): SMODS.Booster|table? Returns an object if one matches the `key`. 
 ---@field create_card? fun(self: SMODS.Booster|table, card: Card|table, i: number): Card|table Creates the cards inside the booster pack. Returning a table will create a Card through `SMODS.create_card`. 
 ---@field update_pack? fun(self: SMODS.Booster|table, dt: number) Handles booster pack UI when opened. 
 ---@field ease_background_colour? fun(self: SMODS.Booster|table) Changes background colour when booster pack is opened. 

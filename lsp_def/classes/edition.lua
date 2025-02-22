@@ -14,7 +14,7 @@
 ---@field disable_shadow? boolean Sets if the shadow is drawn under the card with this Edition. 
 ---@field disable_base_shader? boolean Sets if the default shader for the card is disabled. 
 ---@field super? SMODS.Center|table Parent class. 
----@field __call? fun(self: SMODS.Edition|table, o: SMODS.Edition|table): nil|SMODS.Edition
+---@field __call? fun(self: SMODS.Edition|table, o: SMODS.Edition|table): nil|table|SMODS.Edition
 ---@field extend? fun(self: SMODS.Edition|table, o: SMODS.Edition|table): table Primary method of creating a class. 
 ---@field check_duplicate_register? fun(self: SMODS.Edition|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Edition|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
@@ -26,8 +26,8 @@
 ---@field post_inject_class? fun(self: SMODS.Edition|table) Called after `inject_class`. Injects and manages class information after object injection. 
 ---@field inject_class? fun(self: SMODS.Edition|table) Injects all direct instances of class objects by calling `obj:inject` and `obj:process_loc_text`. Also injects anything necessary for the class itself. Only called if class has defined both `obj_table` and `obj_buffer`. 
 ---@field inject? fun(self: SMODS.Edition|table, i?: number) Called during `inject_class`. Injects the object into the game. 
----@field take_ownership? fun(self: SMODS.Edition|table, key: string, obj: table, silent?: boolean): nil|SMODS.Edition Takes control of vanilla objects. Child class must have get_obj for this to function
----@field get_obj? fun(self: SMODS.Edition|table, key: string): table? Returns an object if one matches the `key`. 
+---@field take_ownership? fun(self: SMODS.Edition|table, key: string, obj: SMODS.Edition|table, silent?: boolean): nil|table|SMODS.Edition Takes control of vanilla objects. Child class must have get_obj for this to function
+---@field get_obj? fun(self: SMODS.Edition|table, key: string): SMODS.Edition|table? Returns an object if one matches the `key`. 
 ---@field get_weight? fun(self: SMODS.Edition|table): number? Allows modifying the weight of this Edition. 
 ---@field on_apply? fun(card: Card|table) Used to modify the card when this Edition is applied. 
 ---@field on_remove? fun(card: Card|table) Used to modify the card when this Edition is removed. 
