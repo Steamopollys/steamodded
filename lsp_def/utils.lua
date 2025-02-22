@@ -20,7 +20,7 @@
 ---@field blind? Blind|table Current blind being selected. 
 ---@field hook? boolean `true` when "The Hook" discards cards. 
 ---@field card? Card|table The individual card being checked outside of scoring. 
----@field cards? boolean[]|Card[]|table[] Table of booleans representing how many cards are created. Only a value when `context.playing_card_added` is `true`. 
+---@field cards? table[]|Card[] Table of cards representing how many cards were created. 
 ---@field consumable? Card|table The Consumable being used. Only a value when `context.using_consumeable` is `true`. 
 ---@field blueprint_card? Card|table The card currently copying the eval effects. 
 ---@field no_blueprint? true Effects akin to Blueprint or Brainstorm should not trigger in this context. 
