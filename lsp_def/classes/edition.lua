@@ -33,6 +33,7 @@
 ---@field on_remove? fun(card: Card|table) Used to modify the card when this Edition is removed. 
 ---@field on_load? fun(card: Card|table) Used to modify the card when a card with this Edition is loaded from a save. 
 ---@field draw? fun(self: SMODS.Edition|table, card: Card|table, layer: string) Draws the edition's shader. By default, `self.shader` is drawn. 
+---@field get_edition_cards? fun(self: SMODS.Edition|table, card_area: CardArea|table, edition: boolean): table
 ---@overload fun(self: SMODS.Edition): SMODS.Edition
 SMODS.Edition = setmetatable({}, {
     __call = function(self)
