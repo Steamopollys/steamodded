@@ -13,8 +13,8 @@
 ---@field other_card? Card|table The individual card being checked during scoring. 
 ---@field other_joker? Card|table The individual Joker being checked during scoring. 
 ---@field card_effects? table Table of effects that have been calculated. 
----@field destory_card? Card|table The individual card being checked for destruction. 
----@field destorying_card? Card|table The individual card being checked for destruction. Only present when calculating G.play. 
+---@field destroy_card? Card|table The individual card being checked for destruction. 
+---@field destroying_card? Card|table The individual card being checked for destruction. Only present when calculating G.play. 
 ---@field removed? Card[]|table[] Table of destroyed playing cards. 
 ---@field game_over? boolean Whether the run is lost or not. 
 ---@field blind? Blind|table Current blind being selected. 
