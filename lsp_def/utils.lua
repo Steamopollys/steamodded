@@ -57,6 +57,7 @@
 ---@field post_trigger? true Check if `true` for effects after another Joker is triggered. 
 ---@field modify_scoring_hand? true Check if `true` for modifying the scoring hand. 
 ---@field ending_booster? true Check if `true` for effects after a Booster Pack ends. 
+---@field starting_shop? true Check id `true` for effects when the shop is first opened. 
 
 --- Util Functions
 
