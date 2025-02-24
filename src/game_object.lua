@@ -1442,7 +1442,6 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
 
     SMODS.Booster:take_ownership_by_kind('Celestial', {
         group_key = "k_celestial_pack",
-        config = {extra = 10, choose = 1},
         update_pack = SMODS.Booster.update_pack,
         ease_background_colour = function(self) ease_background_colour_blind(G.STATES.PLANET_PACK) end,
         create_UIBox = SMODS.Booster.create_UIBox,
