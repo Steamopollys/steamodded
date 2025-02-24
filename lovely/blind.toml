@@ -4,6 +4,79 @@ dump_lua = true
 priority = -10
 
 ### Blind API
+## elseif-ify some if chains
+[[patches]]
+[patches.regex]
+target = 'blind.lua'
+pattern = "end\n(?<indent>[\t ]*)if self.name == ['\"](?<ability>.*?)['\"]"
+position = 'at'
+payload = "elseif self.name == '$ability'"
+
+# revert the change for The Pillar
+[[patches]]
+[patches.pattern]
+target = 'blind.lua'
+pattern = "elseif self.name == 'The Pillar' and card.ability.played_this_ante then"
+position = 'at'
+payload = '''end
+if self.name == 'The Pillar' and card.ability.played_this_ante then'''
+match_indent = true
+
+# revert the change for The Eye in debuff_hand
+[[patches]]
+[patches.pattern]
+target = 'blind.lua'
+pattern = "elseif self.name == 'The Eye' then"
+position = 'at'
+payload = '''end
+if self.name == 'The Eye' then'''
+match_indent = true
+
+
+#[[patches]]
+#[patches.pattern]
+#target = 'blind.lua'
+#pattern = '''end
+#if self.name == 'The Fish' and not reset then'''
+#position = 'at'
+#payload = "elseif self.name == 'The Fish' and not reset then"
+#match_indent = true
+#
+#[[patches]]
+#[patches.pattern]
+#target = 'blind.lua'
+#pattern = '''end
+#if self.name == 'The Water' and not reset then'''
+#position = 'at'
+#payload = "elseif self.name == 'The Water' and not reset then"
+#match_indent = true
+#
+#[[patches]]
+#[patches.pattern]
+#target = 'blind.lua'
+#pattern = '''end
+#if self.name == 'The Needle' and not reset then'''
+#position = 'at'
+#payload = "elseif self.name == 'The Needle' and not reset then"
+#match_indent = true
+#
+#[[patches]]
+#[patches.pattern]
+#target = 'blind.lua'
+#pattern = '''end
+#if self.name == 'The Manacle' and not reset then'''
+#position = 'at'
+#payload = "elseif self.name == 'The Manacle' and not reset then"
+#match_indent = true
+#
+#[[patches]]
+#[patches.pattern]
+#target = 'blind.lua'
+#pattern = '''end
+#if self.name == 'Amber Acorn' and not reset and #G.jokers.cards > 0 then'''
+#position = 'at'
+#payload = "elseif self.name == 'Amber Acorn' and not reset and #G.jokers.cards > 0 then"
+#match_indent = true
 
 ## Set debuffed_by_blind, use it for Matador behavior
 ## Blind:debuff_card()
@@ -62,60 +135,6 @@ local obj = self.config.blind
 if obj.set_blind and type(obj.set_blind) == 'function' then
     obj:set_blind()
 elseif self.name == 'The Eye' and not reset then'''
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = 'blind.lua'
-pattern = '''end
-if self.name == 'The Mouth' and not reset then'''
-position = 'at'
-payload = "elseif self.name == 'The Mouth' and not reset then"
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = 'blind.lua'
-pattern = '''end
-if self.name == 'The Fish' and not reset then'''
-position = 'at'
-payload = "elseif self.name == 'The Fish' and not reset then"
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = 'blind.lua'
-pattern = '''end
-if self.name == 'The Water' and not reset then'''
-position = 'at'
-payload = "elseif self.name == 'The Water' and not reset then"
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = 'blind.lua'
-pattern = '''end
-if self.name == 'The Needle' and not reset then'''
-position = 'at'
-payload = "elseif self.name == 'The Needle' and not reset then"
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = 'blind.lua'
-pattern = '''end
-if self.name == 'The Manacle' and not reset then'''
-position = 'at'
-payload = "elseif self.name == 'The Manacle' and not reset then"
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = 'blind.lua'
-pattern = '''end
-if self.name == 'Amber Acorn' and not reset and #G.jokers.cards > 0 then'''
-position = 'at'
-payload = "elseif self.name == 'Amber Acorn' and not reset and #G.jokers.cards > 0 then"
 match_indent = true
 
 # [[patches]]
@@ -210,7 +229,8 @@ payload = '''
 local obj = self.config.blind
 if obj.drawn_to_hand and type(obj.drawn_to_hand) == 'function' then
     obj:drawn_to_hand()
-end'''
+end
+'''
 
 # Blind:debuff_hand()
 [[patches]]
