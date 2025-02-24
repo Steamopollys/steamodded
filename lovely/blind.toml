@@ -12,6 +12,36 @@ pattern = "end\n(?<indent>[\t ]*)if self.name == ['\"](?<ability>.*?)['\"]"
 position = 'at'
 payload = "elseif self.name == '$ability'"
 
+# revert the change for The Pillar
+[[patches]]
+[patches.regex]
+target = 'blind.lua'
+pattern = "(?<indent>[\t ]*)elseif self.name == 'The Pillar' and card.ability.played_this_ante then"
+position = 'at'
+line_prepend = '$indent'
+payload = '''end
+if self.name == 'The Pillar' and card.ability.played_this_ante then'''
+
+# revert the change for The Eye in debuff_hand
+[[patches]]
+[patches.regex]
+target = 'blind.lua'
+pattern = "(?<indent>[\t ]*)elseif self.name == 'The Eye' then"
+position = 'at'
+line_prepend = '$indent'
+payload = '''end
+if self.name == 'The Eye' then'''
+
+# revert the change for The Arm in debuff_hand
+[[patches]]
+[patches.regex]
+target = 'blind.lua'
+pattern = "(?<indent>[\t ]*)elseif self.name == 'The Arm' then"
+position = 'at'
+line_prepend = '$indent'
+payload = '''end
+if self.name == 'The Arm' then'''
+
 ## Set debuffed_by_blind, use it for Matador behavior
 ## Blind:debuff_card()
 [[patches]]
