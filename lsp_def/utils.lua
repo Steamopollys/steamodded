@@ -66,7 +66,17 @@
 ---Flattens given arrays into one, then adds elements from each table to a new one. Skips duplicates. 
 function SMODS.merge_lists(...) end
 
---- Inserts all features mods enable into `SMODS.optional_features`. 
+--- A table of SMODS feature that mods can choose to enable. 
+---@class SMODS.optional_features: table
+---@field quantum_enhancements? boolean Enables "Quantum Enhancement" contexts. Cards can count as having multiple enhancements at once. 
+---@field retrigger_joker? boolean Enables "Joker Retrigger" contexts. Jokers can be retriggered by other jokers or effects. 
+---@field post_trigger? boolean Enables "Post Trigger" contexts. Allows calculating effects after a Joker has been calculated. 
+---@field cardarea? table<string, boolean> Enables additional CardArea calculation. Currently supports: `deck`, `discards`, `unscored`. 
+
+---@type SMODS.optional_features
+SMODS.optional_features = { cardarea = {} }
+
+--- Inserts all SMODS features enabled by loaded mods into `SMODS.optional_features`. 
 function SMODS.get_optional_features() end
 
 ---@param context CalcContext|table 
@@ -291,7 +301,7 @@ function SMODS.restart_game() end
 
 ---@param obj SMODS.GameObject|table
 ---@param badges table[]
---- Adds the mod badge into the `badges` based on provided `obj`. 
+--- Adds the mod badge into the `badges` of the provided `obj` description UIBox. 
 function SMODS.create_mod_badges(obj, badges) end
 
 --- Creates a localization dump. 
@@ -350,12 +360,12 @@ function SMODS.find_mod(id) end
 
 ---@param tbl table
 ---@param val any
----@param mode ("index"|"i")|("value"|"v")? Sets if the value is compared with th indexes or values of the table. 
+---@param mode ("index"|"i")|("value"|"v")? Sets if the value is compared with the indexes or values of the table. 
 ---@param immediate  boolean?
 ---Seatch for val anywhere deep in tbl. Return a table of finds, or the first found if args.immediate is provided.
 function SMODS.deepfind(tbl, val, mode, immediate) end
 
---- Enabled debugging Joker calculations. 
+--- Enables debugging Joker calculations. 
 function SMODS.debug_calculation() end
 
 ---@param card Card|table
@@ -364,7 +374,7 @@ function SMODS.debug_calculation() end
 --- Controls if the card should be selectable from a Booster Pack. 
 function Card.selectable_from_pack(card, pack) end
 
----@param pool (table|"UNAVAILABLE")[]
+---@param pool (string|"UNAVAILABLE")[]
 ---@return number
 --- Returns size of the provided pool (excluding `"UNAVAILABLE"`). 
 function SMODS.size_of_pool(pool) end
@@ -375,6 +385,7 @@ function SMODS.size_of_pool(pool) end
 function SMODS.get_next_vouchers(vouchers) end
 
 ---@param key string
+---@return Card|table voucher
 --- Adds a Voucher with matching `key` to the shop. 
 function SMODS.add_voucher_to_shop(key) end
 
@@ -383,6 +394,7 @@ function SMODS.add_voucher_to_shop(key) end
 function SMODS.change_voucher_limit(mod) end
 
 ---@param key string 
+---@return Card|table booster
 --- Adds a Booster Pack with matching `key` to the shop. 
 function SMODS.add_booster_to_shop(key) end
 

@@ -37,7 +37,7 @@ SMODS.path = ""
 ---@field set_ability_reset_keys? fun(): table When a card's `ability` table is changed, values with a key matching inside this table will not persist. 
 ---@field reset_game_globals? fun(run_start: boolean) Allows resetting global values every new run or round. 
 ---@field set_debuff? fun(card: Card|table): boolean|string? Allows controlling when a card is debuffed or not. Return `"prevent_debuff"` to force a card to be undebuffable. 
----@field optional_features? table|fun(): table Table of optional SMODS features to enable inserted into `SMODS.optional_features`. If function, returns table. 
+---@field optional_features? SMODS.optional_features|(fun(): SMODS.optional_features) Table of optional SMODS features to enable inserted into `SMODS.optional_features`. If function, returns table. 
 ---@field meta_mod? boolean Marked as a "meta mod" by SMODS. Only "Steamodded", "Lovely", and "Balatro" are provided by default.
 
 ---@type table<string, Mod|table>
