@@ -142,17 +142,6 @@ payload = """if not SMODS.has_no_suit(scoring_hand[i]) then
     G.GAME.cards_played[scoring_hand[i].base.value].suits[scoring_hand[i].base.suit] = true
 end"""
 
-
-## replace_base_card
-# Determines whether to draw the base card's front or not
-# Card:draw()
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = "if self.children.front and self.ability.effect ~= 'Stone Card' then"
-match_indent = true
-position = "at"
-payload = "if self.children.front and (self.ability.delayed or (self.ability.effect ~= 'Stone Card' and not self.config.center.replace_base_card)) then"
 # Add the delayed property to sprites that are delayed
 [[patches]]
 [patches.pattern]
