@@ -183,12 +183,12 @@ function SMODS.process_loc_text(ref_table, ref_value, loc_txt, key)
     ref_table[ref_value] = target
 end
 
-local function parse_loc_file(file_name, force)
+local function parse_loc_file(file_name, force, mod_id)
     local loc_table = nil
     if file_name:lower():match("%.json$") then
         loc_table = assert(JSON.decode(NFS.read(file_name)))
     else
-        loc_table = assert(loadstring(NFS.read(file_name)))()
+        loc_table = assert(loadstring(NFS.read(file_name), ('=[SMODS %s "%s"]'):format(mod_id, string.match(file_name, '[^/]+/[^/]+$'))))()
     end
     local function recurse(target, ref_table)
         if type(target) ~= 'table' then return end --this shouldn't happen unless there's a bad return value
@@ -207,21 +207,21 @@ local function parse_loc_file(file_name, force)
 	recurse(loc_table, G.localization)
 end
 
-local function handle_loc_file(dir, language, force)
+local function handle_loc_file(dir, language, force, mod_id)
     for k, v in ipairs({ dir .. language .. '.lua', dir .. language .. '.json' }) do
         if NFS.getInfo(v) then
-            parse_loc_file(v, force)
+            parse_loc_file(v, force, mod_id)
             break
         end
     end
 end
 
-function SMODS.handle_loc_file(path)
+function SMODS.handle_loc_file(path, mod_id)
     local dir = path .. 'localization/'
-    handle_loc_file(dir, 'en-us', true)
-    handle_loc_file(dir, 'default', true)
-    handle_loc_file(dir, G.SETTINGS.language, true)
-    if G.SETTINGS.real_language then handle_loc_file(dir, G.SETTINGS.real_language, true) end
+    handle_loc_file(dir, 'en-us', true, mod_id)
+    handle_loc_file(dir, 'default', true, mod_id)
+    handle_loc_file(dir, G.SETTINGS.language, true, mod_id)
+    if G.SETTINGS.real_language then handle_loc_file(dir, G.SETTINGS.real_language, true, mod_id) end
 end
 
 function SMODS.insert_pool(pool, center, replace)
@@ -230,15 +230,15 @@ function SMODS.insert_pool(pool, center, replace)
 		for k, v in ipairs(pool) do
             if v.key == center.key then
                 pool[k] = center
+                return
             end
 		end
-    else
-		local prev_order = (pool[#pool] and pool[#pool].order) or 0
-		if prev_order ~= nil then 
-			center.order = prev_order + 1
-		end
-		table.insert(pool, center)
-	end
+    end
+    local prev_order = (pool[#pool] and pool[#pool].order) or 0
+    if prev_order ~= nil then 
+        center.order = prev_order + 1
+    end
+    table.insert(pool, center)
 end
 
 function SMODS.remove_pool(pool, key)
@@ -976,6 +976,17 @@ function SMODS.always_scores(card)
         if v.always_scores and card.ability[k] then return true end
     end
 end
+function SMODS.never_scores(card)
+    card.extra_enhancements = nil
+    for k, _ in pairs(SMODS.get_enhancements(card)) do
+        if G.P_CENTERS[k].never_scores then return true end
+    end
+    if (G.P_CENTERS[(card.edition or {}).key] or {}).never_scores then return true end
+    if (G.P_SEALS[card.seal or {}] or {}).never_scores then return true end
+    for k, v in pairs(SMODS.Stickers) do
+        if v.never_scores and card.ability[k] then return true end
+    end
+end
 
 SMODS.collection_pool = function(_base_pool)
     local pool = {}
@@ -1193,7 +1204,18 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
     end
 
     if key == 'level_up' then
-        level_up_hand(scored_card, G.GAME.last_hand_played, effect.instant, type(amount) == 'number' and amount or 1)
+        local old_text = {}
+        G.E_MANAGER:add_event(Event({
+            trigger = 'immediate',
+            func = function()
+                old_text = copy_table(G.GAME.current_round.current_hand)
+                update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = old_text.mult, chips = old_text.chips, handname = old_text.handname, level = old_text.handname ~= "" and G.GAME.hands[G.GAME.last_hand_played].level or ''})
+                return true
+            end
+        }))
+        local hand_type = effect.level_up_hand or G.GAME.last_hand_played
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(hand_type, 'poker_hands'),chips = G.GAME.hands[hand_type].chips, mult = G.GAME.hands[hand_type].mult, level=G.GAME.hands[hand_type].level})
+        level_up_hand(scored_card, hand_type, effect.instant, type(amount) == 'number' and amount or 1)
         return true
     end
 
@@ -1383,6 +1405,24 @@ function SMODS.calculate_context(context, return_table)
                 SMODS.trigger_effects(effects, context.scoring_hand[i])
             end
         end
+        if SMODS.optional_features.cardareas.unscored then
+            context.cardarea = 'unscored'
+            local unscored_cards = {}
+            for _, played_card in pairs(G.play.cards) do
+                if not SMODS.in_scoring(played_card, context.scoring_hand) then unscored_cards[#unscored_cards + 1] = played_card end
+            end
+            for i=1, #unscored_cards do
+                --calculate the played card effects
+                if return_table then 
+                    return_table[#return_table+1] = eval_card(unscored_cards[i], context)
+                    SMODS.calculate_quantum_enhancements(unscored_cards[i], return_table, context)
+                else
+                    local effects = {eval_card(unscored_cards[i], context)}
+                    SMODS.calculate_quantum_enhancements(unscored_cards[i], effects, context)
+                    SMODS.trigger_effects(effects, unscored_cards[i])
+                end
+            end
+        end
     end
     context.cardarea = G.hand
     for i=1, #G.hand.cards do
@@ -1423,6 +1463,12 @@ function SMODS.calculate_context(context, return_table)
     end
     local effect = G.GAME.selected_back:trigger_effect(context)
     if effect then SMODS.calculate_effect(effect, G.deck.cards[1] or G.deck) end
+end
+
+function SMODS.in_scoring(card, scoring_hand)
+    for _, _card in pairs(scoring_hand) do
+        if card == _card then return true end
+    end
 end
 
 function SMODS.score_card(card, context)
@@ -1618,6 +1664,12 @@ function SMODS.calculate_destroying_cards(context, cards_destroyed, scoring_hand
         SMODS.trigger_effects({post}, card)
         if self_destroy then destroyed = true end
         
+        local deck_effect = G.GAME.selected_back:trigger_effect(context)
+        if deck_effect then
+            self_destroy = SMODS.calculate_effect(deck_effect, G.deck.cards[1] or G.deck)
+            if self_destroy then destroyed = true end
+        end
+
         -- TARGET: card destroyed
 
         if destroyed then 
@@ -1635,6 +1687,7 @@ function SMODS.get_card_areas(_type, _context)
     if _type == 'playing_cards' then
         local t = {}
         if _context ~= 'end_of_round' then t[#t+1] = G.play end
+        if _context ~= 'end_of_round' and SMODS.optional_features.cardareas.unscored then t[#t+1] = 'unscored' end
         t[#t+1] = G.hand
         if SMODS.optional_features.cardareas.deck then t[#t+1] = G.deck end
         if SMODS.optional_features.cardareas.discard then t[#t+1] = G.discard end
@@ -1778,4 +1831,81 @@ function Card.selectable_from_pack(card, pack)
         end
         return pack.select_card
     end
+end
+
+-- Shop functionality
+function SMODS.size_of_pool(pool)
+    local size = 0
+    for _, v in pairs(pool) do
+        if v ~= 'UNAVAILABLE' then size = size + 1 end
+    end
+    return size
+end
+
+function SMODS.get_next_vouchers(vouchers)
+    vouchers = vouchers or {spawn = {}}
+    local _pool, _pool_key = get_current_pool('Voucher')
+    for i=#vouchers+1, math.min(SMODS.size_of_pool(_pool), G.GAME.starting_params.vouchers_in_shop + (G.GAME.modifiers.extra_vouchers or 0)) do
+        local center = pseudorandom_element(_pool, pseudoseed(_pool_key))
+        local it = 1
+        while center == 'UNAVAILABLE' or vouchers.spawn[center] do
+            it = it + 1
+            center = pseudorandom_element(_pool, pseudoseed(_pool_key..'_resample'..it))
+        end
+
+        vouchers[#vouchers+1] = center
+        vouchers.spawn[center] = true
+    end
+    return vouchers
+end
+
+function SMODS.add_voucher_to_shop(key)
+    if key then assert(G.P_CENTERS[key], "Invalid voucher key: "..key) else 
+        key = get_next_voucher_key() 
+        G.GAME.current_round.voucher.spawn[key] = true
+        G.GAME.current_round.voucher[#G.GAME.current_round.voucher + 1] = key
+    end
+    local card = Card(G.shop_vouchers.T.x + G.shop_vouchers.T.w/2,
+        G.shop_vouchers.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS[key],{bypass_discovery_center = true, bypass_discovery_ui = true})
+        card.shop_voucher = true
+        create_shop_card_ui(card, 'Voucher', G.shop_vouchers)
+        card:start_materialize()
+        G.shop_vouchers:emplace(card)
+        G.shop_vouchers.config.card_limit = #G.shop_vouchers.cards
+        return card
+end
+
+function SMODS.change_voucher_limit(mod)
+    G.GAME.modifiers.extra_vouchers = (G.GAME.modifiers.extra_vouchers or 0) + mod
+    if mod > 0 and G.STATE == G.STATES.SHOP then
+        for i=1, mod do
+            SMODS.add_voucher_to_shop()
+        end
+    end
+end
+
+function SMODS.add_booster_to_shop(key)
+    if key then assert(G.P_CENTERS[key], "Invalid booster key: "..key) else key = get_pack('shop_pack').key end
+    local card = Card(G.shop_booster.T.x + G.shop_booster.T.w/2,
+    G.shop_booster.T.y, G.CARD_W*1.27, G.CARD_H*1.27, G.P_CARDS.empty, G.P_CENTERS[key], {bypass_discovery_center = true, bypass_discovery_ui = true})
+    create_shop_card_ui(card, 'Booster', G.shop_booster)
+    card.ability.booster_pos = #G.shop_booster.cards + 1
+    card:start_materialize()
+    G.shop_booster:emplace(card)
+    return card
+end
+
+function SMODS.change_booster_limit(mod)
+    G.GAME.modifiers.extra_boosters = (G.GAME.modifiers.extra_boosters or 0) + mod
+    if mod > 0 and G.STATE == G.STATES.SHOP then
+        for i = 1, mod do
+            SMODS.add_booster_to_shop()
+        end
+    end
+end
+
+function SMODS.change_free_rerolls(mod)
+    G.GAME.round_resets.free_rerolls = G.GAME.round_resets.free_rerolls + mod
+    G.GAME.current_round.free_rerolls = math.max(G.GAME.current_round.free_rerolls + mod, 0)
+    calculate_reroll_cost(true)
 end

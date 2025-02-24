@@ -49,6 +49,26 @@ payload = '''
 		obj:apply(self)
 	end'''
 
+[[patches]]
+[patches.pattern]
+target = 'back.lua'
+pattern = "if self.effect.config.randomize_rank_suit then"
+position = 'before'
+match_indent = true
+payload = '''
+G.E_MANAGER:add_event(Event({
+	func = function()
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				save_run()
+				return true
+			end
+		}))
+		return true
+	end
+}))
+'''
+
 # Back:trigger_effect(args)
 [[patches]]
 [patches.pattern]

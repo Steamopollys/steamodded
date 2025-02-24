@@ -27,7 +27,7 @@ match_indent = true
 target = 'game.lua'
 pattern = "self.localization = assert(loadstring(love.filesystem.read('localization/'..G.SETTINGS.language..'.lua')))()"
 position = 'at'
-payload = "self.localization = assert(loadstring(love.filesystem.read('localization/'..G.SETTINGS.language..'.lua') or love.filesystem.read('localization/en-us.lua')))()"
+payload = """self.localization = assert(loadstring(love.filesystem.read('localization/'..G.SETTINGS.language..'.lua') or love.filesystem.read('localization/en-us.lua'), '=[localization "'..G.SETTINGS.language..'.lua"]'))()"""
 match_indent = true
 
 [[patches]]

@@ -7,17 +7,37 @@ priority = -10
 
 # Card:open
 [[patches]]
-[patches.regex]
+[patches.pattern]
 target = "card.lua"
-pattern = '''(?<indent>[\t ]*)if self\.ability\.name:find\('Arcana'\) then \n[\s\S]{12}G\.STATE'''
-position = "before"
-payload = '''
+pattern = '''
+if self.ability.name:find('Arcana') then 
+            G.STATE = G.STATES.TAROT_PACK
+            G.GAME.pack_size = self.ability.extra
+        elseif self.ability.name:find('Celestial') then
+            G.STATE = G.STATES.PLANET_PACK
+            G.GAME.pack_size = self.ability.extra
+        elseif self.ability.name:find('Spectral') then
+            G.STATE = G.STATES.SPECTRAL_PACK
+            G.GAME.pack_size = self.ability.extra
+        elseif self.ability.name:find('Standard') then
+            G.STATE = G.STATES.STANDARD_PACK
+            G.GAME.pack_size = self.ability.extra
+        elseif self.ability.name:find('Buffoon') then
+            G.STATE = G.STATES.BUFFOON_PACK
+            G.GAME.pack_size = self.ability.extra
+        end
+
+        G.GAME.pack_choices = self.config.center.config.choose or 1'''
+match_indent = true
+position = "at"
+payload = """
 booster_obj = self.config.center
 if booster_obj and SMODS.Centers[booster_obj.key] then
     G.STATE = G.STATES.SMODS_BOOSTER_OPENED
     SMODS.OPENED_BOOSTER = self
-end'''
-line_prepend = '$indent'
+end
+G.GAME.pack_choices = self.ability.choose or self.config.center.config.choose or 1
+"""
 
 # Card:open
 [[patches]]
@@ -230,6 +250,9 @@ if card.ability.consumeable then
 payload = '''
 if select_to then
     G[select_to]:emplace(card)
+    if card.config.center.on_select and type(card.config.center.on_select) == 'function' then
+        card.config.center:on_select(card)
+    end
     play_sound('card1', 0.8, 0.6)
     play_sound('generic1')
     dont_dissolve = true
@@ -262,9 +285,9 @@ booster_obj = nil
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
 match_indent = true
-position = 'after'
+position = 'before'
 pattern = '''
-G.FUNCS.skip_booster = function(e)
+G.FUNCS.end_consumeable(e)
 '''
 payload = '''
 booster_obj = nil

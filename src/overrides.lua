@@ -1252,6 +1252,91 @@ function evaluate_poker_hand(hand)
 end
 --#endregion
 
+function Card:set_sprites(_center, _front)
+    if _front then 
+        local _atlas, _pos = get_front_spriteinfo(_front)
+        if self.children.front then self.children.front:remove() end
+		self.children.front = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, _atlas, _pos)
+		self.children.front.states.hover = self.states.hover
+		self.children.front.states.click = self.states.click
+		self.children.front.states.drag = self.states.drag
+		self.children.front.states.collide.can = false
+		self.children.front:set_role({major = self, role_type = 'Glued', draw_major = self})
+    end
+    if _center then 
+        if _center.set then
+            if self.children.center then self.children.center:remove() end
+			if _center.set == 'Joker' and not _center.unlocked and not self.params.bypass_discovery_center then 
+				self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["Joker"], G.j_locked.pos)
+			elseif self.config.center.set == 'Voucher' and not self.config.center.unlocked and not self.params.bypass_discovery_center then 
+				self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["Voucher"], G.v_locked.pos)
+			elseif self.config.center.consumeable and self.config.center.demo then 
+				self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["Tarot"], G.c_locked.pos)
+			elseif not self.params.bypass_discovery_center and (_center.set == 'Edition' or _center.set == 'Joker' or _center.consumeable or _center.set == 'Voucher' or _center.set == 'Booster') and not _center.discovered then
+				local atlas = G.ASSET_ATLAS[
+					(_center.undiscovered and
+						(_center.undiscovered[G.SETTINGS.colourblind_option and 'hc_atlas' or 'lc_atlas'] or
+						_center.undiscovered.atlas)
+					) or
+					(
+						SMODS.UndiscoveredSprites[_center.set] and
+						(SMODS.UndiscoveredSprites[_center.set][G.SETTINGS.colourblind_option and 'hc_atlas' or 'lc_atlas'] or 
+						SMODS.UndiscoveredSprites[_center.set].atlas)
+					) or
+					_center.set
+				] or G.ASSET_ATLAS["Joker"]
+				local pos = (_center.undiscovered and _center.undiscovered.pos) or
+					(SMODS.UndiscoveredSprites[_center.set] and SMODS.UndiscoveredSprites[_center.set].pos) or
+					G.j_undiscovered.pos
+				self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, atlas, pos)
+			elseif _center.set == 'Joker' or _center.consumeable or _center.set == 'Voucher' then
+				self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[_center[G.SETTINGS.colourblind_option and 'hc_atlas' or 'lc_atlas'] or _center.atlas or _center.set], self.config.center.pos)
+			else
+				self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[_center.atlas or 'centers'], _center.pos)
+			end
+			self.children.center.states.hover = self.states.hover
+			self.children.center.states.click = self.states.click
+			self.children.center.states.drag = self.states.drag
+			self.children.center.states.collide.can = false
+			self.children.center:set_role({major = self, role_type = 'Glued', draw_major = self})
+            if _center.name == 'Half Joker' and (_center.discovered or self.bypass_discovery_center) then 
+                self.children.center.scale.y = self.children.center.scale.y/1.7
+            end
+            if _center.name == 'Photograph' and (_center.discovered or self.bypass_discovery_center) then 
+                self.children.center.scale.y = self.children.center.scale.y/1.2
+            end
+            if _center.name == 'Square Joker' and (_center.discovered or self.bypass_discovery_center) then 
+                self.children.center.scale.y = self.children.center.scale.x
+            end
+            if _center.pixel_size and _center.pixel_size.h and (_center.discovered or self.bypass_discovery_center) then
+                self.children.center.scale.y = self.children.center.scale.y*(_center.pixel_size.h/95)
+            end
+            if _center.pixel_size and _center.pixel_size.w and (_center.discovered or self.bypass_discovery_center) then
+                self.children.center.scale.x = self.children.center.scale.x*(_center.pixel_size.w/71)
+            end
+        end
+
+        if _center.soul_pos then
+			if self.children.floating_sprite then self.children.floating_sprite:remove() end
+            self.children.floating_sprite = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[_center[G.SETTINGS.colourblind_option and 'hc_atlas' or 'lc_atlas'] or _center.atlas or _center.set], self.config.center.soul_pos)
+            self.children.floating_sprite.role.draw_major = self
+            self.children.floating_sprite.states.hover.can = false
+            self.children.floating_sprite.states.click.can = false
+        end
+
+        if self.children.back then self.children.back:remove() end
+		self.children.back = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS[(G.GAME.viewed_back or G.GAME.selected_back) and ((G.GAME.viewed_back or G.GAME.selected_back)[G.SETTINGS.colourblind_option and 'hc_atlas' or 'lc_atlas'] or (G.GAME.viewed_back or G.GAME.selected_back).atlas) or 'centers'], self.params.bypass_back or (self.playing_card and G.GAME[self.back].pos or G.P_CENTERS['b_red'].pos))
+		self.children.back.states.hover = self.states.hover
+		self.children.back.states.click = self.states.click
+		self.children.back.states.drag = self.states.drag
+		self.children.back.states.collide.can = false
+		self.children.back:set_role({major = self, role_type = 'Glued', draw_major = self})
+		if _center.set_sprites and type(_center.set_sprites) == 'function' then
+            _center:set_sprites(self, _front)
+        end
+    end
+end
+
 -- Init custom card parameters.
 local card_init = Card.init
 function Card:init(X, Y, W, H, card, center, params)

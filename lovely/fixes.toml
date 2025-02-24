@@ -35,7 +35,7 @@ pattern = "if G.SAVED_GAME ~= nil then G.SAVED_GAME = STR_UNPACK(G.SAVED_GAME) e
 position = 'after'
 match_indent = true
 payload = """
-if G.SAVED_GAME == nil then 
+if G.SAVED_GAME == nil then
     e.config.colour = G.C.UI.BACKGROUND_INACTIVE
     e.config.button = nil
     return _can_continue
@@ -161,13 +161,19 @@ payload = 'cfg'
 [patches.pattern]
 target = 'card.lua'
 pattern = "self.config.center = center"
-position = 'before'
+position = 'at'
 match_indent = true
 payload = '''
 if self.added_to_deck and old_center and not self.debuff then
     self:remove_from_deck()
     self.added_to_deck = true
-end'''
+end
+if type(center) == 'string' then
+    assert(G.P_CENTERS[center])
+    center = G.P_CENTERS[center]
+end
+self.config.center = center
+'''
 
 [[patches]]
 [patches.pattern]
@@ -345,7 +351,7 @@ payload = ""
 #
 
 ## create_UIBox_HUD
-[[patches]] 
+[[patches]]
 [patches.regex]
 target = "functions/UI_definitions.lua"
 pattern = '''
@@ -358,7 +364,7 @@ payload = '''
                             end,'''
 
 ## DynaText:update_text
-[[patches]] 
+[[patches]]
 [patches.pattern]
 target = "engine/text.lua"
 pattern = 'self.config.H = 0'
@@ -394,18 +400,6 @@ target = "card.lua"
 pattern = 'if G\.GAME\.blind then'
 position = "at"
 payload = "if G.GAME.blind and G.GAME.blind.in_blind then"
-
-# Blind:set_blind
-[[patches]]
-[patches.pattern]
-target = "blind.lua"
-match_indent = true
-pattern = "if not reset then"
-position = "after"
-payload = '''
-    if blind then
-        self.in_blind = true
-    end'''
 
 # end_round()
 [[patches]]
@@ -476,7 +470,7 @@ payload = 'for k, v in pairs(G.I.SPRITE) do'
 ##
 ## Card:draw() - improved mod compatibility
 ##
-# Add option for sprites to not be drawn 
+# Add option for sprites to not be drawn
 [[patches]]
 [patches.pattern]
 target = "card.lua"
@@ -594,6 +588,19 @@ pattern = '''and \(G\.hand\.cards\[1\] or \(G\.hand\.config\.card_limit <= 0\)\)
 position = "at"
 payload = ''' '''
 
+# Fix prng calls on collection advancing seeds
+# Keep vanilla behaviour for to-do list
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = "if key == 'seed' then return math.random() end"
+position = "after"
+payload = """
+if G.SETTINGS.paused and key ~= 'to_do' then return math.random() end
+"""
+overwrite = true
+match_indent = true
+
 # Fixes Steam API not loading on unix
 [[patches]]
 [patches.pattern]
@@ -603,7 +610,7 @@ position = 'after'
 pattern = '--To control when steam communication happens, make sure to send updates to steam as little as possible'
 payload = '''local cwd = NFS.getWorkingDirectory()
 NFS.setWorkingDirectory(love.filesystem.getSourceBaseDirectory())
-''' 
+'''
 
 [[patches]]
 [patches.pattern]
@@ -612,7 +619,7 @@ match_indent = true
 position = 'before'
 pattern = '--Set up the render window and the stage for the splash screen, then enter the gameloop with :update'
 payload = '''NFS.setWorkingDirectory(cwd)
-''' 
+'''
 
 [[patches]]
 [patches.pattern]
