@@ -52,16 +52,85 @@ self.children.animatedSprite.atlas = G.ANIMATION_ATLAS[obj.atlas] or G.ANIMATION
 [[patches]]
 [patches.pattern]
 target = 'blind.lua'
-pattern = '--add new debuffs'
-position = 'before'
-match_indent = true
+pattern = "if self.name == 'The Eye' and not reset then"
+position = 'at'
 payload = '''
-if not reset then
-    local obj = self.config.blind
-    if obj.set_blind and type(obj.set_blind) == 'function' then
-        obj:set_blind()
-    end
-end'''
+if blind then
+    self.in_blind = true
+end
+local obj = self.config.blind
+if obj.set_blind and type(obj.set_blind) == 'function' then
+    obj:set_blind()
+elseif self.name == 'The Eye' and not reset then'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'blind.lua'
+pattern = '''end
+if self.name == 'The Mouth' and not reset then'''
+position = 'at'
+payload = "elseif self.name == 'The Mouth' and not reset then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'blind.lua'
+pattern = '''end
+if self.name == 'The Fish' and not reset then'''
+position = 'at'
+payload = "elseif self.name == 'The Fish' and not reset then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'blind.lua'
+pattern = '''end
+if self.name == 'The Water' and not reset then'''
+position = 'at'
+payload = "elseif self.name == 'The Water' and not reset then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'blind.lua'
+pattern = '''end
+if self.name == 'The Needle' and not reset then'''
+position = 'at'
+payload = "elseif self.name == 'The Needle' and not reset then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'blind.lua'
+pattern = '''end
+if self.name == 'The Manacle' and not reset then'''
+position = 'at'
+payload = "elseif self.name == 'The Manacle' and not reset then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'blind.lua'
+pattern = '''end
+if self.name == 'Amber Acorn' and not reset and #G.jokers.cards > 0 then'''
+position = 'at'
+payload = "elseif self.name == 'Amber Acorn' and not reset and #G.jokers.cards > 0 then"
+match_indent = true
+
+# [[patches]]
+# [patches.pattern]
+# target = 'blind.lua'
+# pattern = '--add new debuffs'
+# position = 'before'
+# match_indent = true
+# payload = '''
+# if not reset then
+#     local obj = self.config.blind
+#     if obj.set_blind and type(obj.set_blind) == 'function' then
+#         obj:set_blind()
+#     end
+# end'''
 
 # Blind:disable()
 [[patches]]
@@ -99,7 +168,7 @@ match_indent = true
 payload = '''
 local obj = self.config.blind
 if not self.disabled and obj.recalc_debuff and type(obj.recalc_debuff) == 'function' then
-    if obj:recalc_debuff(card, from_blind) then 
+    if obj:recalc_debuff(card, from_blind) then
         card:set_debuff(true)
         if card.debuff then card.debuffed_by_blind = true end
     else
@@ -108,7 +177,7 @@ if not self.disabled and obj.recalc_debuff and type(obj.recalc_debuff) == 'funct
     return
 elseif not self.disabled and obj.debuff_card and type(obj.debuff_card) == 'function' then
     sendWarnMessage(("Blind object %s has debuff_card function, recalc_debuff is preferred"):format(obj.key), obj.set)
-    if obj:debuff_card(card, from_blind) then 
+    if obj:debuff_card(card, from_blind) then
         card:set_debuff(true)
         if card.debuff then card.debuffed_by_blind = true end
     else
