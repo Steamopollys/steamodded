@@ -40,7 +40,7 @@ SMODS.GameObject = setmetatable({
 })
 
 ---@param obj SMODS.GameObject|table
----@param prefix string?
+---@param prefix boolean|string?
 ---@param condition boolean?
 ---@param key string?
 --- Modifies the object's key. 

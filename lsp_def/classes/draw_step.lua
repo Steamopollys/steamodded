@@ -1,7 +1,7 @@
 ---@meta
 
 ---@class SMODS.DrawStep: SMODS.GameObject
----@field order? number Sets the order. `DrawStep` objects are evaluated in order from highest to lowest. 
+---@field order? number Sets the order. `DrawStep` objects are evaluated in order from lowest to highest. 
 ---@field layers? table<string, true> Strings corresponding to draw layers. The `DrawStep` object's `func` will only be called when the `layer` arg in `Card:draw()` matches a string in this table. 
 ---@field __call? fun(self: SMODS.DrawStep|table, o: SMODS.DrawStep|table): nil|table|SMODS.DrawStep
 ---@field extend? fun(self: SMODS.DrawStep|table, o: SMODS.DrawStep|table): table Primary method of creating a class. 

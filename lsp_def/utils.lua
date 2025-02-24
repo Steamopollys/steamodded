@@ -110,7 +110,7 @@ function SMODS.calculate_destroying_cards(context, cards_destroyed, scoring_hand
 ---@param key string
 ---@param amount number|boolean 
 ---@param from_edition? boolean
----@return boolean?
+---@return boolean|table?
 --- This function handles the calculation of each effect returned to evaluate play.
 --- Can easily be hooked to add more calculation effects ala Talisman
 function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition) end
