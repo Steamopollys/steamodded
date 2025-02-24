@@ -137,20 +137,6 @@ if obj.set_blind and type(obj.set_blind) == 'function' then
 elseif self.name == 'The Eye' and not reset then'''
 match_indent = true
 
-# [[patches]]
-# [patches.pattern]
-# target = 'blind.lua'
-# pattern = '--add new debuffs'
-# position = 'before'
-# match_indent = true
-# payload = '''
-# if not reset then
-#     local obj = self.config.blind
-#     if obj.set_blind and type(obj.set_blind) == 'function' then
-#         obj:set_blind()
-#     end
-# end'''
-
 # Blind:disable()
 [[patches]]
 [patches.pattern]
