@@ -25,7 +25,9 @@ if self.ability.name:find('Arcana') then
         elseif self.ability.name:find('Buffoon') then
             G.STATE = G.STATES.BUFFOON_PACK
             G.GAME.pack_size = self.ability.extra
-        end'''
+        end
+
+        G.GAME.pack_choices = self.config.center.config.choose or 1'''
 match_indent = true
 position = "at"
 payload = """
@@ -34,6 +36,7 @@ if booster_obj and SMODS.Centers[booster_obj.key] then
     G.STATE = G.STATES.SMODS_BOOSTER_OPENED
     SMODS.OPENED_BOOSTER = self
 end
+G.GAME.pack_choices = self.ability.choose
 """
 
 # Card:open
