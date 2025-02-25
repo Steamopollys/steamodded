@@ -335,6 +335,18 @@ payload = '''
 local obj = G.GAME.blind.config.blind
 local blind_sprite = AnimatedSprite(0, 0, 1.2, 1.2, G.ANIMATION_ATLAS[obj.atlas] or G.ANIMATION_ATLAS['blind_chips'], copy_table(G.GAME.blind.pos))'''
 
+# display blind descriptions in info_queue
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "elseif _c.set == 'Tarot' then"
+position = "before"
+match_indent = true
+payload = '''elseif _c.set == 'Blind' then
+    loc_vars = (_c.collection_loc_vars and type(_c.collection_loc_vars) == 'function' and _c.collection_loc_vars()) or _c.vars
+    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
+'''
+
 # create_UIBox_blind_choice()
 [[patches]]
 [patches.pattern]
