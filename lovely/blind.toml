@@ -343,8 +343,9 @@ pattern = "elseif _c.set == 'Tarot' then"
 position = "before"
 match_indent = true
 payload = '''elseif _c.set == 'Blind' then
-    loc_vars = (_c.loc_vars and type(_c.loc_vars) == 'function' and _c:loc_vars()) or _c.vars
-    localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
+    local coll_loc_vars = (_c.collection_loc_vars and type(_c.collection_loc_vars) == 'function' and _c:collection_loc_vars()) or {}
+    loc_vars = coll_loc_vars.vars or _c.vars
+    localize{type = 'descriptions', key = coll_loc_vars.key or _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
 '''
 
 # create_UIBox_blind_choice()
