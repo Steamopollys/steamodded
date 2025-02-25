@@ -70,7 +70,7 @@ function SMODS.merge_lists(...) end
 ---@class SMODS.optional_features: table
 ---@field quantum_enhancements? boolean Enables "Quantum Enhancement" contexts. Cards can count as having multiple enhancements at once. 
 ---@field retrigger_joker? boolean Enables "Joker Retrigger" contexts. Jokers can be retriggered by other jokers or effects. 
----@field post_trigger? boolean Enables "Post Trigger" contexts. Allows calculating effects after a Joker has been calculated. 
+---@field post_trigger? boolean Enables "Post Trigger" contexts. Allows calculating effects on a Joker after it has been calculated. 
 ---@field cardarea? table<string, boolean> Enables additional CardArea calculation. Currently supports: `deck`, `discards`, `unscored`. 
 
 ---@type SMODS.optional_features
