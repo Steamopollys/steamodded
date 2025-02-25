@@ -128,13 +128,6 @@ end"""
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
-pattern = "if G.play.cards[i].ability.effect == 'Stone Card' then"
-match_indent = true
-position = "at"
-payload = '''if SMODS.always_scores(G.play.cards[i]) then'''
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
 pattern = "if scoring_hand[i].ability.effect ~= 'Stone Card' then"
 match_indent = true
 position = "at"
@@ -159,7 +152,39 @@ target = "card.lua"
 pattern = "if self.children.front and self.ability.effect ~= 'Stone Card' then"
 match_indent = true
 position = "at"
-payload = "if self.children.front and self.ability.effect ~= 'Stone Card' and not self.config.center.replace_base_card then"
+payload = "if self.children.front and (self.ability.delayed or (self.ability.effect ~= 'Stone Card' and not self.config.center.replace_base_card)) then"
+# Add the delayed property to sprites that are delayed
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+match_indent = true
+position = 'at'
+pattern = '''
+if delay_sprites then 
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            if not self.REMOVED then
+                self:set_sprites(center)
+            end
+            return true
+        end
+    })) 
+'''
+payload = '''
+if delay_sprites then 
+    self.ability.delayed = true
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            if not self.REMOVED then
+                self:set_sprites(center)
+                self.ability.delayed = false
+            end
+            return true
+        end
+    })) 
+'''
+
+
 
 # Card:generate_UIBox_ability_table()
 # replaces two consecutive lines
@@ -177,23 +202,6 @@ pattern = "if (specific_vars.playing_card and (_c.name ~= 'Stone Card')) then"
 match_indent = true
 position = "at"
 payload = "elseif specific_vars.playing_card then"
-
-# Game:update_draw_to_hand()
-
-[[patches]]
-[patches.pattern]
-target = "game.lua"
-pattern = "G.GAME.current_round.discards_used == 0 and G.GAME.facing_blind then"
-match_indent = true
-position = "after"
-payload = """
-for i = 1, #G.hand.cards do
-    eval_card(G.hand.cards[i], {first_hand_drawn = true})
-end"""
-
-# G.FUNCS.discard_cards_from_highlighted()
-
-
 
 
 ## Allow cards to function as multiple enhancements (e.g. from jokers)
@@ -249,7 +257,7 @@ match_indent = true
 target = "card.lua"
 pattern = "if card.ability.name == 'Glass Card' then"
 position = "at"
-payload = "if SMODS.has_enhancement(card, 'm_glass') then"
+payload = "if SMODS.shatters(card) then"
 match_indent = true
 
 [[patches]]
@@ -257,7 +265,7 @@ match_indent = true
 target = "functions/state_events.lua"
 pattern = "if G.hand.highlighted[i].ability.name == 'Glass Card' then"
 position = "at"
-payload = "if SMODS.has_enhancement(G.hand.highlighted[i], 'm_glass') then"
+payload = "if SMODS.shatters(G.hand.highlighted[i]) then"
 match_indent = true
 
 [[patches]]
@@ -273,7 +281,7 @@ match_indent = true
 target = "functions/state_events.lua"
 pattern = "if cards_destroyed[i].ability.name == 'Glass Card' then"
 position = "at"
-payload = "if SMODS.has_enhancement(cards_destroyed[i], 'm_glass') then"
+payload = "if cards_destroyed[i].shattered then"
 match_indent = true
 
 # Prevent blue seals from applying on quantum enhancement calc

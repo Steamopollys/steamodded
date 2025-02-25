@@ -49,6 +49,26 @@ payload = '''
 		obj:apply(self)
 	end'''
 
+[[patches]]
+[patches.pattern]
+target = 'back.lua'
+pattern = "if self.effect.config.randomize_rank_suit then"
+position = 'before'
+match_indent = true
+payload = '''
+G.E_MANAGER:add_event(Event({
+	func = function()
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				save_run()
+				return true
+			end
+		}))
+		return true
+	end
+}))
+'''
+
 # Back:trigger_effect(args)
 [[patches]]
 [patches.pattern]
@@ -145,3 +165,29 @@ target = 'back.lua'
 pattern = "key = back_config\\.key"
 position = 'at'
 payload = "key = key_override or back_config.key"
+
+# Back:apply_to_run() - add jokers support to config
+[[patches]]
+[patches.pattern]
+target = 'back.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+if self.effect.config.voucher then
+'''
+payload = '''
+if self.effect.config.jokers then
+        delay(0.4)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for k, v in ipairs(self.effect.config.jokers) do
+                    local card = create_card('Joker', G.jokers, nil, nil, nil, nil, v, 'deck')
+                    card:add_to_deck()
+                    G.jokers:emplace(card)
+					card:start_materialize()
+                end
+            return true
+            end
+        }))
+    end
+'''

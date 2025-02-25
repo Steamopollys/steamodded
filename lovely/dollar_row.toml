@@ -21,15 +21,13 @@ target = "functions/common_events.lua"
 pattern = "local dollar_string = localize('$')..num_dollars"
 position = "at"
 payload = '''
-local dollar_string
 if num_dollars < 0 then --if negative
-    dollar_string = '-'..localize('$')..(num_dollars*-1)
     G.E_MANAGER:add_event(Event({
         trigger = 'before',delay = 0.38,
         func = function()
             G.round_eval:add_child(
                 {n=G.UIT.R, config={align = "cm", id = 'dollar_row_'..(dollar_row+1)..'_'..config.name}, nodes={
-                    {n=G.UIT.O, config={object = DynaText({string = {localize('$')..(num_dollars*-1)}, colours = {G.C.MONEY}, shadow = true, pop_in = 0, scale = 0.65, float = true})}}
+                    {n=G.UIT.O, config={object = DynaText({string = {'-'..localize('$')..format_ui_value(-num_dollars)}, colours = {G.C.MONEY}, shadow = true, pop_in = 0, scale = 0.65, float = true})}}
                 }},
                 G.round_eval:get_UIE_by_ID('dollar_'..config.name))
             play_sound('coin3', 0.9+0.2*math.random(), 0.7)
@@ -38,7 +36,7 @@ if num_dollars < 0 then --if negative
         end
     }))
 else --if positive
-    dollar_string = localize('$')..num_dollars'''
+'''
 match_indent = true
 
 [[patches]]

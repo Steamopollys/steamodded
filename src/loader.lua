@@ -584,6 +584,7 @@ function loadMods(modsDirectory)
             end
         end
     end
+    SMODS.get_optional_features()
     -- compat after loading mods
     if SMODS.compat_0_9_8.load_done then
         -- Invasive change to Card:generate_UIBox_ability_table()

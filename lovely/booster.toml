@@ -7,17 +7,37 @@ priority = -10
 
 # Card:open
 [[patches]]
-[patches.regex]
+[patches.pattern]
 target = "card.lua"
-pattern = '''(?<indent>[\t ]*)if self\.ability\.name:find\('Arcana'\) then \n[\s\S]{12}G\.STATE'''
-position = "before"
-payload = '''
+pattern = '''
+if self.ability.name:find('Arcana') then 
+            G.STATE = G.STATES.TAROT_PACK
+            G.GAME.pack_size = self.ability.extra
+        elseif self.ability.name:find('Celestial') then
+            G.STATE = G.STATES.PLANET_PACK
+            G.GAME.pack_size = self.ability.extra
+        elseif self.ability.name:find('Spectral') then
+            G.STATE = G.STATES.SPECTRAL_PACK
+            G.GAME.pack_size = self.ability.extra
+        elseif self.ability.name:find('Standard') then
+            G.STATE = G.STATES.STANDARD_PACK
+            G.GAME.pack_size = self.ability.extra
+        elseif self.ability.name:find('Buffoon') then
+            G.STATE = G.STATES.BUFFOON_PACK
+            G.GAME.pack_size = self.ability.extra
+        end
+
+        G.GAME.pack_choices = self.config.center.config.choose or 1'''
+match_indent = true
+position = "at"
+payload = """
 booster_obj = self.config.center
 if booster_obj and SMODS.Centers[booster_obj.key] then
     G.STATE = G.STATES.SMODS_BOOSTER_OPENED
     SMODS.OPENED_BOOSTER = self
-end'''
-line_prepend = '$indent'
+end
+G.GAME.pack_choices = self.ability.choose or self.config.center.config.choose or 1
+"""
 
 # Card:open
 [[patches]]
@@ -35,16 +55,6 @@ payload = '''if booster_obj.create_card and type(booster_obj.create_card) == "fu
 elseif self.ability.name:find('Arcana') then
     if G.GAME.used_vouchers.v_omen_globe and pseudorandom('omen_globe') > 0.8 then'''
 line_prepend = '$indent'
-
-## Stop cards from boosters getting double emplaced
-# Card:open
-[[patches]]
-[patches.pattern]
-target = "functions/button_callbacks.lua"
-pattern = "G.pack_cards:emplace(v)"
-position = "at"
-payload = "--G.pack_cards:emplace(v)"
-match_indent = true
 
 # Game:set_globals
 [[patches]]
@@ -150,7 +160,7 @@ pattern = 'if area == G.consumeables then'
 position = 'before'
 match_indent = true
 payload = '''
-if nc and area == G.pack_cards then G.pack_cards:remove_card(card); G.consumeables:emplace(card) end'''
+if nc and area == G.pack_cards and not select_to then G.pack_cards:remove_card(card); G.consumeables:emplace(card) end'''
 
 # G.FUNC.use_card()
 [[patches]]
@@ -203,3 +213,82 @@ if self.cost ~= 0 then
     inc_career_stat('c_shop_dollars_spent', self.cost)
 end'''
 line_prepend = '$indent'
+
+# Add support for saving consumables
+# comment
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+if card.ability.consumeable then
+    if (card.area == G.pack_cards and G.pack_cards) then
+'''
+payload = '''
+if card.ability.consumeable and card.area == G.pack_cards and booster_obj and booster_obj.select_card and card:selectable_from_pack(booster_obj) then
+    if (card.area == G.pack_cards and G.pack_cards) then
+        return {n=G.UIT.ROOT, config = {padding = 0, colour = G.C.CLEAR}, nodes={
+                {n=G.UIT.R, config={ref_table = card, r = 0.08, padding = 0.1, align = "bm", minw = 0.5*card.T.w - 0.15, maxw = 0.9*card.T.w - 0.15, minh = 0.3*card.T.h, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'use_card', func = 'can_select_from_booster'}, nodes={
+                {n=G.UIT.T, config={text = localize('b_select'),colour = G.C.UI.TEXT_LIGHT, scale = 0.45, shadow = true}}
+                }},
+            }}
+    end
+end
+'''
+
+# comment
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+match_indent = true
+position = 'at'
+pattern = '''
+if card.ability.consumeable then
+      if nc then
+'''
+payload = '''
+if select_to then
+    G[select_to]:emplace(card)
+    if card.config.center.on_select and type(card.config.center.on_select) == 'function' then
+        card.config.center:on_select(card)
+    end
+    play_sound('card1', 0.8, 0.6)
+    play_sound('generic1')
+    dont_dissolve = true
+    delay_fac = 0.2
+elseif card.ability.consumeable then
+      if nc then
+'''
+# comment
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+for i = 1, #G.GAME.tags do
+    if G.GAME.tags[i]:apply_to_run({type = 'new_blind_choice'}) then break end
+end
+
+G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.2*delayfac,
+          func = function()
+            save_run()
+            return true
+      end}))
+'''
+payload = '''
+booster_obj = nil
+'''
+# comment
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+G.FUNCS.end_consumeable(e)
+'''
+payload = '''
+booster_obj = nil
+'''

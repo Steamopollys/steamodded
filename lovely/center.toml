@@ -40,14 +40,16 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = 'if self.ability.set == "Planet" and not self.debuff then'
-position = 'before'
+pattern = '''function Card:calculate_joker(context)
+    if self.debuff then return nil end
+'''
+position = 'after'
 payload = '''
-local obj = self.config.center
-if self.ability.set ~= "Enhanced" and obj.calculate and type(obj.calculate) == 'function' then
-    local o, t = obj:calculate(self, context)
-    if o or t then return o, t end
-end'''
+    local obj = self.config.center
+    if self.ability.set ~= "Enhanced" and obj.calculate and type(obj.calculate) == 'function' then
+        local o, t = obj:calculate(self, context)
+        if o or t then return o, t end
+    end'''
 match_indent = true
 
 # Card:update()
@@ -113,10 +115,13 @@ position = 'at'
 payload = '''
 local res = {}
 if _c.locked_loc_vars and type(_c.locked_loc_vars) == 'function' then
-    res = _c:locked_loc_vars(info_queue) or {}
+    local _card = _c.create_fake_card and _c:create_fake_card()
+    res = _c:locked_loc_vars(info_queue, _card) or {}
     loc_vars = res.vars or {}
     specific_vars = specific_vars or {}
     specific_vars.not_hidden = res.not_hidden or specific_vars.not_hidden
+    if res.main_start then desc_nodes[#desc_nodes+1] = res.main_start end
+    main_end = res.main_end or main_end
 elseif $rest'''
 
 [[patches]]
@@ -320,7 +325,7 @@ position = 'before'
 payload = '''
 local obj = center or self.config.center
 if obj.redeem and type(obj.redeem) == 'function' then
-    obj:redeem(self)
+    obj:redeem(card_to_save)
     return
 end'''
 
@@ -404,14 +409,26 @@ match_indent = true
 position = 'at'
 payload = '''
 local nc
-if card.ability.consumeable then
+local select_to = card.area == G.pack_cards and booster_obj and booster_obj.select_card and card:selectable_from_pack(booster_obj)
+if card.ability.consumeable and not select_to then
     local obj = card.config.center
     if obj.keep_on_use and type(obj.keep_on_use) == 'function' then
         nc = obj:keep_on_use(card)
     end
 end
+if not card.from_area then card.from_area = card.area end
 if card.area and (not nc or card.area == G.pack_cards) then card.area:remove_card(card) end'''
-
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+match_indent = true
+position = 'before'
+pattern = '''
+if area and area.cards[1] then 
+'''
+payload = '''
+if nc and not area then G.consumeables:emplace(card) end
+'''
 [[patches]]
 [patches.pattern]
 target = 'functions/button_callbacks.lua'
@@ -420,18 +437,6 @@ match_indent = true
 position = 'at'
 payload = '''elseif not nc then draw_card(G.hand, G.play, 1, 'up', true, card, nil, mute) end'''
 
-# Card:set_sprites()
-[[patches]]
-[patches.pattern]
-target = 'card.lua'
-pattern = "if not self.children.back then"
-match_indent = true
-position = 'at'
-payload = '''
-if _center.set_sprites and type(_center.set_sprites) == 'function' then
-    _center:set_sprites(self, _front)
-end
-if true then'''
 
 # Card:load()
 [[patches]]
@@ -450,15 +455,16 @@ elseif self.config.center.name == "Half Joker" then'''
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = "if self.ability.name == 'Cloud 9' and self.ability.nine_tally and self.ability.nine_tally > 0 then"
-position = "before"
+pattern = """function Card:calculate_dollar_bonus()
+    if self.debuff then return end"""
+position = "after"
 match_indent = true
 payload = '''
---asdf
-local obj = self.config.center
-if obj.calc_dollar_bonus and type(obj.calc_dollar_bonus) == 'function' then
-    return obj:calc_dollar_bonus(self)
-end'''
+    local obj = self.config.center
+    if obj.calc_dollar_bonus and type(obj.calc_dollar_bonus) == 'function' then
+        return obj:calc_dollar_bonus(self)
+    end
+'''
 
 # Card:draw()
 [[patches]]

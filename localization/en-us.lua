@@ -152,11 +152,16 @@ return {
                 'Disabled',
                 'Enabled',
                 'Bypass Restrictions'
-            }
+            },
+            b_deckskins_lc = 'Low Contrast Colors',
+            b_deckskins_hc = 'High Contrast Colors',
+            b_deckskins_def = 'Default Colors',
 		},
 		v_dictionary = {
 			c_types = '#1# Types',
 			cashout_hidden = '...and #1# more',
+            a_xchips = "X#1# Chips",
+            a_xchips_minus = "-X#1# Chips",
 		},
 	}
 }
