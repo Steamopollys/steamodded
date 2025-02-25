@@ -1794,10 +1794,22 @@ function playing_card_joker_effects(cards)
 	SMODS.calculate_context({playing_card_added = true, cards = cards})
 end
 
+-- perma-bonus function for played xchips
+function Card:get_chip_x_bonus()
+    if self.debuff then return 0 end
+    return self.ability.perma_x_chips or 0
+end
+
 -- perma-bonus function for held in hand chips
 function Card:get_chip_h_bonus()
     if self.debuff then return 0 end
     return self.ability.perma_h_chips or 0
+end
+
+-- perma-bonus function for held in hand xchips
+function Card:get_chip_h_x_bonus()
+    if self.debuff then return 0 end
+    return self.ability.perma_h_x_chips or 0
 end
 
 G.FUNCS.change_collab = function(args)

@@ -85,6 +85,11 @@ if context.cardarea == G.play and context.main_scoring then
     if chips ~= 0 then 
         ret.playing_card.chips = chips
     end
+    
+    local x_chips = card:get_chip_x_bonus()
+    if x_chips > 0 then
+        ret.playing_card.x_chips = x_chips
+    end
 
     local mult = card:get_chip_mult()
     if mult ~= 0 then 

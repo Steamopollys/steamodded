@@ -63,6 +63,11 @@ return {
                     '{C:attention}disabled!{}'
                 }
             },
+            card_extra_x_chips = {
+                text = {
+                    "{X:chips,C:white}X#1#{} extra chips",
+                },
+            },
             card_extra_mult = {
                 text = {
                     "{C:mult}+#1#{} extra Mult",
@@ -81,6 +86,11 @@ return {
             card_extra_h_chips = {
                 text = {
                     "{C:chips}+#1#{} chips when held",
+                },
+            },
+            card_extra_h_x_chips = {
+                text = {
+                    "{X:chips,C:white}X#1#{} chips when held",
                 },
             },
             card_extra_h_mult = {
