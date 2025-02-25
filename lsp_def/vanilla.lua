@@ -113,7 +113,7 @@ function HEX(hex) end
 ---@param hide_desc? boolean Undiscovered description instead of normal. 
 ---@param main_start? table Added text above the card's normal description. 
 ---@param main_end? table Added text below the card's normal description. 
----@param card table Card or Card-like object. 
+---@param card? table Card or Card-like object. 
 ---@return table full_UI_table
 --- Generates description UI for Cards and Card-like objects. 
 function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card) end

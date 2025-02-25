@@ -36,7 +36,7 @@
 ---@field post_joker? true Check if `true` for triggering editions on jokers after they score. 
 ---@field joker_main? true Check if `true` for triggering normal scoring effects on Jokers. 
 ---@field final_scoring_step? true Check if `true` for effects after cards are scored and before the score is totalled. 
----@field remove_playing_card? true Check if `true` for effects on removed cards. 
+---@field remove_playing_cards? true Check if `true` for effects on removed cards. 
 ---@field debuffed_hand? true Check if `true` for effects when playing a hand debuffed by a blind. 
 ---@field end_of_round? true Check if `true` for effects at the end of the round. 
 ---@field setting_blind? true Check if `true` for effects when the blind is selected. 
@@ -257,7 +257,7 @@ function SMODS.change_base(card, suit, rank) end
 
 ---@param key string
 ---@param count_debuffed true?
----@return table[]
+---@return Card[]|table[]
 --- Returns all cards matching provided `key`. 
 function SMODS.find_card(key, count_debuffed) end
 
@@ -273,7 +273,7 @@ function SMODS.find_card(key, count_debuffed) end
 ---@field no_edition? boolean Ignore natural edition application. 
 ---@field edition? string Apply this edition. 
 ---@field enhancement? string Apply this enhancement. 
----@field seal? string Apply this seal
+---@field seal? string Apply this seal. 
 ---@field stickers? string[] Apply all stickers in this array. 
 
 ---@param t CreateCard|table
