@@ -1,7 +1,7 @@
 [manifest]
 version = "1.0.0"
 dump_lua = true
-priority = -10
+priority = -5
 
 ### Perma-bonusses
 ## for jokers: Chips, Mult, xMult, end of round Dollars
