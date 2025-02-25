@@ -62,7 +62,58 @@ return {
                     'This mod has been',
                     '{C:attention}disabled!{}'
                 }
-            }
+            },
+
+
+            -- card perma bonuses
+            card_extra_xchips = {
+                text = {
+                    "{C:chips}+{X:chips,C:white}X#1#{} extra chips"
+                }
+            },
+            card_extra_mult = {
+                text = {
+                    "{C:mult}+#1#{} extra Mult"
+                }
+            },
+            card_extra_xmult = {
+                text = {
+                    "{C:mult}+{X:mult,C:white}X#1#{} extra Mult"
+                }
+            },
+            card_extra_hchips = {
+                text = {
+                    "{C:chips}+#1#{} extra chips",
+                    "while this card",
+                    "stays in hand",
+                }
+            },
+            card_extra_hxchips = {
+                text = {
+                    "{C:chips}+{X:chips,C:white}X#1#{} extra chips",
+                    "while this card",
+                    "stays in hand",
+                }
+            },
+            card_extra_hmult = {
+                text = {
+                    "{C:mult}+#1#{} extra Mult",
+                    "while this card",
+                    "stays in hand",
+                }
+            },
+            card_extra_hxmult = {
+                text = {
+                    "{C:mult}+{X:mult,C:white}X#1#{} extra Mult",
+                    "while this card",
+                    "stays in hand",
+                }
+            },
+            card_extra_dollars = {
+                text = {
+                    "{C:money}+$#1#{} when scored",
+                }
+            },
         },
         Edition = {
             e_negative_playing_card = {

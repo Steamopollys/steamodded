@@ -89,7 +89,7 @@ payload = '''
         G.ARGS.LOC_COLOURS[v:lower()] = G.C.RARITY[v]
     end
     for _, v in ipairs(SMODS.ConsumableType.ctype_buffer) do
-        G.ARGS.LOC_COLOURS[v:lower()] = G.C.SECONDARY_SET[v] 
+        G.ARGS.LOC_COLOURS[v:lower()] = G.C.SECONDARY_SET[v]
     end
     for _, v in ipairs(SMODS.Suit.obj_buffer) do
         G.ARGS.LOC_COLOURS[v:lower()] = G.C.SUITS[v]
@@ -146,7 +146,7 @@ function Card:get_nominal(mod)
     local mult = 1
     local rank_mult = 1
     if mod == 'suit' then mult = 10000 end
-    if self.ability.effect == 'Stone Card' or (self.config.center.no_suit and self.config.center.no_rank) then 
+    if self.ability.effect == 'Stone Card' or (self.config.center.no_suit and self.config.center.no_rank) then
         mult = -10000
     elseif self.config.center.no_suit then
         mult = 0
@@ -272,7 +272,7 @@ for j = 1, #suit_map do
     if SUITS[suit_map[j]][1] then num_suits = num_suits + 1 end
 end
 for j = 1, #suit_map do
-    $mid			
+    $mid
             (0.42 - (num_suits <= 4 and 0 or num_suits >= 8 and 0.28 or 0.07 * (num_suits - 4))) * G.CARD_H,'''
 
 [[patches]]
@@ -296,4 +296,146 @@ payload = '''if card_type == 'Default' or card_type == 'Enhanced' and not _c.rep
     end
 end
 
+'''
+
+### Permanent card values implementations
+## Adapted from AMM (https://github.com/AutumnMood924/AutumnMoodMechanics)
+
+# generate_card_ui(): show permanent bonuses on enhanced playing cards
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "elseif _c.set == 'Enhanced' then"
+position = "before"
+payload = '''
+if specific_vars and specific_vars.bonus_xchips then
+	localize{type = 'other', key = 'card_extra_xchips', nodes = desc_nodes, vars = {specific_vars.bonus_xchips}}
+end
+if specific_vars and specific_vars.bonus_mult then
+	localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {specific_vars.bonus_mult}}
+end
+if specific_vars and specific_vars.bonus_xmult then
+	localize{type = 'other', key = 'card_extra_xmult', nodes = desc_nodes, vars = {specific_vars.bonus_xmult}}
+end
+if specific_vars and specific_vars.bonus_hchips then
+	localize{type = 'other', key = 'card_extra_hchips', nodes = desc_nodes, vars = {specific_vars.bonus_hchips}}
+end
+if specific_vars and specific_vars.bonus_hxchips then
+	localize{type = 'other', key = 'card_extra_hxchips', nodes = desc_nodes, vars = {specific_vars.bonus_hxchips}}
+end
+if specific_vars and specific_vars.bonus_hmult then
+	localize{type = 'other', key = 'card_extra_hmult', nodes = desc_nodes, vars = {specific_vars.bonus_hmult}}
+end
+if specific_vars and specific_vars.bonus_hxmult then
+	localize{type = 'other', key = 'card_extra_hxmult', nodes = desc_nodes, vars = {specific_vars.bonus_hxmult}}
+end
+if specific_vars and specific_vars.bonus_dollars then
+	localize{type = 'other', key = 'card_extra_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_dollars}}
+end'''
+match_indent = true
+overwrite = false
+
+# generate_card_ui(): show permanent bonuses on default playing cards
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "elseif _c.set == 'Booster' then"
+position = "before"
+payload = '''
+if specific_vars and specific_vars.bonus_xchips then
+	localize{type = 'other', key = 'card_extra_xchips', nodes = desc_nodes, vars = {specific_vars.bonus_xchips}}
+end
+if specific_vars and specific_vars.bonus_mult then
+	localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {specific_vars.bonus_mult}}
+end
+if specific_vars and specific_vars.bonus_xmult then
+	localize{type = 'other', key = 'card_extra_xmult', nodes = desc_nodes, vars = {specific_vars.bonus_xmult}}
+end
+if specific_vars and specific_vars.bonus_hchips then
+	localize{type = 'other', key = 'card_extra_hchips', nodes = desc_nodes, vars = {specific_vars.bonus_hchips}}
+end
+if specific_vars and specific_vars.bonus_hxchips then
+	localize{type = 'other', key = 'card_extra_hxchips', nodes = desc_nodes, vars = {specific_vars.bonus_hxchips}}
+end
+if specific_vars and specific_vars.bonus_hmult then
+	localize{type = 'other', key = 'card_extra_hmult', nodes = desc_nodes, vars = {specific_vars.bonus_hmult}}
+end
+if specific_vars and specific_vars.bonus_hxmult then
+	localize{type = 'other', key = 'card_extra_hxmult', nodes = desc_nodes, vars = {specific_vars.bonus_hxmult}}
+end
+if specific_vars and specific_vars.bonus_dollars then
+	localize{type = 'other', key = 'card_extra_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_dollars}}
+end'''
+match_indent = true
+overwrite = false
+
+# generate_UIBox_ability_table(): prime specific_vars for playing cards
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "nominal_chips = self.base.nominal > 0 and self.base.nominal or nil,"
+position = "after"
+payload = '''
+bonus_xchips = (self.ability.perma_xbonus or 0) > 1 and (self.ability.perma_xbonus or 0) or nil,
+bonus_mult = (self.ability.perma_mult or 0) > 0 and (self.ability.perma_mult or 0) or nil,
+bonus_xmult = (self.ability.perma_xmult or 0) > 1 and (self.ability.perma_xmult or 0) or nil,
+bonus_hchips = (self.ability.perma_hbonus or 0) > 0 and (self.ability.perma_hbonus or 0) or nil,
+bonus_hxchips = (self.ability.perma_hxbonus or 0) > 1 and (self.ability.perma_hxbonus or 0) or nil,
+bonus_hmult = (self.ability.perma_hmult or 0) > 0 and (self.ability.perma_hmult or 0) or nil,
+bonus_hxmult = (self.ability.perma_hxmult or 0) > 1 and (self.ability.perma_hxmult or 0) or nil,
+bonus_dollars = (self.ability.perma_dollars or 0) > 0 and (self.ability.perma_dollars or 0) or nil,'''
+match_indent = true
+overwrite = false
+
+# set_ability: set defaults for permanent bonuses
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "perma_bonus = self.ability and self.ability.perma_bonus or 0,"
+position = "after"
+payload = '''
+perma_xbonus = self.ability and self.ability.perma_xbonus or 1,
+perma_mult = self.ability and self.ability.perma_mult or 0,
+perma_xmult = self.ability and self.ability.perma_xmult or 1,
+perma_hbonus = self.ability and self.ability.perma_hbonus or 0,
+perma_hxbonus = self.ability and self.ability.perma_hxbonus or 1,
+perma_hmult = self.ability and self.ability.perma_hmult or 0,
+perma_hxmult = self.ability and self.ability.perma_hxmult or 1,
+perma_dollars = self.ability and self.ability.perma_dollars or 0,
+'''
+match_indent = true
+overwrite = false
+
+# eval_card(): score xbonus on playing cards
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "-- TARGET: main scoring on played cards"
+match_indent = true
+overwrite = false
+position = 'after'
+payload = '''
+local x_chips = card:get_chip_x_bonus()
+if x_chips > 0 then
+	ret.playing_card.x_chips = x_chips
+end
+'''
+
+# eval_card(): score hbonus and hxbonus on held playing cards
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "-- TARGET: main scoring on held cards"
+match_indent = true
+overwrite = false
+position = 'after'
+payload = '''
+local h_chips = card:get_chip_h_bonus()
+if h_chips > 0 then
+	ret.playing_card.chips = h_chips
+end
+local h_x_chips = card:get_chip_h_x_bonus()
+if h_x_chips > 0 then
+	ret.playing_card.x_chips = h_x_chips
+end
 '''
