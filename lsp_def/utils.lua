@@ -406,3 +406,34 @@ function SMODS.change_booster_limit(mod) end
 ---@param mod number
 --- Modifies the current amount of free shop rerolls by `mod`. 
 function SMODS.change_free_rerolls(mod) end
+
+---@param message string
+---@param logger? string
+--- Prints to the console at "DEBUG" level
+function sendDebugMessage(message, logger) end
+
+---@param message string
+---@param logger? string
+--- Prints to the console at "INFO" level
+function sendInfoMessage(message, logger) end
+
+---@param message string
+---@param logger? string
+--- Prints to the console at "WARN" level
+function sendWarnMessage(message, logger) end
+
+---@param message string
+---@param logger? string
+--- Prints to the console at "ERROR" level
+function sendErrorMessage(message, logger) end
+
+---@param message string
+---@param logger? string
+--- Prints to the console at "FATAL" level
+function sendFatalMessage(message, logger) end
+
+---@param level string 
+---@param logger string 
+---@param message string 
+--- Sends the provided `message` to debug console. 
+function sendMessageToConsole(level, logger, message) end
