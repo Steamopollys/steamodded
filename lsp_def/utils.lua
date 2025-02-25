@@ -137,6 +137,7 @@ function SMODS.calculate_retriggers(card, context, _ret) end
 ---@param card Card|table
 ---@param context CalcContext|table
 ---@param reps table[]
+---@return table[] reps
 function SMODS.calculate_repetitions(card, context, reps) end
 
 ---@param _type string
