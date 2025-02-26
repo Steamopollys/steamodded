@@ -149,7 +149,7 @@ return {
             m_gold={
                 name="Gold Card",
                 text={
-                    "{C:money}#1#{} if held",
+                    "{C:money}#1#{} if this",
                     "card is held in hand",
                     "at end of round",
                 },
