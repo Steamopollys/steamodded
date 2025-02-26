@@ -308,29 +308,32 @@ target = "functions/common_events.lua"
 pattern = "elseif _c.set == 'Enhanced' then"
 position = "before"
 payload = '''
-if specific_vars and specific_vars.bonus_xchips then
-	localize{type = 'other', key = 'card_extra_xchips', nodes = desc_nodes, vars = {specific_vars.bonus_xchips}}
+if specific_vars and specific_vars.bonus_x_chips then
+	localize{type = 'other', key = 'card_extra_x_chips', nodes = desc_nodes, vars = {specific_vars.bonus_x_chips}}
 end
 if specific_vars and specific_vars.bonus_mult then
 	localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {specific_vars.bonus_mult}}
 end
-if specific_vars and specific_vars.bonus_xmult then
-	localize{type = 'other', key = 'card_extra_xmult', nodes = desc_nodes, vars = {specific_vars.bonus_xmult}}
+if specific_vars and specific_vars.bonus_x_mult then
+	localize{type = 'other', key = 'card_extra_x_mult', nodes = desc_nodes, vars = {specific_vars.bonus_x_mult}}
 end
-if specific_vars and specific_vars.bonus_hchips then
-	localize{type = 'other', key = 'card_extra_hchips', nodes = desc_nodes, vars = {specific_vars.bonus_hchips}}
+if specific_vars and specific_vars.bonus_h_chips then
+	localize{type = 'other', key = 'card_extra_h_chips', nodes = desc_nodes, vars = {specific_vars.bonus_h_chips}}
 end
-if specific_vars and specific_vars.bonus_hxchips then
-	localize{type = 'other', key = 'card_extra_hxchips', nodes = desc_nodes, vars = {specific_vars.bonus_hxchips}}
+if specific_vars and specific_vars.bonus_h_x_chips then
+	localize{type = 'other', key = 'card_extra_h_x_chips', nodes = desc_nodes, vars = {specific_vars.bonus_h_x_chips}}
 end
-if specific_vars and specific_vars.bonus_hmult then
-	localize{type = 'other', key = 'card_extra_hmult', nodes = desc_nodes, vars = {specific_vars.bonus_hmult}}
+if specific_vars and specific_vars.bonus_h_mult then
+	localize{type = 'other', key = 'card_extra_h_mult', nodes = desc_nodes, vars = {specific_vars.bonus_h_mult}}
 end
-if specific_vars and specific_vars.bonus_hxmult then
-	localize{type = 'other', key = 'card_extra_hxmult', nodes = desc_nodes, vars = {specific_vars.bonus_hxmult}}
+if specific_vars and specific_vars.bonus_h_x_mult then
+	localize{type = 'other', key = 'card_extra_h_x_mult', nodes = desc_nodes, vars = {specific_vars.bonus_h_x_mult}}
 end
 if specific_vars and specific_vars.bonus_dollars then
-	localize{type = 'other', key = 'card_extra_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_dollars}}
+	localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_dollars}}
+end
+if specific_vars and specific_vars.bonus_h_dollars then
+	localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_h_dollars}}
 end'''
 match_indent = true
 overwrite = false
@@ -342,30 +345,53 @@ target = "functions/common_events.lua"
 pattern = "elseif _c.set == 'Booster' then"
 position = "before"
 payload = '''
-if specific_vars and specific_vars.bonus_xchips then
-	localize{type = 'other', key = 'card_extra_xchips', nodes = desc_nodes, vars = {specific_vars.bonus_xchips}}
+if specific_vars and specific_vars.bonus_x_chips then
+	localize{type = 'other', key = 'card_extra_xchips', nodes = desc_nodes, vars = {specific_vars.bonus_x_chips}}
 end
 if specific_vars and specific_vars.bonus_mult then
 	localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {specific_vars.bonus_mult}}
 end
-if specific_vars and specific_vars.bonus_xmult then
-	localize{type = 'other', key = 'card_extra_xmult', nodes = desc_nodes, vars = {specific_vars.bonus_xmult}}
+if specific_vars and specific_vars.bonus_x_mult then
+	localize{type = 'other', key = 'card_extra_x_mult', nodes = desc_nodes, vars = {specific_vars.bonus_x_mult}}
 end
-if specific_vars and specific_vars.bonus_hchips then
-	localize{type = 'other', key = 'card_extra_hchips', nodes = desc_nodes, vars = {specific_vars.bonus_hchips}}
+if specific_vars and specific_vars.bonus_h_chips then
+	localize{type = 'other', key = 'card_extra_h_chips', nodes = desc_nodes, vars = {specific_vars.bonus_h_chips}}
 end
-if specific_vars and specific_vars.bonus_hxchips then
-	localize{type = 'other', key = 'card_extra_hxchips', nodes = desc_nodes, vars = {specific_vars.bonus_hxchips}}
+if specific_vars and specific_vars.bonus_h_x_chips then
+	localize{type = 'other', key = 'card_extra_h_x_chips', nodes = desc_nodes, vars = {specific_vars.bonus_h_x_chips}}
 end
-if specific_vars and specific_vars.bonus_hmult then
-	localize{type = 'other', key = 'card_extra_hmult', nodes = desc_nodes, vars = {specific_vars.bonus_hmult}}
+if specific_vars and specific_vars.bonus_h_mult then
+	localize{type = 'other', key = 'card_extra_h_mult', nodes = desc_nodes, vars = {specific_vars.bonus_h_mult}}
 end
-if specific_vars and specific_vars.bonus_hxmult then
-	localize{type = 'other', key = 'card_extra_hxmult', nodes = desc_nodes, vars = {specific_vars.bonus_hxmult}}
+if specific_vars and specific_vars.bonus_h_x_mult then
+	localize{type = 'other', key = 'card_extra_h_x_mult', nodes = desc_nodes, vars = {specific_vars.bonus_h_x_mult}}
 end
 if specific_vars and specific_vars.bonus_dollars then
-	localize{type = 'other', key = 'card_extra_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_dollars}}
+	localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_dollars}}
+end
+if specific_vars and specific_vars.bonus_h_dollars then
+	localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_h_dollars}}
 end'''
+match_indent = true
+overwrite = false
+
+# generate_UIBox_ability_table(): prime extra chips
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "loc_vars = { playing_card = not not self.base.colour, value = self.base.value, suit = self.base.suit, colour = self.base.colour,"
+position = "before"
+payload = 'local bonus_chips = self.ability.bonus + (self.ability.perma_bonus or 0)'
+match_indent = true
+overwrite = false
+
+# generate_UIBox_ability_table(): represent extra chips
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "bonus_chips = (self.ability.bonus + (self.ability.perma_bonus or 0)) > 0 and (self.ability.bonus + (self.ability.perma_bonus or 0)) or nil,"
+position = "at"
+payload = "bonus_chips = bonus_chips and bonus_chips ~= 0 and (bonus_chips > 0 and '+'..bonus_chips or bonus_chips) or nil"
 match_indent = true
 overwrite = false
 
@@ -376,14 +402,15 @@ target = "card.lua"
 pattern = "nominal_chips = self.base.nominal > 0 and self.base.nominal or nil,"
 position = "after"
 payload = '''
-bonus_xchips = (self.ability.perma_xbonus or 0) > 1 and (self.ability.perma_xbonus or 0) or nil,
-bonus_mult = (self.ability.perma_mult or 0) > 0 and (self.ability.perma_mult or 0) or nil,
-bonus_xmult = (self.ability.perma_xmult or 0) > 1 and (self.ability.perma_xmult or 0) or nil,
-bonus_hchips = (self.ability.perma_hbonus or 0) > 0 and (self.ability.perma_hbonus or 0) or nil,
-bonus_hxchips = (self.ability.perma_hxbonus or 0) > 1 and (self.ability.perma_hxbonus or 0) or nil,
-bonus_hmult = (self.ability.perma_hmult or 0) > 0 and (self.ability.perma_hmult or 0) or nil,
-bonus_hxmult = (self.ability.perma_hxmult or 0) > 1 and (self.ability.perma_hxmult or 0) or nil,
-bonus_dollars = (self.ability.perma_dollars or 0) > 0 and (self.ability.perma_dollars or 0) or nil,'''
+bonus_x_chips = self.ability.perma_x_chips and self.ability.perma_x_chips ~=0 and (self.ability.perma_x_chips or 0) or nil,
+bonus_mult = self.ability.perma_mult and self.ability.perma_mult ~= 0 and (self.ability.perma_mult > 0 and '+'..self.ability.perma_mult or self.ability.perma_mult) or nil,
+bonus_x_mult = self.ability.perma_x_mult and self.ability.perma_x_mult ~= 0 and (self.ability.perma_x_mult or 0) or nil,
+bonus_h_chips = self.ability.perma_h_chips and self.ability.perma_h_chips ~= 0 and (self.ability.perma_h_chips > 0 and '+'..self.ability.perma_h_chips or self.ability.perma_h_chips) or nil,
+bonus_h_x_chips = self.ability.perma_h_x_chips and self.ability.perma_h_x_chips ~= 0 and self.ability.perma_h_x_chips ~= 1 and (self.ability.perma_h_x_chips or 0) or nil,
+bonus_h_mult = self.ability.perma_h_mult and self.ability.perma_h_mult ~= 0 and (self.ability.perma_h_mult > 0 and '+'..self.ability.perma_h_mult or self.ability.perma_h_mult) or nil,
+bonus_h_x_mult = self.ability.perma_h_x_mult and self.ability.perma_h_x_mult ~= 0 and (self.ability.perma_h_x_mult or 0) or nil,
+bonus_dollars = self.ability.perma_p_dollars and self.ability.perma_p_dollars ~= 0 and (self.ability.perma_p_dollars > 0 and '$'.. self.ability.perma_p_dollars or '-$'..-self.ability.perma_p_dollars) or nil,
+bonus_h_dollars = self.ability.perma_h_dollars and self.ability.perma_h_dollars ~= 0 and (self.ability.perma_h_dollars > 0 and '$'.. self.ability.perma_h_dollars or '-$'..-self.ability.perma_h_dollars) or nil,'''
 match_indent = true
 overwrite = false
 
@@ -394,14 +421,15 @@ target = "card.lua"
 pattern = "perma_bonus = self.ability and self.ability.perma_bonus or 0,"
 position = "after"
 payload = '''
-perma_xbonus = self.ability and self.ability.perma_xbonus or 1,
+perma_x_chips = self.ability and self.ability.perma_x_chips or 0,
 perma_mult = self.ability and self.ability.perma_mult or 0,
-perma_xmult = self.ability and self.ability.perma_xmult or 1,
-perma_hbonus = self.ability and self.ability.perma_hbonus or 0,
-perma_hxbonus = self.ability and self.ability.perma_hxbonus or 1,
-perma_hmult = self.ability and self.ability.perma_hmult or 0,
-perma_hxmult = self.ability and self.ability.perma_hxmult or 1,
-perma_dollars = self.ability and self.ability.perma_dollars or 0,
+perma_x_mult = self.ability and self.ability.perma_x_mult or 0,
+perma_h_chips = self.ability and self.ability.perma_h_chips or 0,
+perma_h_x_chips = self.ability and self.ability.perma_h_x_chips or 0,
+perma_h_mult = self.ability and self.ability.perma_hmult or 0,
+perma_h_x_mult = self.ability and self.ability.perma_h_x_mult or 0,
+perma_p_dollars = self.ability and self.ability.perma_p_dollars or 0,
+perma_h_dollars = self.ability and self.ability.perma_p_dollars or 0,
 '''
 match_indent = true
 overwrite = false
@@ -431,11 +459,31 @@ overwrite = false
 position = 'after'
 payload = '''
 local h_chips = card:get_chip_h_bonus()
-if h_chips > 0 then
-	ret.playing_card.chips = h_chips
+if h_chips ~= 0 then
+	ret.playing_card.h_chips = h_chips
 end
 local h_x_chips = card:get_chip_h_x_bonus()
 if h_x_chips > 0 then
 	ret.playing_card.x_chips = h_x_chips
 end
 '''
+
+# Card:get_end_of_round_effect
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if self.ability.h_dollars > 0 then
+    ret.h_dollars = self.ability.h_dollars
+    ret.card = self
+end
+'''
+position = "before"
+match_indent = true
+payload = '''
+if (self.ability.h_dollars + self.ability.perma_h_dollars) ~= 0 then
+    ret.h_dollars = (ret.h_dollars or 0) + self.ability.h_dollars + self.ability.perma_h_dollars
+    ret.card = self
+end
+'''
+times = 1

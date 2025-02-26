@@ -66,53 +66,55 @@ return {
 
 
             -- card perma bonuses
-            card_extra_xchips = {
+            card_extra_chips={
+                text={
+                    "{C:chips}#1#{} extra chips",
+                },
+            },
+            card_extra_x_chips = {
                 text = {
-                    "{C:chips}+{X:chips,C:white}X#1#{} extra chips"
+                    "{X:chips,C:white}X#1#{} extra chips"
                 }
             },
             card_extra_mult = {
                 text = {
-                    "{C:mult}+#1#{} extra Mult"
+                    "{C:mult}#1#{} extra Mult"
                 }
             },
-            card_extra_xmult = {
+            card_extra_x_mult = {
                 text = {
-                    "{C:mult}+{X:mult,C:white}X#1#{} extra Mult"
+                    "{X:mult,C:white}X#1#{} extra Mult"
                 }
             },
-            card_extra_hchips = {
+            card_extra_p_dollars = {
                 text = {
-                    "{C:chips}+#1#{} extra chips",
-                    "while this card",
-                    "stays in hand",
+                    "{C:money}#1#{} when scored",
                 }
             },
-            card_extra_hxchips = {
+            card_extra_h_chips = {
                 text = {
-                    "{C:chips}+{X:chips,C:white}X#1#{} extra chips",
-                    "while this card",
-                    "stays in hand",
+                    "{C:chips}#1#{} chips when held",
                 }
             },
-            card_extra_hmult = {
+            card_extra_h_x_chips = {
                 text = {
-                    "{C:mult}+#1#{} extra Mult",
-                    "while this card",
-                    "stays in hand",
+                    "{X:chips,C:white}X#1#{} extra chips when held",
                 }
             },
-            card_extra_hxmult = {
+            card_extra_h_mult = {
                 text = {
-                    "{C:mult}+{X:mult,C:white}X#1#{} extra Mult",
-                    "while this card",
-                    "stays in hand",
+                    "{C:mult}#1#{} extra Mult",
                 }
             },
-            card_extra_dollars = {
+            card_extra_h_x_mult = {
                 text = {
-                    "{C:money}+$#1#{} when scored",
+                    "{X:mult,C:white}X#1#{} extra Mult when held",
                 }
+            },
+            card_extra_h_dollars = {
+                text = {
+                    "{C:money}#1#{} if held at end of round",
+                },
             },
         },
         Edition = {

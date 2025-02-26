@@ -1799,56 +1799,58 @@ function Card:get_chip_mult()
     return cgcm(self) + (self.ability.perma_mult or 0)
 end
 
--- perma_xmult
+-- perma_x_mult
 local cgcxm = Card.get_chip_x_mult
 function Card:get_chip_x_mult()
     if self.debuff then return 0 end
-	local ret = math.max(cgcxm(self), 1) + (self.ability.perma_xmult - 1)
+	local base = cgcxm(self)
+	local ret = (base ~= 0 and base or 1) + self.ability.perma_x_mult
     return (ret == 1 and 0) or ((ret > 0) and ret) or 0
 end
 
--- perma_hmult
+-- perma_h_mult
 local cgchm = Card.get_chip_h_mult
 function Card:get_chip_h_mult()
     if self.debuff then return 0 end
-    return cgchm(self) + (self.ability.perma_hmult or 0)
+    return cgchm(self) + (self.ability.perma_h_mult or 0)
 end
 
 
--- perma_hxmult
+-- perma_h_x_mult
 local cgchxm = Card.get_chip_h_x_mult
 function Card:get_chip_h_x_mult()
     if self.debuff then return 0 end
-	local ret = math.max(cgchxm(self), 1) + (self.ability.perma_hxmult - 1)
+	local base = cgchxm(self)
+	local ret = (base ~= 0 and base or 1) + self.ability.perma_h_x_mult
     return (ret == 1 and 0) or ((ret > 0) and ret) or 0
 end
 
 -- perma_xbonus
 function Card:get_chip_x_bonus()
     if self.debuff then return 0 end
-    local ret = 1 + (self.ability.perma_xbonus - 1)
+	local ret = 1 + self.ability.perma_x_chips
 	return (ret == 1 and 0) or ((ret > 0) and ret) or 0
 end
 
--- perma_hbonus
+-- perma_h_chips
 function Card:get_chip_h_bonus()
     if self.debuff then return 0 end
-    return self.ability.perma_hbonus or 0
+    return self.ability.perma_h_chips or 0
 end
 
--- perma_hxbonus
+-- perma_h_x_chips
 function Card:get_chip_h_x_bonus()
     if self.debuff then return 0 end
-    local ret = 1 + (self.ability.perma_hxbonus - 1)
+    local ret = 1 + self.ability.perma_h_x_chips
 	return (ret == 1 and 0) or ((ret > 0) and ret) or 0
 end
 
--- perma_dollars
+-- perma_p_dollars
 local cgpd = Card.get_p_dollars
 
 Card.get_p_dollars = function(self)
     if self.debuff then return 0 end
-	return cgpd(self) + (self.ability.perma_dollars or 0)
+	return cgpd(self) + (self.ability.perma_p_dollars or 0)
 end
 
 --#endregion
