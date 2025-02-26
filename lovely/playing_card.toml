@@ -301,6 +301,15 @@ end
 ### Permanent card values implementations
 ## Adapted from AMM (https://github.com/AutumnMood924/AutumnMoodMechanics)
 
+# generate_card_ui(): mult card special case
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if _c.effect == 'Mult Card' then loc_vars = {_c.config.mult}"
+position = "at"
+payload = "if _c.effect == 'Mult Card' then loc_vars = {SMODS.signed(_c.config.mult + (specific_vars and specific_vars.bonus_mult or 0))}"
+match_indent = true
+
 # generate_card_ui(): glass card special case
 [[patches]]
 [patches.pattern]
@@ -325,7 +334,7 @@ match_indent = true
 target = "functions/common_events.lua"
 pattern = "elseif _c.effect == 'Gold Card' then loc_vars = {_c.config.h_dollars}"
 position = "at"
-payload = "elseif _c.effect == 'Gold Card' then loc_vars = {specific_vars and specific_vars.total_h_dollars or _c.config.h_dollars}"
+payload = "elseif _c.effect == 'Gold Card' then loc_vars = {specific_vars and SMODS.signed_dollars(specific_vars.total_h_dollars) or _c.config.h_dollars and SMODS.signed_dollars(_c.config.h_dollars) or 0}"
 match_indent = true
 
 # generate_card_ui(): stone card special case
@@ -334,7 +343,7 @@ match_indent = true
 target = "functions/common_events.lua"
 pattern = "elseif _c.effect == 'Stone Card' then loc_vars = {((specific_vars and specific_vars.bonus_chips) or _c.config.bonus)}"
 position = "at"
-payload = "elseif _c.effect == 'Stone Card' then loc_vars = {((specific_vars and specific_vars.bonus_chips) or _c.config.bonus and (_c.config.bonus > 0 and '+'.._c.config.bonus or _c.config.bonus) or 0)}"
+payload = "elseif _c.effect == 'Stone Card' then loc_vars = {((specific_vars and SMODS.signed(specific_vars.bonus_chips)) or _c.config.bonus and SMODS.signed(_c.config.bonus) or 0)}"
 match_indent = true
 
 # generate_card_ui(): show permanent bonuses on default playing cards
@@ -345,31 +354,31 @@ pattern = "elseif _c.set == 'Enhanced' then"
 position = "before"
 payload = '''
 if specific_vars and specific_vars.total_x_chips then
-	localize{type = 'other', key = 'card_x_chips', nodes = desc_nodes, vars = {specific_vars.total_x_chips}}
+	localize{type = 'other', key = 'card_x_chips', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.total_x_chips)}}
 end
 if specific_vars and specific_vars.bonus_mult then
-	localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {specific_vars.bonus_mult}}
+	localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_mult)}}
 end
 if specific_vars and specific_vars.total_x_mult then
 	localize{type = 'other', key = 'card_x_mult', nodes = desc_nodes, vars = {specific_vars.total_x_mult}}
 end
 if specific_vars and specific_vars.bonus_h_chips then
-	localize{type = 'other', key = 'card_extra_h_chips', nodes = desc_nodes, vars = {specific_vars.bonus_h_chips}}
+	localize{type = 'other', key = 'card_extra_h_chips', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_h_chips)}}
 end
 if specific_vars and specific_vars.total_h_x_chips then
 	localize{type = 'other', key = 'card_h_x_chips', nodes = desc_nodes, vars = {specific_vars.total_h_x_chips}}
 end
 if specific_vars and specific_vars.bonus_h_mult then
-	localize{type = 'other', key = 'card_extra_h_mult', nodes = desc_nodes, vars = {specific_vars.bonus_h_mult}}
+	localize{type = 'other', key = 'card_extra_h_mult', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_h_mult)}}
 end
 if specific_vars and specific_vars.total_h_x_mult then
 	localize{type = 'other', key = 'card_h_x_mult', nodes = desc_nodes, vars = {specific_vars.total_h_x_mult}}
 end
 if specific_vars and specific_vars.bonus_p_dollars then
-	localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_p_dollars}}
+	localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {SMODS.signed_dollars(specific_vars.bonus_p_dollars)}}
 end
 if specific_vars and specific_vars.bonus_h_dollars then
-	localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_h_dollars}}
+	localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {SMODS.signed_dollars(specific_vars.bonus_h_dollars)}}
 end'''
 match_indent = true
 overwrite = false
@@ -384,29 +393,29 @@ payload = '''
 if specific_vars and specific_vars.total_x_chips then
 	localize{type = 'other', key = 'card_x_chips', nodes = desc_nodes, vars = {specific_vars.total_x_chips}}
 end
-if specific_vars and specific_vars.bonus_mult then
-	localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {specific_vars.bonus_mult}}
+if specific_vars and specific_vars.bonus_mult and _c.effect ~= 'Mult Card'  then
+	localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_mult)}}
 end
 if specific_vars and specific_vars.total_x_mult and _c.effect ~= 'Glass Card' then
 	localize{type = 'other', key = 'card_x_mult', nodes = desc_nodes, vars = {specific_vars.total_x_mult}}
 end
 if specific_vars and specific_vars.bonus_h_chips then
-	localize{type = 'other', key = 'card_extra_h_chips', nodes = desc_nodes, vars = {specific_vars.bonus_h_chips}}
+	localize{type = 'other', key = 'card_extra_h_chips', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_h_chips)}}
 end
 if specific_vars and specific_vars.total_h_x_chips then
 	localize{type = 'other', key = 'card_h_x_chips', nodes = desc_nodes, vars = {specific_vars.total_h_x_chips}}
 end
 if specific_vars and specific_vars.bonus_h_mult then
-	localize{type = 'other', key = 'card_extra_h_mult', nodes = desc_nodes, vars = {specific_vars.bonus_h_mult}}
+	localize{type = 'other', key = 'card_extra_h_mult', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_h_mult)}}
 end
 if specific_vars and specific_vars.total_h_x_mult and _c.effect ~= 'Steel Card' then
 	localize{type = 'other', key = 'card_h_x_mult', nodes = desc_nodes, vars = {specific_vars.total_h_x_mult}}
 end
 if specific_vars and specific_vars.bonus_p_dollars then
-	localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_p_dollars}}
+	localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {SMODS.signed_dollars(specific_vars.bonus_p_dollars)}}
 end
 if specific_vars and specific_vars.bonus_h_dollars and _c.effect ~= 'Gold Card' then
-	localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_h_dollars}}
+	localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {SMODS.signed_dollars(specific_vars.bonus_h_dollars)}}
 end'''
 match_indent = true
 overwrite = false
@@ -433,21 +442,21 @@ target = "card.lua"
 pattern = "bonus_chips = (self.ability.bonus + (self.ability.perma_bonus or 0)) > 0 and (self.ability.bonus + (self.ability.perma_bonus or 0)) or nil,"
 position = "at"
 payload = '''
-bonus_x_chips = self.ability.perma_x_chips and self.ability.perma_x_chips ~=0 and (self.ability.perma_x_chips or 0) or nil,
+bonus_x_chips = self.ability.perma_x_chips ~= 0 and self.ability.perma_x_chips or nil,
 total_x_chips = total_x_chips ~= 0 and total_x_chips ~= 1 and total_x_chips or nil,
-bonus_mult = self.ability.perma_mult and self.ability.perma_mult ~= 0 and (self.ability.perma_mult > 0 and '+'..self.ability.perma_mult or self.ability.perma_mult) or nil,
-bonus_x_mult = self.ability.perma_x_mult and self.ability.perma_x_mult ~= 0 and (self.ability.perma_x_mult or 0) or nil,
+bonus_mult = self.ability.perma_mult ~= 0 and self.ability.perma_mult or nil,
+bonus_x_mult = self.ability.perma_x_mult ~= 0 and self.ability.perma_x_mult or nil,
 total_x_mult = total_x_mult ~= 0 and total_x_mult ~= 1 and total_x_mult or nil,
-bonus_h_chips = self.ability.perma_h_chips and self.ability.perma_h_chips ~= 0 and (self.ability.perma_h_chips > 0 and '+'..self.ability.perma_h_chips or self.ability.perma_h_chips) or nil,
-bonus_h_x_chips = self.ability.perma_h_x_chips and self.ability.perma_h_x_chips ~= 0 and self.ability.perma_h_x_chips ~= 1 and (self.ability.perma_h_x_chips or 0) or nil,
+bonus_h_chips = self.ability.perma_h_chips ~= 0 and self.ability.perma_h_chips or nil,
+bonus_h_x_chips = self.ability.perma_h_x_chips ~= 0 and self.ability.perma_h_x_chips ~= 1 and self.ability.perma_h_x_chips or nil,
 total_h_x_chips = total_h_x_chips ~= 0 and total_h_x_chips ~= 1 and total_h_x_chips or nil,
-bonus_h_mult = self.ability.perma_h_mult and self.ability.perma_h_mult ~= 0 and (self.ability.perma_h_mult > 0 and '+'..self.ability.perma_h_mult or self.ability.perma_h_mult) or nil,
-bonus_h_x_mult = self.ability.perma_h_x_mult and self.ability.perma_h_x_mult ~= 0 and (self.ability.perma_h_x_mult or 0) or nil,
+bonus_h_mult = self.ability.perma_h_mult ~= 0 and self.ability.perma_h_mult or nil,
+bonus_h_x_mult = self.ability.perma_h_x_mult ~= 0 and self.ability.perma_h_x_mult or nil,
 total_h_x_mult = total_h_x_mult ~= 0 and total_h_x_mult ~= 1 and total_h_x_mult or nil,
-bonus_p_dollars = self.ability.perma_p_dollars and self.ability.perma_p_dollars ~= 0 and (self.ability.perma_p_dollars > 0 and '$'.. self.ability.perma_p_dollars or '-$'..-self.ability.perma_p_dollars) or nil,
-bonus_h_dollars = self.ability.perma_h_dollars and self.ability.perma_h_dollars ~= 0 and (self.ability.perma_h_dollars > 0 and '$'.. self.ability.perma_h_dollars or '-$'..-self.ability.perma_h_dollars) or nil,
+bonus_p_dollars = self.ability.perma_p_dollars ~= 0 and self.ability.perma_p_dollars or nil,
+bonus_h_dollars = self.ability.perma_h_dollars ~= 0 and self.ability.perma_h_dollars or nil,
 total_h_dollars = total_h_dollars ~= 0 and total_h_dollars or nil,
-bonus_chips = bonus_chips and bonus_chips ~= 0 and (bonus_chips > 0 and '+'..bonus_chips or bonus_chips) or nil,'''
+bonus_chips = bonus_chips ~= 0 and bonus_chips or nil,'''
 match_indent = true
 overwrite = false
 

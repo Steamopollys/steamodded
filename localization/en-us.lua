@@ -146,11 +146,25 @@ return {
             },
         },
         Enhanced = {
+            m_gold={
+                name="Gold Card",
+                text={
+                    "{C:money}#1#{} if held",
+                    "card is held in hand",
+                    "at end of round",
+                },
+            },
             m_stone={
                 name="Stone Card",
                 text={
                     "{C:chips}#1#{} chips",
                     "no rank or suit",
+                },
+            },
+            m_mult={
+                name="Mult Card",
+                text={
+                    "{C:mult}#1#{} Mult",
                 },
             },
         }
