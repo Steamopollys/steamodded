@@ -21,7 +21,7 @@
 ---@field hook? boolean `true` when "The Hook" discards cards. 
 ---@field card? Card|table The individual card being checked outside of scoring. 
 ---@field cards? table[]|Card[] Table of cards representing how many cards were created. 
----@field consumable? Card|table The Consumable being used. Only a value when `context.using_consumeable` is `true`. 
+---@field consumeable? Card|table The Consumable being used. Only a value when `context.using_consumeable` is `true`. 
 ---@field blueprint_card? Card|table The card currently copying the eval effects. 
 ---@field no_blueprint? true Effects akin to Blueprint or Brainstorm should not trigger in this context. 
 ---@field other_context? CalcContext|table The context the last eval happened on. 
