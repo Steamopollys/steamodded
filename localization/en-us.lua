@@ -71,6 +71,11 @@ return {
                     "{C:chips}#1#{} extra chips",
                 },
             },
+            card_x_chips = {
+                text = {
+                    "{X:chips,C:white}X#1#{} chips"
+                }
+            },
             card_extra_x_chips = {
                 text = {
                     "{X:chips,C:white}X#1#{} extra chips"
@@ -79,6 +84,11 @@ return {
             card_extra_mult = {
                 text = {
                     "{C:mult}#1#{} extra Mult"
+                }
+            },
+            card_x_mult = {
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult"
                 }
             },
             card_extra_x_mult = {
@@ -96,6 +106,11 @@ return {
                     "{C:chips}#1#{} chips when held",
                 }
             },
+            card_h_x_chips = {
+                text = {
+                    "{X:chips,C:white}X#1#{} chips when held",
+                }
+            },
             card_extra_h_x_chips = {
                 text = {
                     "{X:chips,C:white}X#1#{} extra chips when held",
@@ -103,7 +118,12 @@ return {
             },
             card_extra_h_mult = {
                 text = {
-                    "{C:mult}#1#{} extra Mult",
+                    "{C:mult}#1#{} extra Mult when held",
+                }
+            },
+            card_h_x_mult = {
+                text = {
+                    "{X:mult,C:white}X#1#{} Mult when held",
                 }
             },
             card_extra_h_x_mult = {
@@ -122,6 +142,15 @@ return {
                 name = "Negative",
                 text = {
                     "{C:dark_edition}+#1#{} hand size"
+                },
+            },
+        },
+        Enhanced = {
+            m_stone={
+                name="Stone Card",
+                text={
+                    "{C:chips}#1#{} chips",
+                    "no rank or suit",
                 },
             },
         }

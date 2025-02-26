@@ -1853,6 +1853,26 @@ Card.get_p_dollars = function(self)
 	return cgpd(self) + (self.ability.perma_p_dollars or 0)
 end
 
+-- perma_h_dollars
+
+Card.get_h_dollars = function(self)
+	if self.debuff then return 0 end
+	return (self.ability.h_dollars or 0) + (self.ability.perma_h_dollars or 0)
+end
+
+function SMODS.perma_example_card(card)
+	card.ability.perma_bonus = -2.2
+	card.ability.perma_mult = -0.7
+	card.ability.perma_h_chips = 4.6
+	card.ability.perma_x_chips = -4.7
+	card.ability.perma_x_mult = 3.4
+	card.ability.perma_h_x_chips = 4.6
+	card.ability.perma_h_mult = 3.4
+	card.ability.perma_h_x_mult = 0.1
+	card.ability.perma_p_dollars = 2.5
+	card.ability.perma_h_dollars = -4.5
+end
+
 --#endregion
 
 function playing_card_joker_effects(cards)
