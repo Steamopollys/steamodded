@@ -329,8 +329,8 @@ end
 if specific_vars and specific_vars.bonus_h_x_mult then
 	localize{type = 'other', key = 'card_extra_h_x_mult', nodes = desc_nodes, vars = {specific_vars.bonus_h_x_mult}}
 end
-if specific_vars and specific_vars.bonus_dollars then
-	localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_dollars}}
+if specific_vars and specific_vars.bonus_p_dollars then
+	localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_p_dollars}}
 end
 if specific_vars and specific_vars.bonus_h_dollars then
 	localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_h_dollars}}
@@ -366,8 +366,8 @@ end
 if specific_vars and specific_vars.bonus_h_x_mult then
 	localize{type = 'other', key = 'card_extra_h_x_mult', nodes = desc_nodes, vars = {specific_vars.bonus_h_x_mult}}
 end
-if specific_vars and specific_vars.bonus_dollars then
-	localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_dollars}}
+if specific_vars and specific_vars.bonus_p_dollars then
+	localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_p_dollars}}
 end
 if specific_vars and specific_vars.bonus_h_dollars then
 	localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {specific_vars.bonus_h_dollars}}
@@ -409,7 +409,7 @@ bonus_h_chips = self.ability.perma_h_chips and self.ability.perma_h_chips ~= 0 a
 bonus_h_x_chips = self.ability.perma_h_x_chips and self.ability.perma_h_x_chips ~= 0 and self.ability.perma_h_x_chips ~= 1 and (self.ability.perma_h_x_chips or 0) or nil,
 bonus_h_mult = self.ability.perma_h_mult and self.ability.perma_h_mult ~= 0 and (self.ability.perma_h_mult > 0 and '+'..self.ability.perma_h_mult or self.ability.perma_h_mult) or nil,
 bonus_h_x_mult = self.ability.perma_h_x_mult and self.ability.perma_h_x_mult ~= 0 and (self.ability.perma_h_x_mult or 0) or nil,
-bonus_dollars = self.ability.perma_p_dollars and self.ability.perma_p_dollars ~= 0 and (self.ability.perma_p_dollars > 0 and '$'.. self.ability.perma_p_dollars or '-$'..-self.ability.perma_p_dollars) or nil,
+bonus_p_dollars = self.ability.perma_p_dollars and self.ability.perma_p_dollars ~= 0 and (self.ability.perma_p_dollars > 0 and '$'.. self.ability.perma_p_dollars or '-$'..-self.ability.perma_p_dollars) or nil,
 bonus_h_dollars = self.ability.perma_h_dollars and self.ability.perma_h_dollars ~= 0 and (self.ability.perma_h_dollars > 0 and '$'.. self.ability.perma_h_dollars or '-$'..-self.ability.perma_h_dollars) or nil,'''
 match_indent = true
 overwrite = false
