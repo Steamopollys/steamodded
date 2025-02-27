@@ -437,3 +437,19 @@ function sendFatalMessage(message, logger) end
 ---@param message string 
 --- Sends the provided `message` to debug console. 
 function sendMessageToConsole(level, logger, message) end
+
+---@param val number
+---@return string
+--- Returns a signed `val`. 
+function SMODS.signed(val) end
+
+---@param val number
+---@return string
+--- Returns a signed `val` with "$". 
+function SMODS.signed_dollars(val) end
+
+---@param base number
+---@param perma number
+---@return number|0 # Returns 0 
+--- Returns result of multiplying `base` and `perma`. 
+function SMODS.multiplicative_stacking(base, perma) end

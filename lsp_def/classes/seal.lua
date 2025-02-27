@@ -30,6 +30,7 @@
 ---@field draw? fun(self: SMODS.Seal|table, card: Card|table, layer: string) Draws the sprite and shader of the seal. 
 ---@field update? fun(self: SMODS.Seal|table, card: Card|table, dt: number) Allows logic for this card to be run per-frame. 
 ---@field generate_ui? fun(self: SMODS.Seal|table, info_queue: table, card: Card|table, desc_nodes: table, specific_vars: table, full_UI_table: table) Provides complex control over the UI display of the seal. See [`generate_ui` function](https://github.com/Steamodded/smods/wiki/Localization#generate_ui-advanced) documentation for details. 
+---@field create_fake_card? fun(self: SMODS.Seal|table): table Creates a fake card with this seal. Used internally for `generate_ui` in cases where recieved `card` param is nil. 
 ---@field new? fun(self, name, label, full_name, pos, loc_txt, atlas, discovered, color): any DEPRECATED. DO NOT USE
 ---@overload fun(self: SMODS.Seal): SMODS.Seal
 SMODS.Seal = setmetatable({}, {

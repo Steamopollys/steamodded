@@ -33,6 +33,13 @@ function Back:__call(...) return self end
 Tag = {}
 function Tag:__call(...) return self end
 
+---@param self Tag|table
+---@param tag_sprite Sprite|table
+---@param vars_only boolean 
+---@return Sprite|table? tag_sprite Returns `loc_vars` if `vars_only` is `true`. 
+--- Sets the Tag's description UIBox. 
+function Tag:get_uibox_table(tag_sprite, vars_only) end
+
 ---@class Game: Object
 ---@overload fun(...: any): Game|table
 Game = {}
@@ -87,6 +94,58 @@ G.GAME.blind = Blind()
 ---@overload fun(...: any): Card|table
 Card = {}
 function Card:__call(...) return self end
+
+---@param vars_only? boolean Only return description values
+---@return table # Becomes `loc_vars` if `vars_only` is `true`. 
+---@return table? man_start Only returns if `vars_only` is `true`. 
+---@return table? main_end Only returns if `vars_only` is `true`. 
+--- Handles variables before passing into `generate_card_ui()`. 
+function Card:generate_UIBox_ability_table(vars_only) end
+
+---@param self Card
+---@return number
+--- Returns card Mult. 
+function Card:get_chip_mult() end
+
+---@param self Card
+---@return number
+--- Returns card XMult.
+function Card:get_chip_x_mult() end
+
+---@param self Card
+---@return number
+--- Returns card hand Mult.
+function Card:get_chip_h_mult() end
+
+---@param self Card
+---@return number
+--- Returns card hand XMult.
+function Card:get_chip_h_x_mult() end
+
+---@param self Card
+---@return number
+--- Returns card XChips.
+function Card:get_chip_x_bonus() end
+
+---@param self Card
+---@return number
+--- Returns card hand Chips.
+function Card:get_chip_h_bonus() end
+
+---@param self Card
+---@return number
+--- Returns card hand XChips.
+function Card:get_chip_h_x_bonus() end
+
+---@param self Card
+---@return number
+--- Returns card dollars.
+function Card:get_p_dollars() end
+
+---@param self Card
+---@return number
+--- Returns card hand dollars.
+function Card:get_h_dollars() end
 
 ---@class Card_Character: Moveable
 ---@overload fun(...: any): Card_Character|table
@@ -154,13 +213,6 @@ function scale_number(number, scale, max, e_switch_point) end
 --- Returns table of cards forming a straight. 
 function get_straight(hand, min_length, skip, wrap) end
 
----@param vars_only? boolean Only return description values
----@return table # Becomes `loc_vars` if `vars_only` is `true`. 
----@return table? man_start Only returns if `vars_only` is `true`. 
----@return table? main_end Only returns if `vars_only` is `true`. 
---- Handles variables before passing into `generate_card_ui()`. 
-function Card:generate_UIBox_ability_table(vars_only) end
-
 ---@param pos table|{x: number, y: number}
 ---@param value string|{string: string, colour: table}[]
 ---@param tooltip string[]
@@ -176,10 +228,3 @@ function tally_sprite(pos, value, tooltip, suit) end
 ---@return string key
 --- Sets the seed to `seed` and randomly selects a table within `_t`. 
 function pseudorandom_element(_t, seed, args) end
-
----@param self Tag|table
----@param tag_sprite Sprite|table
----@param vars_only boolean 
----@return Sprite|table? tag_sprite Returns `loc_vars` if `vars_only` is `true`. 
---- Sets the Tag's description UIBox. 
-function Tag:get_uibox_table(tag_sprite, vars_only) end

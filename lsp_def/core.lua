@@ -1,6 +1,7 @@
 ---@meta
 
 --- Core SMODS classes/functions
+
 SMODS = {}
 
 ---@type string
