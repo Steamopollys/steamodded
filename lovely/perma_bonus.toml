@@ -1,7 +1,7 @@
 [manifest]
 version = "1.0.0"
 dump_lua = true
-priority = -10
+priority = -5
 
 ### Permanent card values implementations
 ## Adapted from AMM (https://github.com/AutumnMood924/AutumnMoodMechanics)
@@ -10,27 +10,27 @@ priority = -10
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
-pattern = "if _c.effect == 'Mult Card' then loc_vars = {_c.config.mult}"
+pattern = "if _c.effect == 'Mult Card' then loc_vars = {cfg.mult}"
 position = "at"
-payload = "if _c.effect == 'Mult Card' then loc_vars = {SMODS.signed(_c.config.mult + (specific_vars and specific_vars.bonus_mult or 0))}"
+payload = "if _c.effect == 'Mult Card' then loc_vars = {SMODS.signed(cfg.mult + (specific_vars and specific_vars.bonus_mult or 0))}"
 match_indent = true
 
 # generate_card_ui(): gold card special case
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
-pattern = "elseif _c.effect == 'Gold Card' then loc_vars = {_c.config.h_dollars}"
+pattern = "elseif _c.effect == 'Gold Card' then loc_vars = {cfg.h_dollars}"
 position = "at"
-payload = "elseif _c.effect == 'Gold Card' then loc_vars = {specific_vars and SMODS.signed_dollars(specific_vars.total_h_dollars) or _c.config.h_dollars and SMODS.signed_dollars(_c.config.h_dollars) or 0}"
+payload = "elseif _c.effect == 'Gold Card' then loc_vars = {specific_vars and SMODS.signed_dollars(specific_vars.total_h_dollars) or cfg.h_dollars and SMODS.signed_dollars(cfg.h_dollars) or 0}"
 match_indent = true
 
 # generate_card_ui(): stone card special case
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
-pattern = "elseif _c.effect == 'Stone Card' then loc_vars = {((specific_vars and specific_vars.bonus_chips) or _c.config.bonus)}"
+pattern = "elseif _c.effect == 'Stone Card' then loc_vars = {((specific_vars and specific_vars.bonus_chips) or cfg.bonus)}"
 position = "at"
-payload = "elseif _c.effect == 'Stone Card' then loc_vars = {((specific_vars and SMODS.signed(specific_vars.bonus_chips)) or _c.config.bonus and SMODS.signed(_c.config.bonus) or 0)}"
+payload = "elseif _c.effect == 'Stone Card' then loc_vars = {((specific_vars and SMODS.signed(specific_vars.bonus_chips)) or cfg.bonus and SMODS.signed(cfg.bonus) or 0)}"
 match_indent = true
 
 # generate_card_ui(): show permanent bonuses on default playing cards
@@ -83,10 +83,10 @@ payload = "localize{type = 'other', key = 'card_extra_chips', nodes = desc_nodes
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
-pattern = "localize{type = 'other', key = 'card_extra_chips', nodes = desc_nodes, vars = {((specific_vars and specific_vars.bonus_chips) or _c.config.bonus)}}"
+pattern = "localize{type = 'other', key = 'card_extra_chips', nodes = desc_nodes, vars = {((specific_vars and specific_vars.bonus_chips) or cfg.bonus)}}"
 position = "at"
 match_indent = true
-payload = "localize{type = 'other', key = 'card_extra_chips', nodes = desc_nodes, vars = {SMODS.signed((specific_vars and specific_vars.bonus_chips) or _c.config.bonus)}}"
+payload = "localize{type = 'other', key = 'card_extra_chips', nodes = desc_nodes, vars = {SMODS.signed((specific_vars and specific_vars.bonus_chips) or cfg.bonus)}}"
 
 # generate_card_ui(): show permanent bonuses on enhanced playing cards
 [[patches]]
@@ -304,14 +304,14 @@ end
 [[patches]]
 [patches.pattern]
 target = "card.lua"
-pattern = 'if self.ability.p_dollars > 0 then'
-position = "before"
+pattern = '''if ret > 0 then
+    G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + ret'''
+position = "at"
 match_indent = true
-payload = '''
-ret = ret + (self.ability.perma_p_dollars) or 0
-
+payload = '''ret = ret + (self.ability.perma_p_dollars) or 0
 -- TARGET: get_p_dollars
-'''
+if ret ~= 0 then
+    G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + ret'''
 
 # Card:get_end_of_round_effect
 [[patches]]
