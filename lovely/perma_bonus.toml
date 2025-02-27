@@ -132,10 +132,6 @@ target = "card.lua"
 pattern = "loc_vars = { playing_card = not not self.base.colour, value = self.base.value, suit = self.base.suit, colour = self.base.colour,"
 position = "before"
 payload = '''local bonus_chips = self.ability.bonus + (self.ability.perma_bonus or 0)
-local total_x_mult = self:get_chip_x_mult()
-local total_h_x_mult = self:get_chip_h_x_mult()
-local total_x_chips = self:get_chip_x_bonus()
-local total_h_x_chips = self:get_chip_h_x_bonus()
 local total_h_dollars = self:get_h_dollars()'''
 match_indent = true
 overwrite = false
