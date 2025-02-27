@@ -23,6 +23,7 @@ function loadAPIs()
         o = o or {}
         assert(o.mod == nil)
         o.mod = SMODS.current_mod
+        o.original_mod = o.mod
         setmetatable(o, self)
         for _, v in ipairs(o.required_params or {}) do
             assert(not (o[v] == nil), ('Missing required parameter for %s declaration: %s'):format(o.set, v))
@@ -215,13 +216,13 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
             )
             return
         end
-        local is_loc_modified = obj.loc_txt or obj.loc_vars or obj.generate_ui or orig_o.mod
+        local is_loc_modified = obj.loc_txt or obj.loc_vars or obj.generate_ui
         if is_loc_modified then orig_o.is_loc_modified = true end
-        if not orig_o.is_loc_modified then
+        if not orig_o.is_loc_modified and not orig_o.original_mod then
             -- Setting generate_ui to this sentinel value
             -- makes vanilla localization code run instead of SMODS's code
             orig_o.generate_ui = 0
-		else
+		elseif not orig_o.original_mod then
 			-- reset the value if otherwise, in case when the object was taken over before and this value was already set to 0
 			if orig_o.generate_ui == 0 then
 				orig_o.generate_ui = nil

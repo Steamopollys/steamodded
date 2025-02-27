@@ -1,4 +1,4 @@
-# Steamodded - A Balatro ModLoader
+# Steamodded - A Balatro Modding Framework
 
 ## Introduction
 

@@ -95,7 +95,8 @@ pattern = '''
 self.GAME.current_round.voucher = G.SETTINGS.tutorial_progress and G.SETTINGS.tutorial_progress.forced_voucher or get_next_voucher_key()
 '''
 payload = '''
-self.GAME.current_round.voucher = G.SETTINGS.tutorial_progress and G.SETTINGS.tutorial_progress.forced_voucher or SMODS.get_next_vouchers()
+local forced_voucher = (G.SETTINGS.tutorial_progress or {}).forced_voucher
+self.GAME.current_round.voucher = forced_voucher and {forced_voucher, spawn = {[forced_voucher] = true }} or SMODS.get_next_vouchers()
 '''
 # Stop redeeming vouchers deleting the table of vouchers
 [[patches]]
@@ -183,7 +184,7 @@ pattern = '''
 G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls + 1
 '''
 payload = '''
-G.GAME.round_resets.free_rerolls = G.GAME.round_resets.free_rerolls + 1
+SMODS.change_free_rerolls(1)
 '''
 [[patches]]
 [patches.pattern]
@@ -194,7 +195,7 @@ pattern = '''
 G.GAME.current_round.free_rerolls = G.GAME.current_round.free_rerolls - 1
 '''
 payload = '''
-G.GAME.round_resets.free_rerolls = G.GAME.round_resets.free_rerolls - 1
+SMODS.change_free_rerolls(-1)
 '''
 
 ## Shop Card Area Width

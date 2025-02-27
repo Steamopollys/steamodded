@@ -42,6 +42,16 @@ line_prepend = '$indent'
 payload = '''end
 if self.name == 'The Arm' then'''
 
+# revert the change for Crimson Heart in debuff_card
+[[patches]]
+[patches.regex]
+target = 'blind.lua'
+pattern = '''(?<indent>[\t ]*)elseif self\.name == 'Crimson Heart' and not self\.disabled'''
+position = 'at'
+line_prepend = '$indent'
+payload = '''end
+if self.name == 'Crimson Heart' and not self.disabled'''
+
 ## Set debuffed_by_blind, use it for Matador behavior
 ## Blind:debuff_card()
 [[patches]]
@@ -334,6 +344,19 @@ position = 'at'
 payload = '''
 local obj = G.GAME.blind.config.blind
 local blind_sprite = AnimatedSprite(0, 0, 1.2, 1.2, G.ANIMATION_ATLAS[obj.atlas] or G.ANIMATION_ATLAS['blind_chips'], copy_table(G.GAME.blind.pos))'''
+
+# display blind descriptions in info_queue
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "elseif _c.set == 'Tarot' then"
+position = "before"
+match_indent = true
+payload = '''elseif _c.set == 'Blind' then
+    local coll_loc_vars = (_c.collection_loc_vars and type(_c.collection_loc_vars) == 'function' and _c:collection_loc_vars()) or {}
+    loc_vars = coll_loc_vars.vars or _c.vars
+    localize{type = 'descriptions', key = coll_loc_vars.key or _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
+'''
 
 # create_UIBox_blind_choice()
 [[patches]]

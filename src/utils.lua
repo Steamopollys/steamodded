@@ -317,7 +317,7 @@ function SMODS.create_card(t)
     if not t.area and not t.key and t.set and SMODS.ConsumableTypes[t.set] then
         t.area = G.consumeables
     end
-    SMODS.bypass_create_card_edition = t.no_edition
+    SMODS.bypass_create_card_edition = t.no_edition or t.edition
     local _card = create_card(t.set, t.area, t.legendary, t.rarity, t.skip_materialize, t.soulable, t.key, t.key_append)
     SMODS.bypass_create_card_edition = nil
 
@@ -1916,3 +1916,4 @@ end
 function SMODS.signed_dollars(val)
     return val and (val > 0 and '$'..val or '-$'..-val) or '0'
 end
+
