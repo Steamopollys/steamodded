@@ -1792,6 +1792,13 @@ end
 
 --#region card perma bonuses
 
+function SMODS.multiplicative_stacking(base, perma)
+	base = (base ~= 0 and base or 1)
+	perma = (perma ~= 0 and perma + 1 or 1)
+	local ret = base * perma
+	return (ret == 1 and 0) or (ret > 0 and ret) or 0
+end
+
 -- perma_mult
 local cgcm = Card.get_chip_mult
 function Card:get_chip_mult()
@@ -1804,8 +1811,7 @@ local cgcxm = Card.get_chip_x_mult
 function Card:get_chip_x_mult()
     if self.debuff then return 0 end
 	local base = cgcxm(self)
-	local ret = (base ~= 0 and base or 1) + self.ability.perma_x_mult
-    return (ret == 1 and 0) or ((ret > 0) and ret) or 0
+	return SMODS.multiplicative_stacking(base, self.ability.perma_x_mult)
 end
 
 -- perma_h_mult
@@ -1821,15 +1827,13 @@ local cgchxm = Card.get_chip_h_x_mult
 function Card:get_chip_h_x_mult()
     if self.debuff then return 0 end
 	local base = cgchxm(self)
-	local ret = (base ~= 0 and base or 1) + self.ability.perma_h_x_mult
-    return (ret == 1 and 0) or ((ret > 0) and ret) or 0
+	return SMODS.multiplicative_stacking(base, self.ability.perma_h_x_mult)
 end
 
 -- perma_xbonus
 function Card:get_chip_x_bonus()
     if self.debuff then return 0 end
-	local ret = 1 + self.ability.perma_x_chips
-	return (ret == 1 and 0) or ((ret > 0) and ret) or 0
+	return SMODS.multiplicative_stacking(1, self.ability.perma_x_chips)
 end
 
 -- perma_h_chips
@@ -1841,8 +1845,7 @@ end
 -- perma_h_x_chips
 function Card:get_chip_h_x_bonus()
     if self.debuff then return 0 end
-    local ret = 1 + self.ability.perma_h_x_chips
-	return (ret == 1 and 0) or ((ret > 0) and ret) or 0
+	return SMODS.multiplicative_stacking(1, self.ability.perma_h_x_chips)
 end
 
 -- perma_p_dollars

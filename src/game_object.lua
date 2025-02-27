@@ -2950,35 +2950,35 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
             SMODS.Enhancement.super.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
             if specific_vars and specific_vars.bonus_chips then
                 local remaining_bonus_chips = specific_vars.bonus_chips - (self.config.bonus or 0)
-                if remaining_bonus_chips > 0 then
-                    localize { type = 'other', key = 'card_extra_chips', nodes = desc_nodes, vars = { specific_vars.bonus_chips - (self.config.bonus or 0) } }
+                if remaining_bonus_chips ~= 0 then
+                    localize { type = 'other', key = 'card_extra_chips', nodes = desc_nodes, vars = { SMODS.signed(remaining_bonus_chips) } }
                 end
             end
-            if specific_vars and specific_vars.total_x_chips and (not self.config.x_chips or self.config.x_chips == 0 or always_show.x_chips) then
-                localize{type = 'other', key = 'card_x_chips', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.total_x_chips)}}
+            if specific_vars and specific_vars.bonus_x_chips then
+                localize{type = 'other', key = 'card_x_chips', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_x_chips)}}
             end
-            if specific_vars and specific_vars.bonus_mult and (not self.config.mult or self.config.mult == 0 or always_show.mult) then
-                localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_mult + (self.config.mult or 0))}}
+            if specific_vars and specific_vars.bonus_mult then
+                localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_mult)}}
             end
-            if specific_vars and specific_vars.total_x_mult and (not self.config.x_mult or self.config.x_mult == 0 or always_show.x_mult) then
-                localize{type = 'other', key = 'card_x_mult', nodes = desc_nodes, vars = {specific_vars.total_x_mult}}
+            if specific_vars and specific_vars.bonus_x_mult then
+                localize{type = 'other', key = 'card_x_mult', nodes = desc_nodes, vars = {specific_vars.bonus_x_mult}}
             end
-            if specific_vars and specific_vars.bonus_h_chips and (not self.config.h_chips or self.config.h_chips == 0 or always_show.h_chips) then
+            if specific_vars and specific_vars.bonus_h_chips then
                 localize{type = 'other', key = 'card_extra_h_chips', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_h_chips)}}
             end
-            if specific_vars and specific_vars.total_h_x_chips and (not self.config.h_x_chips or self.config.h_x_chips == 0 or always_show.h_x_chips) then
-                localize{type = 'other', key = 'card_h_x_chips', nodes = desc_nodes, vars = {specific_vars.total_h_x_chips}}
+            if specific_vars and specific_vars.bonus_x_chips then
+                localize{type = 'other', key = 'card_h_x_chips', nodes = desc_nodes, vars = {specific_vars.bonus_h_x_chips}}
             end
-            if specific_vars and specific_vars.bonus_h_mult and (not self.config.h_mult or self.config.h_mult == 0 or always_show.h_mult) then
+            if specific_vars and specific_vars.bonus_h_mult then
                 localize{type = 'other', key = 'card_extra_h_mult', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_h_mult)}}
             end
-            if specific_vars and specific_vars.total_h_x_mult and (not self.config.h_x_mult or self.config.h_x_mult == 0 or always_show.h_x_mult) then
-                localize{type = 'other', key = 'card_h_x_mult', nodes = desc_nodes, vars = {specific_vars.total_h_x_mult}}
+            if specific_vars and specific_vars.bonus_h_x_mult then
+                localize{type = 'other', key = 'card_h_x_mult', nodes = desc_nodes, vars = {specific_vars.bonus_h_x_mult}}
             end
-            if specific_vars and specific_vars.bonus_p_dollars and (not self.config.h_dollars or self.config.h_dollars == 0 or always_show.h_dollars) then
+            if specific_vars and specific_vars.bonus_p_dollars then
                 localize{type = 'other', key = 'card_extra_p_dollars', nodes = desc_nodes, vars = {SMODS.signed_dollars(specific_vars.bonus_p_dollars)}}
             end
-            if specific_vars and specific_vars.bonus_h_dollars and (not self.config.p_dollars or self.config.p_dollars == 0 or always_show.p_dollars) then
+            if specific_vars and specific_vars.bonus_h_dollars then
                 localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {SMODS.signed_dollars(specific_vars.bonus_h_dollars)}}
             end
         end,
