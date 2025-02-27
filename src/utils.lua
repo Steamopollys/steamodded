@@ -1,46 +1,46 @@
 --- STEAMODDED CORE
 --- UTILITY FUNCTIONS
 function inspect(table)
-	if type(table) ~= 'table' then
-		return "Not a table"
-	end
+    if type(table) ~= 'table' then
+        return "Not a table"
+    end
 
-	local str = ""
-	for k, v in pairs(table) do
-		local valueStr = type(v) == "table" and "table" or tostring(v)
-		str = str .. tostring(k) .. ": " .. valueStr .. "\n"
-	end
+    local str = ""
+    for k, v in pairs(table) do
+        local valueStr = type(v) == "table" and "table" or tostring(v)
+        str = str .. tostring(k) .. ": " .. valueStr .. "\n"
+    end
 
-	return str
+    return str
 end
 
 function inspectDepth(table, indent, depth)
-	if depth and depth > 5 then  -- Limit the depth to avoid deep nesting
-		return "Depth limit reached"
-	end
+    if depth and depth > 5 then  -- Limit the depth to avoid deep nesting
+        return "Depth limit reached"
+    end
 
-	if type(table) ~= 'table' then  -- Ensure the object is a table
-		return "Not a table"
-	end
+    if type(table) ~= 'table' then  -- Ensure the object is a table
+        return "Not a table"
+    end
 
-	local str = ""
-	if not indent then indent = 0 end
+    local str = ""
+    if not indent then indent = 0 end
 
-	for k, v in pairs(table) do
-		local formatting = string.rep("  ", indent) .. tostring(k) .. ": "
-		if type(v) == "table" then
-			str = str .. formatting .. "\n"
-			str = str .. inspectDepth(v, indent + 1, (depth or 0) + 1)
-		elseif type(v) == 'function' then
-			str = str .. formatting .. "function\n"
-		elseif type(v) == 'boolean' then
-			str = str .. formatting .. tostring(v) .. "\n"
-		else
-			str = str .. formatting .. tostring(v) .. "\n"
-		end
-	end
+    for k, v in pairs(table) do
+        local formatting = string.rep("  ", indent) .. tostring(k) .. ": "
+        if type(v) == "table" then
+            str = str .. formatting .. "\n"
+            str = str .. inspectDepth(v, indent + 1, (depth or 0) + 1)
+        elseif type(v) == 'function' then
+            str = str .. formatting .. "function\n"
+        elseif type(v) == 'boolean' then
+            str = str .. formatting .. tostring(v) .. "\n"
+        else
+            str = str .. formatting .. tostring(v) .. "\n"
+        end
+    end
 
-	return str
+    return str
 end
 
 function inspectFunction(func)
@@ -74,7 +74,7 @@ end
 
 function SMODS.SAVE_UNLOCKS()
     boot_print_stage("Saving Unlocks")
-	G:save_progress()
+    G:save_progress()
     -------------------------------------
     local TESTHELPER_unlocks = false and not _RELEASE_MODE
     -------------------------------------
@@ -117,9 +117,9 @@ function SMODS.SAVE_UNLOCKS()
         end
     end
 
-	table.sort(G.P_LOCKED, function (a, b) return a.order and b.order and a.order < b.order end)
+    table.sort(G.P_LOCKED, function (a, b) return a.order and b.order and a.order < b.order end)
 
-	for k, v in pairs(G.P_BLINDS) do
+    for k, v in pairs(G.P_BLINDS) do
         v.key = k
         if not v.wip and not v.demo then
             if TESTHELPER_unlocks then v.discovered = true; v.alerted = true  end --REMOVE THIS
@@ -133,7 +133,7 @@ function SMODS.SAVE_UNLOCKS()
             end
         end
     end
-	for k, v in pairs(G.P_TAGS) do
+    for k, v in pairs(G.P_TAGS) do
         v.key = k
         if not v.wip and not v.demo then
             if TESTHELPER_unlocks then v.discovered = true; v.alerted = true  end --REMOVE THIS
@@ -204,7 +204,7 @@ local function parse_loc_file(file_name, force, mod_id)
             end
         end
     end
-	recurse(loc_table, G.localization)
+    recurse(loc_table, G.localization)
 end
 
 local function handle_loc_file(dir, language, force, mod_id)
@@ -225,14 +225,14 @@ function SMODS.handle_loc_file(path, mod_id)
 end
 
 function SMODS.insert_pool(pool, center, replace)
-	if replace == nil then replace = center.taken_ownership end
-	if replace then
-		for k, v in ipairs(pool) do
+    if replace == nil then replace = center.taken_ownership end
+    if replace then
+        for k, v in ipairs(pool) do
             if v.key == center.key then
                 pool[k] = center
                 return
             end
-		end
+        end
     end
     local prev_order = (pool[#pool] and pool[#pool].order) or 0
     if prev_order ~= nil then
@@ -453,8 +453,8 @@ function SMODS.create_loc_dump()
     end
     cleanup(_dump)
     local str = 'return ' .. serialize(_dump)
-	NFS.createDirectory(SMODS.dump_loc.path..'localization/')
-	NFS.write(SMODS.dump_loc.path..'localization/dump.lua', str)
+    NFS.createDirectory(SMODS.dump_loc.path..'localization/')
+    NFS.write(SMODS.dump_loc.path..'localization/dump.lua', str)
 end
 
 -- Serializes an input table in valid Lua syntax
@@ -463,9 +463,9 @@ end
 function serialize(t, indent)
     indent = indent or ''
     local str = '{\n'
-	for k, v in ipairs(t) do
+    for k, v in ipairs(t) do
         str = str .. indent .. '\t'
-		if type(v) == 'number' then
+        if type(v) == 'number' then
             str = str .. v
         elseif type(v) == 'boolean' then
             str = str .. (v and 'true' or 'false')
@@ -477,33 +477,33 @@ function serialize(t, indent)
             -- not serializable
             str = str .. 'nil'
         end
-		str = str .. ',\n'
-	end
+        str = str .. ',\n'
+    end
     for k, v in pairs(t) do
-		if type(k) == 'string' then
-        	str = str .. indent .. '\t' .. '[' .. serialize_string(k) .. '] = '
+        if type(k) == 'string' then
+            str = str .. indent .. '\t' .. '[' .. serialize_string(k) .. '] = '
 
-			if type(v) == 'number' then
-				str = str .. v
+            if type(v) == 'number' then
+                str = str .. v
             elseif type(v) == 'boolean' then
                 str = str .. (v and 'true' or 'false')
-			elseif type(v) == 'string' then
-				str = str .. serialize_string(v)
-			elseif type(v) == 'table' then
-				str = str .. serialize(v, indent .. '\t')
-			else
-				-- not serializable
+            elseif type(v) == 'string' then
+                str = str .. serialize_string(v)
+            elseif type(v) == 'table' then
+                str = str .. serialize(v, indent .. '\t')
+            else
+                -- not serializable
                 str = str .. 'nil'
-			end
-			str = str .. ',\n'
-		end
+            end
+            str = str .. ',\n'
+        end
     end
     str = str .. indent .. '}'
-	return str
+    return str
 end
 
 function serialize_string(s)
-	return string.format("%q", s)
+    return string.format("%q", s)
 end
 
 -- Starting with `t`, insert any key-value pairs from `defaults` that don't already
@@ -610,9 +610,9 @@ end
 --#region Number formatting
 
 function round_number(num, precision)
-	precision = 10^(precision or 0)
+    precision = 10^(precision or 0)
 
-	return math.floor(num * precision + 0.4999999999999994) / precision
+    return math.floor(num * precision + 0.4999999999999994) / precision
 end
 
 -- Formatting util for UI elements (look number_formatting.toml)
@@ -653,7 +653,7 @@ function SMODS.poll_seal(args)
                 total_weight = total_weight + seal_option.weight
             end
         end
-	end
+    end
     total_weight = total_weight + (total_weight / 2 * 98) -- set base rate to 2%
 
     local type_weight = 0 -- modified weight total
@@ -734,8 +734,8 @@ end
 
 
 function SMODS.poll_rarity(_pool_key, _rand_key)
-	local rarity_poll = pseudorandom(pseudoseed(_rand_key or ('rarity'..G.GAME.round_resets.ante))) -- Generate the poll value
-	local available_rarities = copy_table(SMODS.ObjectTypes[_pool_key].rarities) -- Table containing a list of rarities and their rates
+    local rarity_poll = pseudorandom(pseudoseed(_rand_key or ('rarity'..G.GAME.round_resets.ante))) -- Generate the poll value
+    local available_rarities = copy_table(SMODS.ObjectTypes[_pool_key].rarities) -- Table containing a list of rarities and their rates
     local vanilla_rarities = {["Common"] = 1, ["Uncommon"] = 2, ["Rare"] = 3, ["Legendary"] = 4}
 
     -- Calculate total rates of rarities
@@ -754,19 +754,19 @@ function SMODS.poll_rarity(_pool_key, _rand_key)
         v.weight = v.weight / total_weight
     end
 
-	-- Calculate selected rarity
-	local weight_i = 0
-	for _, v in ipairs(available_rarities) do
-		weight_i = weight_i + v.weight
-		if rarity_poll < weight_i then
+    -- Calculate selected rarity
+    local weight_i = 0
+    for _, v in ipairs(available_rarities) do
+        weight_i = weight_i + v.weight
+        if rarity_poll < weight_i then
             if vanilla_rarities[v.key] then
                 return vanilla_rarities[v.key]
             else
-			    return v.key
+                return v.key
             end
-		end
-	end
-	return nil
+        end
+    end
+    return nil
 end
 
 function SMODS.poll_enhancement(args)
@@ -802,7 +802,7 @@ function SMODS.poll_enhancement(args)
                 total_weight = total_weight + enhance_option.weight
             end
         end
-	  end
+      end
     total_weight = total_weight + (total_weight / 40 * 60) -- set base rate to 40%
 
     local type_weight = 0 -- modified weight total
@@ -1918,8 +1918,8 @@ function SMODS.signed_dollars(val)
 end
 
 function SMODS.multiplicative_stacking(base, perma)
-	base = (base ~= 0 and base or 1)
-	perma = (perma ~= 0 and perma + 1 or 1)
-	local ret = base * perma
-	return (ret == 1 and 0) or (ret > 0 and ret) or 0
+    base = (base ~= 0 and base or 1)
+    perma = (perma ~= 0 and perma + 1 or 1)
+    local ret = base * perma
+    return (ret == 1 and 0) or (ret > 0 and ret) or 0
 end
