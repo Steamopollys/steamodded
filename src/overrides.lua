@@ -1791,14 +1791,6 @@ end
 --#endregion
 
 --#region card perma bonuses
-
-function SMODS.multiplicative_stacking(base, perma)
-	base = (base ~= 0 and base or 1)
-	perma = (perma ~= 0 and perma + 1 or 1)
-	local ret = base * perma
-	return (ret == 1 and 0) or (ret > 0 and ret) or 0
-end
-
 -- perma_mult
 local cgcm = Card.get_chip_mult
 function Card:get_chip_mult()
@@ -1861,19 +1853,6 @@ end
 Card.get_h_dollars = function(self)
 	if self.debuff then return 0 end
 	return (self.ability.h_dollars or 0) + (self.ability.perma_h_dollars or 0)
-end
-
-function SMODS.perma_example_card(card)
-	card.ability.perma_bonus = -2.2
-	card.ability.perma_mult = -0.7
-	card.ability.perma_h_chips = 4.6
-	card.ability.perma_x_chips = -4.7
-	card.ability.perma_x_mult = 3.4
-	card.ability.perma_h_x_chips = 4.6
-	card.ability.perma_h_mult = 3.4
-	card.ability.perma_h_x_mult = 0.1
-	card.ability.perma_p_dollars = 2.5
-	card.ability.perma_h_dollars = -4.5
 end
 
 --#endregion

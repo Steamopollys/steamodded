@@ -1917,3 +1917,9 @@ function SMODS.signed_dollars(val)
     return val and (val > 0 and '$'..val or '-$'..-val) or '0'
 end
 
+function SMODS.multiplicative_stacking(base, perma)
+	base = (base ~= 0 and base or 1)
+	perma = (perma ~= 0 and perma + 1 or 1)
+	local ret = base * perma
+	return (ret == 1 and 0) or (ret > 0 and ret) or 0
+end
