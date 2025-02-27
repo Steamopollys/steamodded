@@ -2956,7 +2956,7 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
                 end
             end
             if specific_vars and specific_vars.bonus_x_chips then
-                localize{type = 'other', key = 'card_x_chips', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_x_chips)}}
+                localize{type = 'other', key = 'card_x_chips', nodes = desc_nodes, vars = {specific_vars.bonus_x_chips}}
             end
             if specific_vars and specific_vars.bonus_mult then
                 localize{type = 'other', key = 'card_extra_mult', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.bonus_mult)}}

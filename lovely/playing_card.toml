@@ -456,6 +456,22 @@ bonus_chips = bonus_chips ~= 0 and bonus_chips or nil,'''
 match_indent = true
 overwrite = false
 
+# set_ability: set defaults for temporary bonuses
+# Also add conformance with SMODS documentation.
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "x_mult = center.config.Xmult or 1,"
+position = "at"
+payload = '''
+x_mult = center.config.Xmult or center.config.x_mult or 1,
+h_chips = center.config.h_chips or 0,
+x_chips = center.config.x_chips or 1,
+h_x_chips = center.config.h_x_chips or 1,
+'''
+match_indent = true
+overwrite = false
+
 # set_ability: set defaults for permanent bonuses
 [[patches]]
 [patches.pattern]

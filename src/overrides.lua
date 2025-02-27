@@ -1825,19 +1825,22 @@ end
 -- perma_xbonus
 function Card:get_chip_x_bonus()
     if self.debuff then return 0 end
-	return SMODS.multiplicative_stacking(1, self.ability.perma_x_chips)
+	local base = self.ability.x_chips or 1
+	return SMODS.multiplicative_stacking(base, self.ability.perma_x_chips)
 end
 
 -- perma_h_chips
 function Card:get_chip_h_bonus()
     if self.debuff then return 0 end
-    return self.ability.perma_h_chips or 0
+	local base = self.ability.h_chips or 0
+    return base + self.ability.perma_h_chips or 0
 end
 
 -- perma_h_x_chips
 function Card:get_chip_h_x_bonus()
     if self.debuff then return 0 end
-	return SMODS.multiplicative_stacking(1, self.ability.perma_h_x_chips)
+	local base = self.ability.h_x_chips or 1
+	return SMODS.multiplicative_stacking(base, self.ability.perma_h_x_chips)
 end
 
 -- perma_p_dollars
