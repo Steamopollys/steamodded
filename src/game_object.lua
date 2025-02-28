@@ -1685,6 +1685,7 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
         end,
         get_obj = function(self, key) return G.P_SEALS[key] end,
         generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+            card = card or self:create_fake_card()
             local target = {
                 type = 'other',
                 set = 'Other',
@@ -1717,6 +1718,9 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
                 desc_nodes[#desc_nodes + 1] = res.main_end
             end
             desc_nodes.background_colour = res.background_colour
+        end,
+        create_fake_card = function(self)
+	        return { ability = { seal = copy_table(self.config) }, fake_card = true }
         end,
     }
     for _,v in ipairs { 'Purple', 'Gold', 'Blue', 'Red' } do
@@ -3086,7 +3090,10 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
         -- apply_modifier = true when G.GAME.edition_rate is to be applied
         get_weight = function(self, apply_modifier)
             return self.weight
-        end
+        end,
+        create_fake_card = function(self)
+	        return { edition = copy_table(self.config), fake_card = true }
+        end,
     }
 
     -- TODO also, this should probably be a utility method in core
@@ -3122,8 +3129,8 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
         get_weight = function(self)
             return G.GAME.edition_rate * self.weight
         end,
-        loc_vars = function(self)
-            return { vars = { self.config.chips } }
+        loc_vars = function(self, info_queue, card)
+            return { vars = { card.edition.chips } }
         end,
         calculate = function(self, card, context)
             if context.pre_joker or (context.main_scoring and context.cardarea == G.play) then
@@ -3153,8 +3160,8 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
         get_weight = function(self)
             return G.GAME.edition_rate * self.weight
         end,
-        loc_vars = function(self)
-            return { vars = { self.config.mult } }
+        loc_vars = function(self, info_queue, card)
+            return { vars = { card.edition.mult } }
         end,
         calculate = function(self, card, context)
             if context.pre_joker or (context.main_scoring and context.cardarea == G.play) then
@@ -3184,8 +3191,8 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
         get_weight = function(self)
             return (G.GAME.edition_rate - 1) * G.P_CENTERS["e_negative"].weight + G.GAME.edition_rate * self.weight
         end,
-        loc_vars = function(self)
-            return { vars = { self.config.x_mult } }
+        loc_vars = function(self, info_queue, card)
+            return { vars = { card.edition.x_mult } }
         end,
         calculate = function(self, card, context)
             if context.post_joker or (context.main_scoring and context.cardarea == G.play) then
@@ -3215,8 +3222,8 @@ Set `prefix_config.key = false` on your object instead.]]):format(obj.key), obj.
         get_weight = function(self)
             return self.weight
         end,
-        loc_vars = function(self)
-            return { vars = { self.config.card_limit } }
+        loc_vars = function(self, info_queue, card)
+            return { vars = { card.edition.card_limit } }
         end,
     })
 

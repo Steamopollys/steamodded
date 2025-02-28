@@ -209,7 +209,7 @@ for k, v in pairs(new_ability) do
     self.ability[k] = v
 end
 -- reset keys do not persist an ability change
-local reset_keys = {'name', 'effect', 'set', 'extra', 'played_this_ante'}
+local reset_keys = {'name', 'effect', 'set', 'extra', 'played_this_ante', 'perma_debuff'}
 for _, mod in ipairs(SMODS.mod_list) do
     if mod.set_ability_reset_keys then
         local keys = mod.set_ability_reset_keys()
@@ -239,14 +239,14 @@ payload = "self.label = center.label or self.config.card and self.config.card.la
 
 ## Blind:drawn_to_hand()
 [[patches]]
-[patches.pattern]
+[patches.regex]
 target = 'blind.lua'
-pattern = "if self.name == 'Crimson Heart' and self.prepped and G.jokers.cards[1] then"
+pattern = "if self.name == 'Crimson Heart' and self.prepped and G.jokers.cards\\[1\\] then"
 position = 'after'
-match_indent = true
 payload = """
-    local prev_chosen_set = {}
-    local fallback_jokers = {}"""
+
+            local prev_chosen_set = {}
+            local fallback_jokers = {}"""
 # Fix bad logic if not enough choices for debuff
 [[patches]]
 [patches.regex]
@@ -309,31 +309,29 @@ end"""
 
 ## Blind:disable()
 [[patches]]
-[patches.pattern]
+[patches.regex]
 target = 'blind.lua'
-pattern = "if self.name == 'The Water' then"
-position = 'before'
+pattern = "elseif self.name == 'The Water' then"
+position = 'at'
 payload = """
-if self.name == 'Crimson Heart' then
-    for _, v in ipairs(G.jokers.cards) do
-        v.ability.crimson_heart_chosen = nil
-    end
-end"""
-match_indent = true
+elseif self.name == 'Crimson Heart' then
+        for _, v in ipairs(G.jokers.cards) do
+            v.ability.crimson_heart_chosen = nil
+        end
+    elseif self.name == 'The Water' then"""
 
 ## Blind:defeat()
 [[patches]]
-[patches.pattern]
+[patches.regex]
 target = 'blind.lua'
-pattern = "if self.name == 'The Manacle' and not self.disabled then"
-position = 'before'
+pattern = "elseif self.name == 'The Manacle' and not self.disabled then"
+position = 'at'
 payload = """
-if self.name == 'Crimson Heart' then
-    for _, v in ipairs(G.jokers.cards) do
-        v.ability.crimson_heart_chosen = nil
-    end
-end"""
-match_indent = true
+elseif self.name == 'Crimson Heart' then
+        for _, v in ipairs(G.jokers.cards) do
+            v.ability.crimson_heart_chosen = nil
+        end
+    elseif self.name == 'The Manacle' and not self.disabled then"""
 
 
 ## Fix Manacle's unnecessary card draw after positive G.hand:change_size()
