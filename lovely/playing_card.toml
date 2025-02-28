@@ -89,7 +89,7 @@ payload = '''
         G.ARGS.LOC_COLOURS[v:lower()] = G.C.RARITY[v]
     end
     for _, v in ipairs(SMODS.ConsumableType.ctype_buffer) do
-        G.ARGS.LOC_COLOURS[v:lower()] = G.C.SECONDARY_SET[v] 
+        G.ARGS.LOC_COLOURS[v:lower()] = G.C.SECONDARY_SET[v]
     end
     for _, v in ipairs(SMODS.Suit.obj_buffer) do
         G.ARGS.LOC_COLOURS[v:lower()] = G.C.SUITS[v]
@@ -146,7 +146,7 @@ function Card:get_nominal(mod)
     local mult = 1
     local rank_mult = 1
     if mod == 'suit' then mult = 10000 end
-    if self.ability.effect == 'Stone Card' or (self.config.center.no_suit and self.config.center.no_rank) then 
+    if self.ability.effect == 'Stone Card' or (self.config.center.no_suit and self.config.center.no_rank) then
         mult = -10000
     elseif self.config.center.no_suit then
         mult = 0
@@ -272,7 +272,7 @@ for j = 1, #suit_map do
     if SUITS[suit_map[j]][1] then num_suits = num_suits + 1 end
 end
 for j = 1, #suit_map do
-    $mid			
+    $mid
             (0.42 - (num_suits <= 4 and 0 or num_suits >= 8 and 0.28 or 0.07 * (num_suits - 4))) * G.CARD_H,'''
 
 [[patches]]

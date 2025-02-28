@@ -40,7 +40,7 @@ function create_UIBox_your_collection_blinds(exit)
 	local spacing = 1 - 15*0.06
 	if G.GAME and G.GAME.round_resets and G.GAME.round_resets.ante then
 		local current_ante = G.GAME.round_resets.ante
-	
+
 		if current_ante > 8 then
 			min_ante = current_ante - 8 + 1
 			max_ante = current_ante + 8
@@ -258,7 +258,7 @@ function create_UIBox_your_collection_blinds(exit)
 							},
 							create_option_cycle({
 								options = page_options,
-								w = 4.5, 
+								w = 4.5,
 								cycle_shoulders = true,
 								opt_callback = 'your_collection_blinds_page',
 								focus_args = {snap_to = true, nav = 'wide'},
@@ -363,7 +363,7 @@ function G.FUNCS.your_collection_blinds_page(args)
 		func = (function()
 			for _, v in ipairs(blinds_to_be_alerted) do
 			  v.children.alert = UIBox{
-				definition = create_UIBox_card_alert(), 
+				definition = create_UIBox_card_alert(),
 				config = { align="tri", offset = {x = 0.1, y = 0.1}, parent = v}
 			  }
 			  v.children.alert.states.collide.can = false
@@ -512,7 +512,7 @@ function SMODS.applied_stakes_UI(i, stake_desc_rows, num_added)
 					end
 					_full_desc[#_full_desc] = nil
 					stake_desc_rows[#stake_desc_rows + 1] = {n = G.UIT.R, config = {align = "cm" }, nodes = {
-						{n = G.UIT.C, config = {align = 'cm'}, nodes = { 
+						{n = G.UIT.C, config = {align = 'cm'}, nodes = {
 							{n = G.UIT.C, config = {align = "cm", colour = get_stake_col(i), r = 0.1, minh = 0.35, minw = 0.35, emboss = 0.05 }, nodes = {}},
 							{n = G.UIT.B, config = {w = 0.1, h = 0.1}}}},
 						{n = G.UIT.C, config = {align = "cm", padding = 0.03, colour = G.C.WHITE, r = 0.1, minh = 0.7, minw = 4.8 }, nodes =
@@ -960,9 +960,9 @@ function G.UIDEF.view_deck(unplayed_only)
 		-- base cards
 		{n = G.UIT.R, config = {align = "cm", minh = 0.05, padding = 0.07}, nodes = {
 			{n = G.UIT.O, config = {
-					object = DynaText({ 
-						string = { 
-							{ string = localize('k_base_cards'), colour = G.C.RED }, 
+					object = DynaText({
+						string = {
+							{ string = localize('k_base_cards'), colour = G.C.RED },
 							modded and { string = localize('k_effective'), colour = G.C.BLUE } or nil
 						},
 						colours = { G.C.RED }, silent = true, scale = 0.4, pop_in_rate = 10, pop_delay = 4
@@ -1040,7 +1040,7 @@ function G.UIDEF.view_deck(unplayed_only)
 										definition = G.GAME.selected_back:generate_UI(nil, 0.7, 0.5, G.GAME.challenge), config = {offset = { x = 0, y = 0 } }
 									}
 								}}}}}},
-					{n = G.UIT.R, config = {align = "cm", r = 0.1, outline_colour = G.C.L_BLACK, line_emboss = 0.05, outline = 1.5}, nodes = 
+					{n = G.UIT.R, config = {align = "cm", r = 0.1, outline_colour = G.C.L_BLACK, line_emboss = 0.05, outline = 1.5}, nodes =
 						tally_ui}}},
 				{n = G.UIT.C, config = {align = "cm"}, nodes = rank_cols},
 				{n = G.UIT.B, config = {w = 0.1, h = 0.1}},}},
@@ -1253,7 +1253,7 @@ end
 --#endregion
 
 function Card:set_sprites(_center, _front)
-    if _front then 
+    if _front then
         local _atlas, _pos = get_front_spriteinfo(_front)
         if self.children.front then self.children.front:remove() end
 		self.children.front = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, _atlas, _pos)
@@ -1263,14 +1263,14 @@ function Card:set_sprites(_center, _front)
 		self.children.front.states.collide.can = false
 		self.children.front:set_role({major = self, role_type = 'Glued', draw_major = self})
     end
-    if _center then 
+    if _center then
         if _center.set then
             if self.children.center then self.children.center:remove() end
-			if _center.set == 'Joker' and not _center.unlocked and not self.params.bypass_discovery_center then 
+			if _center.set == 'Joker' and not _center.unlocked and not self.params.bypass_discovery_center then
 				self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["Joker"], G.j_locked.pos)
-			elseif self.config.center.set == 'Voucher' and not self.config.center.unlocked and not self.params.bypass_discovery_center then 
+			elseif self.config.center.set == 'Voucher' and not self.config.center.unlocked and not self.params.bypass_discovery_center then
 				self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["Voucher"], G.v_locked.pos)
-			elseif self.config.center.consumeable and self.config.center.demo then 
+			elseif self.config.center.consumeable and self.config.center.demo then
 				self.children.center = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["Tarot"], G.c_locked.pos)
 			elseif not self.params.bypass_discovery_center and (_center.set == 'Edition' or _center.set == 'Joker' or _center.consumeable or _center.set == 'Voucher' or _center.set == 'Booster') and not _center.discovered then
 				local atlas = G.ASSET_ATLAS[
@@ -1280,7 +1280,7 @@ function Card:set_sprites(_center, _front)
 					) or
 					(
 						SMODS.UndiscoveredSprites[_center.set] and
-						(SMODS.UndiscoveredSprites[_center.set][G.SETTINGS.colourblind_option and 'hc_atlas' or 'lc_atlas'] or 
+						(SMODS.UndiscoveredSprites[_center.set][G.SETTINGS.colourblind_option and 'hc_atlas' or 'lc_atlas'] or
 						SMODS.UndiscoveredSprites[_center.set].atlas)
 					) or
 					_center.set
@@ -1299,13 +1299,13 @@ function Card:set_sprites(_center, _front)
 			self.children.center.states.drag = self.states.drag
 			self.children.center.states.collide.can = false
 			self.children.center:set_role({major = self, role_type = 'Glued', draw_major = self})
-            if _center.name == 'Half Joker' and (_center.discovered or self.bypass_discovery_center) then 
+            if _center.name == 'Half Joker' and (_center.discovered or self.bypass_discovery_center) then
                 self.children.center.scale.y = self.children.center.scale.y/1.7
             end
-            if _center.name == 'Photograph' and (_center.discovered or self.bypass_discovery_center) then 
+            if _center.name == 'Photograph' and (_center.discovered or self.bypass_discovery_center) then
                 self.children.center.scale.y = self.children.center.scale.y/1.2
             end
-            if _center.name == 'Square Joker' and (_center.discovered or self.bypass_discovery_center) then 
+            if _center.name == 'Square Joker' and (_center.discovered or self.bypass_discovery_center) then
                 self.children.center.scale.y = self.children.center.scale.x
             end
             if _center.pixel_size and _center.pixel_size.h and (_center.discovered or self.bypass_discovery_center) then
@@ -1342,11 +1342,11 @@ local card_init = Card.init
 function Card:init(X, Y, W, H, card, center, params)
 	card_init(self, X, Y, W, H, card, center, params)
 
-	-- This table contains object keys for layers (e.g. edition) 
+	-- This table contains object keys for layers (e.g. edition)
 	-- that dont want base layer to be drawn.
 	-- When layer is removed, layer's value should be set to nil.
 	self.ignore_base_shader = self.ignore_base_shader or {}
-	-- This table contains object keys for layers (e.g. edition) 
+	-- This table contains object keys for layers (e.g. edition)
 	-- that dont want shadow to be drawn.
 	-- When layer is removed, layer's value should be set to nil.
 	self.ignore_shadow = self.ignore_shadow or {}
@@ -1361,7 +1361,7 @@ function Card:should_draw_shadow()
 end
 
 local smods_card_load = Card.load
--- 
+--
 function Card:load(cardTable, other_card)
 	local ret = smods_card_load(self, cardTable, other_card)
 	local on_edition_loaded = self.edition and self.edition.key and G.P_CENTERS[self.edition.key].on_load
@@ -1454,7 +1454,7 @@ function Card:set_edition(edition, immediate, silent)
 	if p_edition.no_shadow or p_edition.disable_shadow then
 		self.ignore_shadow[self.edition.key] = true
 	end
-	
+
 	local on_edition_applied = p_edition.on_apply
 	if type(on_edition_applied) == "function" then
 		on_edition_applied(self)
@@ -1673,7 +1673,7 @@ end
 
 function get_deck_win_sticker(_center)
 	if G.PROFILES[G.SETTINGS.profile].deck_usage[_center.key] and
-	G.PROFILES[G.SETTINGS.profile].deck_usage[_center.key].wins_by_key then 
+	G.PROFILES[G.SETTINGS.profile].deck_usage[_center.key].wins_by_key then
 		local _stake = nil
 		for key, _ in pairs(G.PROFILES[G.SETTINGS.profile].deck_usage[_center.key].wins_by_key) do
 			if (G.P_STAKES[key] and G.P_STAKES[key].stake_level or 0) > (_stake and G.P_STAKES[_stake].stake_level or 0) then
@@ -1709,7 +1709,7 @@ end
 
 function Card:align_h_popup()
 	local focused_ui = self.children.focused_ui and true or false
-	local popup_direction = (self.children.buy_button or (self.area and self.area.config.view_deck) or (self.area and self.area.config.type == 'shop')) and 'cl' or 
+	local popup_direction = (self.children.buy_button or (self.area and self.area.config.view_deck) or (self.area and self.area.config.type == 'shop')) and 'cl' or
 							(self.T.y < G.CARD_H*0.8) and 'bm' or
 							'tm'
 	local sign = 1
@@ -1737,7 +1737,7 @@ function Card:align_h_popup()
 				popup_direction == 'tm' and -0.13 or
 				popup_direction == 'bm' and 0.1 or
 				0
-		},  
+		},
 		type = popup_direction,
 		--lr_clamp = true
 	}
@@ -1754,7 +1754,7 @@ function get_pack(_key, _type)
 		local add
 		v.current_weight = v.get_weight and v:get_weight() or v.weight or 1
         if (not _type or _type == v.kind) then add = true end
-		if v.in_pool and type(v.in_pool) == 'function' then 
+		if v.in_pool and type(v.in_pool) == 'function' then
 			local res, pool_opts = v:in_pool()
 			pool_opts = pool_opts or {}
 			add = res and (add or pool_opts.override_base_checks)
@@ -1763,7 +1763,7 @@ function get_pack(_key, _type)
     end
     local poll = pseudorandom(pseudoseed((_key or 'pack_generic')..G.GAME.round_resets.ante))*cume
     for k, v in ipairs(G.P_CENTER_POOLS['Booster']) do
-        if temp_in_pool[v.key] then 
+        if temp_in_pool[v.key] then
             it = it + (v.current_weight or 1)
             if it >= poll and it - (v.current_weight or 1) <= poll then center = v; break end
         end

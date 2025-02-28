@@ -119,3 +119,12 @@ pattern = '''if hook.children[i].config and hook.children[i].config.id:sub(1, 7)
 position = 'at'
 payload = '''if hook.children[i].config and hook.children[i].config.id:sub(1, 8+string.len(G.CONTROLLER.text_input_id)) == G.CONTROLLER.text_input_id..'_letter_' and hook.children[i].config.text ~= '' then'''
 match_indent = true
+
+# remove hardcoded shop selection limit
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "if self.highlighted[1] then"
+position = "at"
+payload = "if #self.highlighted >= self.config.highlighted_limit then"
+match_indent = true

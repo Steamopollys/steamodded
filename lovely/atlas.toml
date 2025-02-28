@@ -39,19 +39,3 @@ payload = '''
         _atlas = G.ASSET_ATLAS[_smods_atlas] or _atlas
     end'''
 
-## Hide floating ? from undiscovered types
-# Card:draw()
-[[patches]]
-[patches.pattern]
-target = 'card.lua'
-pattern = '''shared_sprite:draw_shader('dissolve', nil, nil, nil, self.children.center, scale_mod, rotate_mod)'''
-position = 'at'
-match_indent = true
-payload = '''
-if (self.config.center.undiscovered and not self.config.center.undiscovered.no_overlay) or not( SMODS.UndiscoveredSprites[self.ability.set] and SMODS.UndiscoveredSprites[self.ability.set].no_overlay) then 
-    shared_sprite:draw_shader('dissolve', nil, nil, nil, self.children.center, scale_mod, rotate_mod)
-else
-    if SMODS.UndiscoveredSprites[self.ability.set] and SMODS.UndiscoveredSprites[self.ability.set].overlay_sprite then
-        SMODS.UndiscoveredSprites[self.ability.set].overlay_sprite:draw_shader('dissolve', nil, nil, nil, self.children.center, scale_mod, rotate_mod)
-    end
-end'''
