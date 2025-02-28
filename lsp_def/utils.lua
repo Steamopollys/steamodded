@@ -5,7 +5,7 @@
 --- Internal class referring args passed as `context` in a SMODS object's `calculate` function. 
 --- Not all arguments typed here are present in all contexts, see [Calculate Function](https://github.com/Steamodded/smods/wiki/calculate_functions#contexts) for details. 
 ---@class CalcContext: table 
----@field cardarea? CardArea The CardArea currently being checked. 
+---@field cardarea? CardArea|"unscored" The CardArea currently being checked. 
 ---@field full_hand? Card[]|table[] All play or selected cards. 
 ---@field scoring_hand? Card[]|table[] All scoring cards in played hand. 
 ---@field scoring_name? string Key to the scoring poker hand. 
