@@ -106,7 +106,7 @@ if blind then
     self.in_blind = true
 end
 local obj = self.config.blind
-if obj.set_blind and type(obj.set_blind) == 'function' then
+if not reset and obj.set_blind and type(obj.set_blind) == 'function' then
     obj:set_blind()
 elseif self.name == 'The Eye' and not reset then'''
 match_indent = true
