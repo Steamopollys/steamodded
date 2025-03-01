@@ -41,19 +41,19 @@ return {
                     'pero la #2# está instalada.'
                 }
             },
-            load_failure_p = { -- To be translated
+            load_failure_p = {
                 text = {
-                    '{C:attention}Prefix Conflict!{}',
-                    'This mod\'s prefix is',
-                    'the same as another mod\'s.',
+                    '{C:attention}¡Conflicto de prefijos!{}',
+                    'El prefijo del mod',
+                    'es el mismo que otro mod.',
                     '({C:attention}#1#{})'
                 }
             },
-            load_failure_m = { -- To be translated
+            load_failure_m = {
                 text = {
-                    '{C:attention}Main File Not Found!{}',
-                    'This mod\'s main file',
-                    'could not be found.',
+                    '{C:attention}¡Archivo principal no encontrado!{}',
+                    'El archivo principal del mod',
+                    'no ha sido encontrado.',
                     '({C:attention}#1#{})'
                 }
             },
@@ -83,7 +83,7 @@ return {
         dictionary = {
             b_mods = 'Mods',
             b_mods_cap = 'MODS',
-            b_modded_version = 'Modded Version!', -- To be translated
+            b_modded_version = '¡Versión Modeada!',
             b_steamodded = 'Steamodded',
             b_credits = 'Créditos',
             b_open_mods_dir = 'Abrir directorio de Mods',
@@ -99,15 +99,15 @@ return {
             b_author = 'Autor/a',
             b_authors = 'Autores',
             b_unknown = 'Desconocido',
-            b_lovely_mod = '(Lovely Mod) ', -- TODO
+            b_lovely_mod = '(Mod de Lovely) ',
             b_by = ' Por: ',
             b_config = "Configuración",
             b_additions = 'Adiciones',
-            b_stickers = 'Stickers', -- TODO
+            b_stickers = 'Stickers',
             b_achievements = "Logros",
             b_applies_stakes_1 = 'Aplica ',
             b_applies_stakes_2 = '',
-            b_graphics_mipmap_level = "Mipmap level", -- TODO
+            b_graphics_mipmap_level = "Nivel de Mipmap",
         },
         v_dictionary = {
             c_types = '#1# Tipos',
