@@ -1615,7 +1615,7 @@ function SMODS.calculate_destroying_cards(context, cards_destroyed, scoring_hand
     for i,card in ipairs(scoring_hand or context.cardarea.cards) do
         local destroyed = nil
         --un-highlight all cards
-        if scoring_hand then highlight_card(card,(i-0.999)/(#scoring_hand-0.998),'down') end
+        if scoring_hand and context.cardarea ~= "unscored" then highlight_card(card,(i-0.999)/(#scoring_hand-0.998),'down') end
 
         -- context.destroying_card calculations
         context.destroy_card = card
