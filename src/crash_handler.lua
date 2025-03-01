@@ -663,6 +663,9 @@ function injectStackTrace()
         if sanitizedmsg:find("Syntax error: game.lua:4: '=' expected near 'Game'") then
             table.insert(err,
                 'Duplicate installation of Steamodded detected! Please clean your installation: Steam Library > Balatro > Properties > Installed Files > Verify integrity of game files.')
+        elseif sanitizedmsg:find("Syntax error: game.lua:%d+: duplicate label 'continue'") then
+            table.insert(err,
+                'Duplicate installation of Steamodded detected! Please remove the duplicate steamodded/smods folder in your mods folder.')
         else
             table.insert(err, sanitizedmsg)
         end
