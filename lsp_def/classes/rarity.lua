@@ -12,7 +12,7 @@
 ---@field check_duplicate_register? fun(self: SMODS.Rarity|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Rarity|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.Rarity|table) Registers the object. 
----@field check_dependencies? fun(self: SMODS.Rarity|table): boolean? Returns true if there's no failed dependencies, else false
+---@field check_dependencies? fun(self: SMODS.Rarity|table): boolean? Returns `true` if there's no failed dependencies. 
 ---@field process_loc_text? fun(self: SMODS.Rarity|table) Called during `inject_class`. Handles injecting loc_text. 
 ---@field send_to_subclasses? fun(self: SMODS.Rarity|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Rarity|table) Called before `inject_class`. Injects and manages class information before object injection. 
@@ -23,7 +23,7 @@
 ---@field get_obj? fun(self: SMODS.Rarity|table, key: string): SMODS.Rarity|table? Returns an object if one matches the `key`. 
 ---@field get_weight? fun(self: SMODS.Rarity|table, weight: number, object_type: SMODS.ObjectType): number Used for finer control over this rarity's weight. 
 ---@field gradient? fun(self: SMODS.Rarity|table, dt: number) Used to make a gradient for this rarity's `badge_colour`. 
----@field get_rarity_badge? fun(self: SMODS.Rarity|table, rarity: string): string Returns loclaized rarity key. 
+---@field get_rarity_badge? fun(self: SMODS.Rarity|table, rarity: string): string Returns localized rarity key. 
 ---@overload fun(self: SMODS.Rarity): SMODS.Rarity
 SMODS.Rarity = setmetatable({}, {
     __call = function(self)

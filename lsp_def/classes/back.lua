@@ -7,7 +7,7 @@
 ---@field check_duplicate_register? fun(self: SMODS.Back|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.Back|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.Back|table) Registers the object. 
----@field check_dependencies? fun(self: SMODS.Back|table): boolean? Returns true if there's no failed dependencies, else false
+---@field check_dependencies? fun(self: SMODS.Back|table): boolean? Returns `true` if there's no failed dependencies. 
 ---@field process_loc_text? fun(self: SMODS.Back|table) Called during `inject_class`. Handles injecting loc_text. 
 ---@field send_to_subclasses? fun(self: SMODS.Back|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.Back|table) Called before `inject_class`. Injects and manages class information before object injection. 
@@ -16,7 +16,7 @@
 ---@field inject? fun(self: SMODS.Back|table, i?: number) Called during `inject_class`. Injects the object into the game. 
 ---@field take_ownership? fun(self: SMODS.Back|table, key: string, obj: SMODS.Back|table, silent?: boolean): nil|table|SMODS.Back Takes control of vanilla objects. Child class must have get_obj for this to function
 ---@field get_obj? fun(self: SMODS.Back|table, key: string): SMODS.Back|table? Returns an object if one matches the `key`. 
----@field calculate? fun(self: SMODS.Back|table, back: Back|table, context: CalcContext|table): table?, boolean? Calculates effects based on parameters in `context`. See SMODS calculations docs for details. 
+---@field calculate? fun(self: SMODS.Back|table, back: Back|table, context: CalcContext|table): table?, boolean? Calculates effects based on parameters in `context`. See [SMODS calculation](https://github.com/Steamodded/smods/wiki/calculate_functions) docs for details. 
 ---@field apply? fun(self: SMODS.Back|table, back: Back|table) Applied modifiers at the start of a run. 
 ---@overload fun(self: SMODS.Back): SMODS.Back
 SMODS.Back = setmetatable({}, {

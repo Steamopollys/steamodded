@@ -6,7 +6,7 @@
 --- Not all arguments typed here are present in all contexts, see [Calculate Function](https://github.com/Steamodded/smods/wiki/calculate_functions#contexts) for details. 
 ---@class CalcContext: table 
 ---@field cardarea? CardArea|"unscored" The CardArea currently being checked. 
----@field full_hand? Card[]|table[] All play or selected cards. 
+---@field full_hand? Card[]|table[] All played or selected cards. 
 ---@field scoring_hand? Card[]|table[] All scoring cards in played hand. 
 ---@field scoring_name? string Key to the scoring poker hand. 
 ---@field poker_hands? table<string, Card[]|table[]> All poker hand parts the played hand can form. 
@@ -57,7 +57,7 @@
 ---@field post_trigger? true Check if `true` for effects after another Joker is triggered. 
 ---@field modify_scoring_hand? true Check if `true` for modifying the scoring hand. 
 ---@field ending_booster? true Check if `true` for effects after a Booster Pack ends. 
----@field starting_shop? true Check id `true` for effects when the shop is first opened. 
+---@field starting_shop? true Check if `true` for effects when the shop is first opened. 
 
 --- Util Functions
 

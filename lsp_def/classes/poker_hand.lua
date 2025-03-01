@@ -17,7 +17,7 @@
 ---@field check_duplicate_register? fun(self: SMODS.PokerHand|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.PokerHand|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.PokerHand|table) Registers the object. 
----@field check_dependencies? fun(self: SMODS.PokerHand|table): boolean? Returns true if there's no failed dependencies, else false
+---@field check_dependencies? fun(self: SMODS.PokerHand|table): boolean? Returns `true` if there's no failed dependencies. 
 ---@field process_loc_text? fun(self: SMODS.PokerHand|table) Called during `inject_class`. Handles injecting loc_text. 
 ---@field send_to_subclasses? fun(self: SMODS.PokerHand|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.PokerHand|table) Called before `inject_class`. Injects and manages class information before object injection. 
@@ -45,7 +45,7 @@ SMODS.PokerHands = {}
 ---@field check_duplicate_register? fun(self: SMODS.PokerHandPart|table): boolean? Ensures objects already registered will not register. 
 ---@field check_duplicate_key? fun(self: SMODS.PokerHandPart|table): boolean? Ensures objects with duplicate keys will not register. Checked on `__call` but not `take_ownership`. For take_ownership, the key must exist. 
 ---@field register? fun(self: SMODS.PokerHandPart|table) Registers the object. 
----@field check_dependencies? fun(self: SMODS.PokerHandPart|table): boolean? Returns true if there's no failed dependencies, else false
+---@field check_dependencies? fun(self: SMODS.PokerHandPart|table): boolean? Returns `true` if there's no failed dependencies. 
 ---@field process_loc_text? fun(self: SMODS.PokerHandPart|table) Called during `inject_class`. Handles injecting loc_text. 
 ---@field send_to_subclasses? fun(self: SMODS.PokerHandPart|table, func: string, ...: any) Starting from this class, recusively searches for functions with the given key on all subordinate classes and run all found functions with the given arguments. 
 ---@field pre_inject_class? fun(self: SMODS.PokerHandPart|table) Called before `inject_class`. Injects and manages class information before object injection. 
