@@ -143,13 +143,13 @@ target = "card.lua"
 pattern = "bonus_chips = (self.ability.bonus + (self.ability.perma_bonus or 0)) > 0 and (self.ability.bonus + (self.ability.perma_bonus or 0)) or nil,"
 position = "at"
 payload = '''
-bonus_x_chips = self.ability.perma_x_chips ~= 0 and (self.ability.perma_x_chips + 1) or nil,
+bonus_x_chips = self.ability.perma_x_chips and self.ability.perma_x_chips ~= 0 and (self.ability.perma_x_chips + 1) or nil,
 bonus_mult = self.ability.perma_mult ~= 0 and self.ability.perma_mult or nil,
-bonus_x_mult = self.ability.perma_x_mult ~= 0 and (self.ability.perma_x_mult + 1) or nil,
+bonus_x_mult = self.ability.perma_x_mult and self.ability.perma_x_mult ~= 0 and (self.ability.perma_x_mult + 1) or nil,
 bonus_h_chips = self.ability.perma_h_chips ~= 0 and self.ability.perma_h_chips or nil,
-bonus_h_x_chips = self.ability.perma_h_x_chips ~= 0 and (self.ability.perma_h_x_chips + 1) or nil,
+bonus_h_x_chips = self.ability.perma_h_x_chips and self.ability.perma_h_x_chips ~= 0 and (self.ability.perma_h_x_chips + 1) or nil,
 bonus_h_mult = self.ability.perma_h_mult ~= 0 and self.ability.perma_h_mult or nil,
-bonus_h_x_mult = self.ability.perma_h_x_mult ~= 0 and (self.ability.perma_h_x_mult + 1) or nil,
+bonus_h_x_mult = self.ability.perma_h_x_mult and self.ability.perma_h_x_mult ~= 0 and (self.ability.perma_h_x_mult + 1) or nil,
 bonus_p_dollars = self.ability.perma_p_dollars ~= 0 and self.ability.perma_p_dollars or nil,
 bonus_h_dollars = self.ability.perma_h_dollars ~= 0 and self.ability.perma_h_dollars or nil,
 total_h_dollars = total_h_dollars ~= 0 and total_h_dollars or nil,
