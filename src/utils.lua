@@ -1471,7 +1471,7 @@ function SMODS.score_card(card, context)
                             eval.jokers.juice_card = eval.jokers.juice_card or eval.jokers.card or _card
                             eval.jokers.message_card = eval.jokers.message_card or eval.jokers.card or card
                         end
-                        
+
                         table.insert(effects, eval)
                         for _, v in ipairs(post) do effects[#effects+1] = v end
                         if eval.retriggers then
@@ -1618,7 +1618,7 @@ function SMODS.calculate_destroying_cards(context, cards_destroyed, scoring_hand
                 context.cardarea = G.play
                 context.destroying_card = card
             else
-                context.cardarea = 'unscored' 
+                context.cardarea = 'unscored'
                 context.destroying_card = nil
             end
         end
@@ -1816,8 +1816,10 @@ SMODS.get_optional_features = function()
 end
 
 G.FUNCS.can_select_from_booster = function(e)
-    local area = booster_obj and e.config.ref_table:selectable_from_pack(booster_obj)
-    if area and #G[area].cards < G[area].config.card_limit then
+    local card = e.config.ref_table
+    local area = booster_obj and card:selectable_from_pack(booster_obj)
+    local edition_card_limit = card.edition and card.edition.card_limit or 0
+    if area and #G[area].cards < G[area].config.card_limit + edition_card_limit then
         e.config.colour = G.C.GREEN
         e.config.button = 'use_card'
     else

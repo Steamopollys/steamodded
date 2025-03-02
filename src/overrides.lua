@@ -564,7 +564,7 @@ function get_straight(hand, min_length, skip, wrap)
         local ret = {}
         for _,v in ipairs(rank.next) do
             ret[#ret+1] = v
-            if skip then 
+            if skip then
                 for _,w in ipairs(SMODS.Ranks[v].next) do
                     ret[#ret+1] = w
                 end

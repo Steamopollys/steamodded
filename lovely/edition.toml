@@ -100,7 +100,7 @@ target = "engine/sprite.lua"
 pattern = "if _send then G.SHADERS[_shader or 'dissolve']:send(_shader,_send) end"
 position = "at"
 payload = '''
-if _send then 
+if _send then
     G.SHADERS[_shader or 'dissolve']:send((SMODS.Shaders[_shader or 'dissolve'] and SMODS.Shaders[_shader or 'dissolve'].original_key) or _shader,_send)
 end'''
 match_indent = true
@@ -130,7 +130,7 @@ pattern = '''(?<indent>[\t ]*)if self\.edition[A-z\.\:\n\t _(',)~=+\-0-9]*limit 
 position = "at"
 payload = '''
 if true then
-    if from_debuff then 
+    if from_debuff then
         self.ability.joker_added_to_deck_but_debuffed = nil
     else
         if self.edition and self.edition.card_limit then
@@ -183,7 +183,6 @@ payload = "joker_added_to_deck_but_debuffed = self.joker_added_to_deck_but_debuf
 match_indent = true
 
 
-
 ## Negative playing card logic
 # CardArea:emplace()
 [[patches]]
@@ -192,7 +191,7 @@ target = "cardarea.lua"
 pattern = "function CardArea:emplace(*"
 position = "after"
 payload = '''
-    if card.edition and card.edition.card_limit and (self == G.hand) then
+    if not card.debuff and card.edition and card.edition.card_limit and (self == G.hand) then
         self.config.real_card_limit = (self.config.real_card_limit or self.config.card_limit) + card.edition.card_limit
         self.config.card_limit = math.max(0, self.config.real_card_limit)
     end'''
@@ -204,7 +203,7 @@ target = "cardarea.lua"
 pattern = "card:remove_from_area()"
 position = "before"
 payload = '''
-if card.edition and card.edition.card_limit and (self == G.hand) then
+if not card.debuff and card.edition and card.edition.card_limit and (self == G.hand) then
     self.config.real_card_limit = (self.config.real_card_limit or self.config.card_limit) - card.edition.card_limit
     self.config.card_limit = math.max(0, self.config.real_card_limit)
 end'''
@@ -222,7 +221,7 @@ if not hand_space then
     local n = 0
     while n < #G.deck.cards do
         local card = G.deck.cards[#G.deck.cards-n]
-        limit = limit - 1 + (card.edition and card.edition.card_limit or 0)
+        limit = limit - 1 + (not card.debuff and card.edition and card.edition.card_limit or 0)
         if limit < 0 then break end
         n = n + 1
     end
@@ -251,7 +250,7 @@ if p_shader and type(p_shader.send_vars) == "function" then
     local sh = G.SHADERS[_shader or 'dissolve']
     local parent_card = self.role.major and self.role.major:is(Card) and self.role.major
     local send_vars = p_shader.send_vars(self, parent_card)
-    
+
     if type(send_vars) == "table" then
         for key, value in pairs(send_vars) do
             sh:send(key, value)
@@ -269,7 +268,7 @@ position = "at"
 payload = '''if v == 'negative_consumable' or v == 'negative_playing_card' then v = 'negative' end'''
 match_indent = true
 
-# 
+#
 [[patches]]
 [patches.regex]
 target = 'functions/common_events.lua'
